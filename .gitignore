@@ -1,1 +1,3 @@
-# Test Commit
+# Root Ignore
+apps/client/*
+!apps/client/.gitignore
