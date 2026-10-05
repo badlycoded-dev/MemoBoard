@@ -1,3 +1,6 @@
 # Root Ignore
+apps/admin/*
+apps/api/*
 apps/client/*
-!apps/client/.gitignore
+apps/mobile/*
+!apps/standalone/.gitignore
