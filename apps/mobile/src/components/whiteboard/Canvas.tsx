@@ -1,8 +1,8 @@
 import React, { useMemo, useRef, useState } from "react";
 import { PanResponder, StyleSheet, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
-import { isWeb } from "../../services/platform";
-import { colors } from "../../theme/colors";
+import { isWeb } from "@/services/platform";
+import { colors } from "@/theme/colors";
 
 export type Stroke = { color: string; width: number; points: number[] };
 const toPath = (p: number[]) => {
