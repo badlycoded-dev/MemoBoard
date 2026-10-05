@@ -1,3 +1,2 @@
 # Root Ignore
-apps/*
-!apps/client/*
+apps/client/node_modules
