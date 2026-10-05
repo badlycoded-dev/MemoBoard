@@ -1,3 +1,5 @@
 # Root Ignore
-apps/client/*
-!apps/client/.gitignore
+apps/*
+!.gitignore
+!LICENSE
+!README.md
