@@ -40,7 +40,7 @@ export function Canvas(props: { strokes: Stroke[]; color: string; width: number;
 
   return (
     <View {...pan.panHandlers} style={[{ flex: 1, backgroundColor: colors.canvas }, webOnly]}>
-      <Svg pointerEvents="none" style={StyleSheet.absoluteFill}>
+      <Svg pointerEvents="none" width="100%" height="100%" style={StyleSheet.absoluteFill}>
         {props.strokes.map((s, i) => (
           <Path key={i} d={toPath(s.points)} stroke={s.color} strokeWidth={s.width} fill="none" strokeLinecap="round" strokeLinejoin="round" />
         ))}

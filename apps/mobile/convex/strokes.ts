@@ -4,7 +4,7 @@ const byBoard = (ctx: any, boardId: any) =>
   ctx.db.query("wb_strokes").withIndex("by_board", (q: any) => q.eq("boardId", boardId));
 export const list = query({ args: { boardId: v.id("boards") }, handler: (ctx, { boardId }) => byBoard(ctx, boardId).collect() });
 export const add = mutation({
-  args: { boardId: v.id("boards"), color: v.string(), width: v.number(), points: v.array(v.number()) },
+  args: { boardId: v.id("boards"), tool: v.optional(v.string()), color: v.string(), width: v.number(), points: v.array(v.number()) },
   handler: (ctx, a) => ctx.db.insert("wb_strokes", { ...a, userId: "dev", createdAt: Date.now() }),
 });
 export const undo = mutation({
@@ -18,3 +18,4 @@ export const clear = mutation({
   args: { boardId: v.id("boards") },
   handler: async (ctx, { boardId }) => { for (const s of await byBoard(ctx, boardId).collect()) await ctx.db.delete(s._id); },
 });
+export const remove = mutation({ args: { id: v.id("wb_strokes") }, handler: (ctx, { id }) => ctx.db.delete(id) });
