@@ -1,9 +1,9 @@
-export type Tool = "select" | "pen" | "wood" | "eraser" | "rect" | "round" | "ellipse" | "triangle" | "arrow" | "arrowThick";
+export type Tool = "select" | "pen" | "marker" | "wood" | "eraser" | "eraser2" | "pipette" | "rect" | "round" | "ellipse" | "triangle" | "arrow" | "arrowThick";
 export const SHAPES = ["rect", "round", "ellipse", "triangle", "arrow", "arrowThick"];
 export const defStyle = { stroke: "#12275C", fill: "#FFFFFF", sw: 3, fs: 18, bold: false, tc: "#12275C" };
 export type Pt = { x: number; y: number };
 export const isArrow = (k: string) => k.startsWith("arrow");
-export const box = (o: any) => ({ x: Math.min(o.x, o.x + o.w), y: Math.min(o.y, o.y + o.h), w: Math.abs(o.w), h: Math.abs(o.h) });
+export const box = (o: any) => o.kind === "tip" ? { x: o.x, y: o.y, w: 180, h: 38 } : ({ x: Math.min(o.x, o.x + o.w), y: Math.min(o.y, o.y + o.h), w: Math.abs(o.w), h: Math.abs(o.h) });
 // point where a ray from o's center toward (tx,ty) leaves o's box
 export function edge(o: any, tx: number, ty: number): Pt {
   const b = box(o), cx = b.x + b.w / 2, cy = b.y + b.h / 2, dx = tx - cx, dy = ty - cy;
@@ -26,5 +26,6 @@ const dist = (p: Pt, a: Pt, b: Pt) => {
 };
 export const hit = (o: any, p: Pt, m: Map<string, any>) => {
   if (isArrow(o.kind)) { const { a, b } = ends(o, m); return dist(p, a, b) < 8 + o.style.sw / 2; }
+  if (o.kind === "tip") { if (Math.hypot(p.x - o.x - o.w, p.y - o.y - o.h) < 18) return true; if (o.hidden) return false; }
   const b = box(o); return p.x >= b.x && p.x <= b.x + b.w && p.y >= b.y && p.y <= b.y + b.h;
 };
