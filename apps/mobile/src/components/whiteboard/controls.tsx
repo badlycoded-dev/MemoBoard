@@ -1,14 +1,18 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import type { ComponentProps } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { BLUE } from "@/theme/theme";
 import { useBoardTheme } from "./BoardTheme";
 import { PAL } from "./constants";
 
+export type IconName = ComponentProps<typeof MaterialCommunityIcons>["name"];
+
 /** Round toolbar button; `sel` marks the active tool. */
-export function ToolButton({ glyph, on, sel }: { glyph: string; on: () => void; sel?: boolean }) {
+export function ToolButton({ icon, on, sel }: { icon: IconName; on: () => void; sel?: boolean }) {
   const T = useBoardTheme();
   return (
     <Pressable onPress={on} style={[styles.tool, { backgroundColor: sel ? T.sel : "transparent" }]}>
-      <Text style={[styles.glyph, { color: T.text }]}>{glyph}</Text>
+      <MaterialCommunityIcons name={icon} size={22} color={sel ? BLUE : T.text} />
     </Pressable>
   );
 }

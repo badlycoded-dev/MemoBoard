@@ -1,4 +1,5 @@
 import { INK } from "@/theme/theme";
+import type { IconName } from "./controls";
 import type { Tool } from "./model";
 
 export const PAL = [
@@ -30,21 +31,21 @@ export const INITIAL_TOOL_CONFIG: Record<string, any> = {
   arrow: mk(INK, 3),
   arrowThick: mk(INK, 10),
 };
-export const DRAW_TOOLS: [Tool, string, string][] = [
-  ["pen", "✎", "Pen"],
-  ["marker", "▬", "Marker"],
-  ["wood", "✏", "Wooden pen"],
-  ["eraser", "⌫", "Eraser (lines)"],
-  ["eraser2", "◐", "Eraser (parts)"],
-  ["pipette", "💧", "Pipette"],
+export const DRAW_TOOLS: [Tool, IconName, string][] = [
+  ["pen", "pen", "Pen"],
+  ["marker", "marker", "Marker"],
+  ["wood", "pencil", "Wooden pen"],
+  ["eraser", "eraser", "Eraser (lines)"],
+  ["eraser2", "eraser-variant", "Eraser (parts)"],
+  ["pipette", "eyedropper", "Pipette"],
 ];
-export const OBJECT_TOOLS: [Tool, string, string][] = [
-  ["rect", "▭", "Rectangle"],
-  ["round", "▢", "Rounded rectangle"],
-  ["ellipse", "◯", "Circle"],
-  ["triangle", "△", "Triangle"],
-  ["arrow", "→", "Thin arrow"],
-  ["arrowThick", "⇨", "Thick arrow"],
+export const OBJECT_TOOLS: [Tool, IconName, string][] = [
+  ["rect", "rectangle-outline", "Rectangle"],
+  ["round", "square-rounded-outline", "Rounded rectangle"],
+  ["ellipse", "circle-outline", "Circle"],
+  ["triangle", "triangle-outline", "Triangle"],
+  ["arrow", "arrow-right", "Thin arrow"],
+  ["arrowThick", "arrow-right-bold", "Thick arrow"],
 ];
 export const isDraw = (t: Tool) => DRAW_TOOLS.some((d) => d[0] === t),
   isObj = (t: Tool) => OBJECT_TOOLS.some((d) => d[0] === t);

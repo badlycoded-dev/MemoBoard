@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRef, useState } from "react";
 import {
   Linking,
   Modal,
@@ -18,21 +19,15 @@ import * as DocumentPicker from "expo-document-picker";
 import * as Clipboard from "expo-clipboard";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { api } from "@/services/api";
-import { getSettings, ready, useSettings } from "@/services/settings";
+import { useSettings } from "@/services/settings";
 import { BLUE, INK } from "@/theme/theme";
-import { ColorPicker } from "@/components/ColorPicker";
-import { Slider } from "@/components/ui/Slider";
 import { BoardThemeProvider, useBoardTheme } from "@/components/whiteboard/BoardTheme";
-import { ColorSwatches, Stepper, ToolButton } from "@/components/whiteboard/controls";
-import {
-  DRAW_TOOLS,
-  OBJECT_TOOLS,
-  INITIAL_TOOL_CONFIG,
-  isDraw,
-  isObj,
-} from "@/components/whiteboard/constants";
+import { ColorSwatches, Stepper } from "@/components/whiteboard/controls";
+import { INITIAL_TOOL_CONFIG } from "@/components/whiteboard/constants";
 import { Tool, SHAPES, defStyle, isArrow, box, ends, hit, Pt } from "@/components/whiteboard/model";
 import { Shape } from "@/components/whiteboard/Shape";
+import { BoardHeader } from "@/components/whiteboard/BoardHeader";
+import { Toolbar } from "@/components/whiteboard/Toolbar";
 import { isImg, pathOf, strip, segD } from "@/components/whiteboard/utils";
 
 function BoardScreen() {
@@ -66,20 +61,6 @@ function BoardScreen() {
     [grp, setGrp] = useState<null | "draw" | "obj">(null),
     [sheet, setSheet] = useState<null | "size" | "scale" | "color">(null);
   const dim = useRef({ w: 360, h: 640 });
-  const mainRef = useRef<ScrollView>(null),
-    subRef = useRef<ScrollView>(null);
-  useEffect(() => {
-    ready.then(() => setOpen(getSettings().startExpanded));
-  }, []);
-  useEffect(() => {
-    // keep the selected tool visible in scrolling toolbars
-    const mi = tool === "select" ? 1 : isDraw(tool) ? 2 : 3,
-      si = DRAW_TOOLS.findIndex((d) => d[0] === tool);
-    const to = (i: number) =>
-      ({ [hz ? "x" : "y"]: Math.max(0, i * 42 - 84), animated: true }) as any;
-    mainRef.current?.scrollTo(to(mi));
-    subRef.current?.scrollTo(to(si < 0 ? 0 : si));
-  }, [tool, open, grp, hz]);
   const [cam, setCam] = useState({ x: 0, y: 0, k: 1 }),
     pinch = useRef<any>(null);
   const live = useRef<any>(null),
@@ -676,246 +657,47 @@ function BoardScreen() {
         </Svg>
       </View>
 
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          paddingTop: ins.top + 8,
-          paddingBottom: 10,
-          paddingHorizontal: 14,
-          backgroundColor: st.accent,
-          borderBottomLeftRadius: 22,
-          borderBottomRightRadius: 22,
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 12,
-        }}
-      >
-        <Pressable onPress={() => router.replace("/")}>
-          <Text style={{ color: "#fff", fontSize: 20 }}>←</Text>
-        </Pressable>
-        <Text style={{ color: "#fff", fontWeight: "700", fontSize: 17, flex: 1 }}>
-          {board?.name ?? "Loading..."}
-        </Text>
-        <Pressable onPress={() => router.push("/settings")}>
-          <Text style={{ color: "#fff", fontSize: 20 }}>⚙</Text>
-        </Pressable>
-      </View>
+      <BoardHeader
+        title={board?.name ?? "Loading..."}
+        accent={st.accent}
+        variant={st.headerStyle}
+        topInset={ins.top}
+        onBack={() => router.replace("/")}
+        onSettings={() => router.push("/settings")}
+      />
 
-      {(() => {
-        const cur = [...DRAW_TOOLS, ...OBJECT_TOOLS].find((d) => d[0] === tool),
-          t0 = ins.top + 56;
-        const choose = (t: Tool) => {
-          setTool(t);
-          setGrp(null);
-          setSheet(null);
-        };
-        const flip = (g: "draw" | "obj") => {
-          setGrp(grp === g ? null : g);
-          setSheet(null);
-        };
-        const hasSize = tool !== "select" && tool !== "pipette";
-        const sizeBtn = hasSize ? (
-          <ToolButton
-            glyph="◉"
-            sel={sheet === "size"}
-            on={() => setSheet(sheet === "size" ? null : "size")}
-          />
-        ) : null;
-        const colorBtn =
-          hasSize && !tool.startsWith("eraser") && tool !== "wood" ? (
-            <ToolButton
-              glyph="🎨"
-              sel={sheet === "color"}
-              on={() => setSheet(sheet === "color" ? null : "color")}
-            />
-          ) : null;
-        if (!open)
-          return (
-            <View style={[card, { left: 8, top: t0, borderRadius: 26, padding: 3 }]}>
-              <ToolButton glyph={cur ? cur[1] : "➤"} sel on={() => setOpen(true)} />
-            </View>
-          );
-        return (
-          <>
-            <View
-              style={[
-                card,
-                hz
-                  ? { left: 8, bottom: 12, maxWidth: "96%" }
-                  : { left: 8, top: t0, maxHeight: "82%" },
-              ]}
-            >
-              <ScrollView
-                ref={mainRef}
-                horizontal={hz}
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-              >
-                <ToolButton
-                  glyph="‹"
-                  on={() => {
-                    setOpen(false);
-                    setGrp(null);
-                    setSheet(null);
-                  }}
-                />
-                <ToolButton glyph="➤" sel={tool === "select"} on={() => choose("select")} />
-                <ToolButton
-                  glyph={isDraw(tool) ? cur![1] : "✎"}
-                  sel={isDraw(tool)}
-                  on={() => flip("draw")}
-                />
-                <ToolButton
-                  glyph={isObj(tool) ? cur![1] : "▭"}
-                  sel={isObj(tool)}
-                  on={() => flip("obj")}
-                />
-                <ToolButton glyph="T" on={addText} />
-                <ToolButton glyph="💡" on={addTip} />
-                <ToolButton glyph="</>" on={addCode} />
-                <ToolButton glyph="📎" on={addPin} />
-                <View
-                  style={
-                    hz
-                      ? {
-                          width: 1,
-                          height: 28,
-                          alignSelf: "center",
-                          backgroundColor: T.border,
-                          marginHorizontal: 4,
-                        }
-                      : { height: 1, backgroundColor: T.border, marginVertical: 4 }
-                  }
-                />
-                <View style={{ opacity: undoS.current.length ? 1 : 0.3 }}>
-                  <ToolButton glyph="↶" on={doUndo} />
-                </View>
-                <View style={{ opacity: redoS.current.length ? 1 : 0.3 }}>
-                  <ToolButton glyph="↷" on={doRedo} />
-                </View>
-                <Pressable
-                  onPress={() => {
-                    setSheet(sheet === "scale" ? null : "scale");
-                    setGrp(null);
-                  }}
-                  style={{
-                    height: hz ? 42 : 34,
-                    width: hz ? 48 : undefined,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      color: T.text,
-                      fontWeight: sheet === "scale" ? "800" : "500",
-                    }}
-                  >
-                    {Math.round(cam.k * 100)}%
-                  </Text>
-                </Pressable>
-              </ScrollView>
-            </View>
-            {grp === "draw" && (
-              <View
-                style={[
-                  card,
-                  hz
-                    ? { left: 8, bottom: 64, flexDirection: "row", maxWidth: "96%" }
-                    : { left: 66, top: t0 + 44 },
-                ]}
-              >
-                <ScrollView
-                  ref={subRef}
-                  horizontal={hz}
-                  showsHorizontalScrollIndicator={false}
-                  showsVerticalScrollIndicator={false}
-                >
-                  {DRAW_TOOLS.map(([k, g]) => (
-                    <ToolButton key={k} glyph={g} sel={tool === k} on={() => choose(k)} />
-                  ))}
-                  {colorBtn}
-                  {sizeBtn}
-                </ScrollView>
-              </View>
-            )}
-            {grp === "obj" && (
-              <View
-                style={[
-                  card,
-                  hz ? { left: 8, bottom: 64, width: 190 } : { left: 66, top: t0 + 88, width: 190 },
-                ]}
-              >
-                {OBJECT_TOOLS.map(([k, g, n]) => (
-                  <Pressable
-                    key={k}
-                    onPress={() => choose(k)}
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 10,
-                      padding: 8,
-                      borderRadius: 16,
-                      backgroundColor: tool === k ? T.sel : "transparent",
-                    }}
-                  >
-                    <Text style={{ fontSize: 18, width: 24, textAlign: "center", color: T.text }}>
-                      {g}
-                    </Text>
-                    <Text style={{ color: T.text }}>{n}</Text>
-                  </Pressable>
-                ))}
-                <View style={{ flexDirection: "row" }}>
-                  {colorBtn}
-                  {sizeBtn}
-                </View>
-              </View>
-            )}
-            {sheet && (
-              <View style={[card, { left: hz ? 8 : 66, bottom: hz ? 124 : 16, padding: 12 }]}>
-                {sheet === "color" ? (
-                  <View style={{ backgroundColor: "#fff", borderRadius: 10, padding: 8 }}>
-                    <ColorPicker value={c.color} onChange={setColor} />
-                  </View>
-                ) : sheet === "scale" ? (
-                  <>
-                    <Text style={{ color: T.text, marginBottom: 4 }}>
-                      Scale {Math.round(cam.k * 100)}%
-                    </Text>
-                    <Slider v={Math.round(cam.k * 100)} min={20} max={500} on={setZoom} />
-                  </>
-                ) : (
-                  <>
-                    <Text style={{ color: T.text, marginBottom: 4 }}>
-                      {tool.startsWith("eraser") ? "Eraser size" : "Thickness"} {c.width}
-                    </Text>
-                    <Slider
-                      v={c.width}
-                      min={1}
-                      max={tool.startsWith("eraser") ? 80 : 40}
-                      on={(w: number) => setCfg({ ...cfg, [tool]: { ...c, width: w } })}
-                    />
-                    {!tool.startsWith("eraser") && tool !== "wood" && (
-                      <ColorSwatches v={c.color} on={setColor} />
-                    )}
-                  </>
-                )}
-              </View>
-            )}
-          </>
-        );
-      })()}
+      <Toolbar
+        tool={tool}
+        cfg={cfg}
+        zoomPct={Math.round(cam.k * 100)}
+        canUndo={undoS.current.length > 0}
+        canRedo={redoS.current.length > 0}
+        top0={ins.top + 60}
+        safe={{ left: ins.left, right: ins.right, bottom: ins.bottom }}
+        anchor={st.toolbarAnchor}
+        horizontal={hz}
+        showFull={st.showFullToolbar}
+        menu={{ open, setOpen, group: grp, setGroup: setGrp, sheet, setSheet }}
+        actions={{
+          setTool,
+          undo: doUndo,
+          redo: doRedo,
+          addText,
+          addTip,
+          addCode,
+          addPin,
+          setZoom,
+          setColor,
+          setWidth: (width: number) => setCfg({ ...cfg, [tool]: { ...c, width } }),
+        }}
+      />
 
       {selO && tool === "select" && !form && (
         <View
           style={[
             card,
             {
-              bottom: hz ? 72 : 16,
+              bottom: hz && st.toolbarAnchor.startsWith("bottom") ? 72 : 16,
               alignSelf: "center",
               flexDirection: "row",
               gap: 16,
@@ -985,7 +767,14 @@ function BoardScreen() {
                 onPress={() => setForm({ ...form, s: { ...form.s, bold: !form.s.bold } })}
                 style={{ marginVertical: 6 }}
               >
-                <Text style={{ color: "#1c2b4a" }}>{form.s.bold ? "☑" : "☐"} Bold text</Text>
+                <Text style={{ color: "#1c2b4a" }}>
+                  <MaterialCommunityIcons
+                    name={form.s.bold ? "checkbox-marked" : "checkbox-blank-outline"}
+                    size={18}
+                    color={BLUE}
+                  />{" "}
+                  Bold text
+                </Text>
               </Pressable>
               <Text style={{ color: "#1c2b4a" }}>Text color</Text>
               <ColorSwatches

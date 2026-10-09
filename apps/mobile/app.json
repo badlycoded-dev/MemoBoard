@@ -3,7 +3,7 @@
     "name": "MemoBoard",
     "slug": "memoboard",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "defualt",
     "icon": "./assets/images/icon.png",
     "scheme": "memoboard",
     "userInterfaceStyle": "automatic",
