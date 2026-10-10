@@ -11,8 +11,9 @@ export type Tool =
   | "ellipse"
   | "triangle"
   | "arrow"
-  | "arrowThick";
-export const SHAPES = ["rect", "round", "ellipse", "triangle", "arrow", "arrowThick"];
+  | "arrowThick"
+  | "line";
+export const SHAPES = ["rect", "round", "ellipse", "triangle", "arrow", "arrowThick", "line"];
 export const defStyle = {
   stroke: "#12275C",
   fill: "#FFFFFF",
@@ -22,7 +23,7 @@ export const defStyle = {
   tc: "#12275C",
 };
 export type Pt = { x: number; y: number };
-export const isArrow = (k: string) => k.startsWith("arrow");
+export const isArrow = (k: string) => k.startsWith("arrow") || k === "line";
 export const box = (o: any) =>
   o.kind === "tip"
     ? { x: o.x, y: o.y, w: 180, h: 38 }
@@ -72,3 +73,48 @@ export const hit = (o: any, p: Pt, m: Map<string, any>) => {
   const b = box(o);
   return p.x >= b.x && p.x <= b.x + b.w && p.y >= b.y && p.y <= b.y + b.h;
 };
+
+/** Drag handles of an item: 8 edge/corner points for boxes, both end points for arrows and lines. */
+export function handlesOf(o: any, m: Map<string, any>): { id: string; x: number; y: number }[] {
+  if (isArrow(o.kind)) {
+    const { a, b } = ends(o, m);
+    return [
+      { id: "start", ...a },
+      { id: "end", ...b },
+    ];
+  }
+  const b = box(o),
+    cx = b.x + b.w / 2,
+    cy = b.y + b.h / 2,
+    r = b.x + b.w,
+    d = b.y + b.h;
+  return [
+    { id: "nw", x: b.x, y: b.y },
+    { id: "n", x: cx, y: b.y },
+    { id: "ne", x: r, y: b.y },
+    { id: "e", x: r, y: cy },
+    { id: "se", x: r, y: d },
+    { id: "s", x: cx, y: d },
+    { id: "sw", x: b.x, y: d },
+    { id: "w", x: b.x, y: cy },
+  ];
+}
+
+/** Geometry patch produced by dragging `handle` of item `o` to point `p`. */
+export function resized(o: any, handle: string, p: Pt) {
+  if (isArrow(o.kind)) {
+    return handle === "start"
+      ? { x: p.x, y: p.y, w: o.x + o.w - p.x, h: o.y + o.h - p.y }
+      : { w: p.x - o.x, h: p.y - o.y };
+  }
+  const b = box(o);
+  let l = b.x,
+    t = b.y,
+    r = b.x + b.w,
+    d = b.y + b.h;
+  if (handle.includes("w")) l = Math.min(p.x, r - 30);
+  if (handle.includes("e")) r = Math.max(p.x, l + 30);
+  if (handle.includes("n")) t = Math.min(p.y, d - 24);
+  if (handle.includes("s")) d = Math.max(p.y, t + 24);
+  return { x: l, y: t, w: r - l, h: d - t };
+}

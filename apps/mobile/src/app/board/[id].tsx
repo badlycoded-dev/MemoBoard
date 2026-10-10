@@ -1,17 +1,5 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRef, useState } from "react";
-import {
-  Linking,
-  Modal,
-  PanResponder,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Linking, PanResponder, Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { G, Path, Rect } from "react-native-svg";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMutation, useQuery } from "convex/react";
@@ -20,14 +8,15 @@ import * as Clipboard from "expo-clipboard";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { api } from "@/services/api";
 import { useSettings } from "@/services/settings";
-import { BLUE, INK } from "@/theme/theme";
+import { BLUE } from "@/theme/theme";
 import { BoardThemeProvider, useBoardTheme } from "@/components/whiteboard/BoardTheme";
-import { ColorSwatches, Stepper } from "@/components/whiteboard/controls";
 import { INITIAL_TOOL_CONFIG } from "@/components/whiteboard/constants";
 import { Tool, SHAPES, defStyle, isArrow, box, ends, hit, Pt } from "@/components/whiteboard/model";
 import { Shape } from "@/components/whiteboard/Shape";
 import { BoardHeader } from "@/components/whiteboard/BoardHeader";
 import { Toolbar } from "@/components/whiteboard/Toolbar";
+import { EditSheet } from "@/components/whiteboard/EditSheet";
+import { handlesOf, resized } from "@/components/whiteboard/model";
 import { isImg, pathOf, strip, segD } from "@/components/whiteboard/utils";
 
 function BoardScreen() {
@@ -423,9 +412,11 @@ function BoardScreen() {
     } else if (SHAPES.includes(tool)) live.current = { k: "shape", s: p, from: top(p, true)?._id };
     else {
       const o = top(p),
-        b = selO && !isArrow(selO.kind) && selO.kind !== "tip" ? box(selO) : null;
-      if (b && Math.hypot(p.x - b.x - b.w, p.y - b.y - b.h) < 22 / cam.k)
-        live.current = { k: "resize", id: selO._id, o: selO };
+        handle =
+          selO && selO.kind !== "tip"
+            ? handlesOf(selO, map).find((h) => Math.hypot(p.x - h.x, p.y - h.y) < 22 / cam.k)
+            : null;
+      if (handle) live.current = { k: "resize", id: selO._id, o: selO, handle: handle.id };
       else if (o) {
         setSel(o._id);
         live.current = { k: "move", id: o._id, o, s: p };
@@ -446,11 +437,7 @@ function BoardScreen() {
     else if (L.k === "pan") setCam({ ...L.c, x: L.c.x + sp.x - L.s.x, y: L.c.y + sp.y - L.s.y });
     else if (L.k === "move")
       setOver((v) => ({ ...v, [L.id]: { x: L.o.x + p.x - L.s.x, y: L.o.y + p.y - L.s.y } }));
-    else if (L.k === "resize")
-      setOver((v) => ({
-        ...v,
-        [L.id]: { w: Math.max(30, p.x - L.o.x), h: Math.max(24, p.y - L.o.y) },
-      }));
+    else if (L.k === "resize") setOver((v) => ({ ...v, [L.id]: resized(L.o, L.handle, p) }));
     L.p = p;
     setDraft({ ...L });
   };
@@ -572,15 +559,6 @@ function BoardScreen() {
         strokeLinecap="round"
       />
     ) : null;
-  const mono = Platform.OS === "android" ? "monospace" : "Courier";
-  const inp = {
-    borderWidth: 1,
-    borderColor: "#C5CFE6",
-    borderRadius: 14,
-    padding: 8,
-    color: "#1c2b4a",
-    marginVertical: 6,
-  };
 
   return (
     <View
@@ -642,15 +620,20 @@ function BoardScreen() {
                   stroke={BLUE}
                   strokeDasharray="5 4"
                 />
-                {!isArrow(selO.kind) && selO.kind !== "tip" && (
-                  <Rect
-                    x={sb.x + sb.w - 6 / cam.k}
-                    y={sb.y + sb.h - 6 / cam.k}
-                    width={14 / cam.k}
-                    height={14 / cam.k}
-                    fill={BLUE}
-                  />
-                )}
+                {selO.kind !== "tip" &&
+                  handlesOf(selO, map).map((h) => (
+                    <Rect
+                      key={h.id}
+                      x={h.x - 6 / cam.k}
+                      y={h.y - 6 / cam.k}
+                      width={12 / cam.k}
+                      height={12 / cam.k}
+                      rx={6 / cam.k}
+                      fill="#fff"
+                      stroke={BLUE}
+                      strokeWidth={2 / cam.k}
+                    />
+                  ))}
               </>
             )}
           </G>
@@ -731,118 +714,18 @@ function BoardScreen() {
         </View>
       )}
 
-      <Modal
-        visible={!!form}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setForm(null)}
-      >
-        <View style={{ flex: 1, justifyContent: "flex-end", backgroundColor: "#0008" }}>
-          {form && (
-            <ScrollView
-              style={{
-                maxHeight: "88%",
-                backgroundColor: "#fff",
-                padding: 16,
-                borderTopLeftRadius: 28,
-                borderTopRightRadius: 28,
-              }}
-            >
-              <Text style={{ fontWeight: "800", fontSize: 18, color: INK }}>Edit item</Text>
-              <TextInput
-                multiline
-                placeholder="Text"
-                value={form.text}
-                onChangeText={(t) => setForm({ ...form, text: t })}
-                style={inp}
-              />
-              <Stepper
-                label="Text size"
-                v={form.s.fs}
-                min={10}
-                max={48}
-                set={(n: number) => setForm({ ...form, s: { ...form.s, fs: n } })}
-              />
-              <Pressable
-                onPress={() => setForm({ ...form, s: { ...form.s, bold: !form.s.bold } })}
-                style={{ marginVertical: 6 }}
-              >
-                <Text style={{ color: "#1c2b4a" }}>
-                  <MaterialCommunityIcons
-                    name={form.s.bold ? "checkbox-marked" : "checkbox-blank-outline"}
-                    size={18}
-                    color={BLUE}
-                  />{" "}
-                  Bold text
-                </Text>
-              </Pressable>
-              <Text style={{ color: "#1c2b4a" }}>Text color</Text>
-              <ColorSwatches
-                v={form.s.tc}
-                on={(x) => setForm({ ...form, s: { ...form.s, tc: x } })}
-              />
-              <Text style={{ color: "#1c2b4a" }}>Outline</Text>
-              <ColorSwatches
-                v={form.s.stroke}
-                on={(x) => setForm({ ...form, s: { ...form.s, stroke: x } })}
-              />
-              {!isArrow(form.o.kind) && (
-                <>
-                  <Text style={{ color: "#1c2b4a" }}>Fill</Text>
-                  <ColorSwatches
-                    v={form.s.fill}
-                    on={(x) => setForm({ ...form, s: { ...form.s, fill: x } })}
-                  />
-                </>
-              )}
-              <Text style={{ color: "#1c2b4a" }}>Code snippet</Text>
-              {form.o.kind === "code" && (
-                <Pressable onPress={loadText} style={{ marginVertical: 4 }}>
-                  <Text style={{ color: BLUE, fontWeight: "700" }}>Load text file…</Text>
-                </Pressable>
-              )}
-              <TextInput
-                multiline
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={form.code}
-                onChangeText={(t) => setForm({ ...form, code: t })}
-                style={[inp, { fontFamily: mono, minHeight: 90 }]}
-              />
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 12, marginVertical: 6 }}
-              >
-                <Pressable
-                  onPress={attach}
-                  style={{ backgroundColor: "#DFE7FF", padding: 10, borderRadius: 8 }}
-                >
-                  <Text style={{ color: BLUE, fontWeight: "700" }}>Attach file</Text>
-                </Pressable>
-                {fo?.file && (
-                  <Pressable onPress={() => fo.fileUrl && Linking.openURL(fo.fileUrl)}>
-                    <Text style={{ color: BLUE }}>{fo.file.name}</Text>
-                  </Pressable>
-                )}
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                  gap: 20,
-                  marginVertical: 16,
-                }}
-              >
-                <Pressable onPress={() => setForm(null)}>
-                  <Text style={{ color: "#1c2b4a", fontWeight: "700" }}>Cancel</Text>
-                </Pressable>
-                <Pressable onPress={save}>
-                  <Text style={{ color: BLUE, fontWeight: "800" }}>Save</Text>
-                </Pressable>
-              </View>
-            </ScrollView>
-          )}
-        </View>
-      </Modal>
+      <EditSheet
+        form={form}
+        setForm={setForm}
+        file={fo?.file}
+        onSave={save}
+        onDelete={() => {
+          del(form.o, false);
+          setForm(null);
+        }}
+        onAttach={attach}
+        onLoadText={loadText}
+      />
     </View>
   );
 }

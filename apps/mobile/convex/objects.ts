@@ -1,6 +1,6 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
-const style = v.object({ stroke: v.string(), fill: v.string(), sw: v.number(), fs: v.number(), bold: v.boolean(), tc: v.string() });
+const style = v.object({ stroke: v.string(), fill: v.string(), sw: v.number(), fs: v.number(), bold: v.boolean(), tc: v.string(), r: v.optional(v.number()) });
 export const list = query({
   args: { boardId: v.id("boards") },
   handler: async (ctx, { boardId }) => {

@@ -18,7 +18,7 @@ export default defineSchema({
   wb_objects: defineTable({
     boardId: v.id("boards"), kind: v.string(), // rect|round|ellipse|triangle|arrow|arrowThick
     x: v.number(), y: v.number(), w: v.number(), h: v.number(), // arrows: start + delta
-    style: v.object({ stroke: v.string(), fill: v.string(), sw: v.number(), fs: v.number(), bold: v.boolean(), tc: v.string() }),
+    style: v.object({ stroke: v.string(), fill: v.string(), sw: v.number(), fs: v.number(), bold: v.boolean(), tc: v.string(), r: v.optional(v.number()) }),
     text: v.optional(v.string()), code: v.optional(v.string()), hidden: v.optional(v.boolean()),
     fromId: v.optional(v.string()), toId: v.optional(v.string()), // arrow links
     file: v.optional(v.object({ storageId: v.id("_storage"), name: v.string() })),

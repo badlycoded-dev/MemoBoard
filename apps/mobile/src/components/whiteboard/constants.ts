@@ -46,6 +46,7 @@ export const OBJECT_TOOLS: [Tool, IconName, string][] = [
   ["triangle", "triangle-outline", "Triangle"],
   ["arrow", "arrow-right", "Thin arrow"],
   ["arrowThick", "arrow-right-bold", "Thick arrow"],
+  ["line", "minus", "Line"],
 ];
 export const isDraw = (t: Tool) => DRAW_TOOLS.some((d) => d[0] === t),
   isObj = (t: Tool) => OBJECT_TOOLS.some((d) => d[0] === t);

@@ -8,6 +8,34 @@ export function Shape({ o, m }: any) {
   const T = useBoardTheme();
   const s = { ...o.style, stroke: T.vis(o.style.stroke), tc: T.vis(o.style.tc) },
     b = box(o);
+  if (o.kind === "line") {
+    const { a, b: e } = ends(o, m);
+    return (
+      <>
+        <Line
+          x1={a.x}
+          y1={a.y}
+          x2={e.x}
+          y2={e.y}
+          stroke={s.stroke}
+          strokeWidth={s.sw}
+          strokeLinecap="round"
+        />
+        {o.text ? (
+          <SText
+            x={(a.x + e.x) / 2}
+            y={(a.y + e.y) / 2 - s.fs}
+            fontSize={s.fs}
+            fontWeight={s.bold ? "700" : "400"}
+            fill={s.tc}
+            textAnchor="middle"
+          >
+            {o.text}
+          </SText>
+        ) : null}
+      </>
+    );
+  }
   if (o.kind === "tip") {
     const an = { x: o.x + o.w, y: o.y + o.h };
     if (o.hidden)
@@ -156,7 +184,14 @@ export function Shape({ o, m }: any) {
           {...cp}
         />
       ) : (
-        <Rect x={b.x} y={b.y} width={b.w} height={b.h} rx={o.kind === "round" ? 18 : 0} {...cp} />
+        <Rect
+          x={b.x}
+          y={b.y}
+          width={b.w}
+          height={b.h}
+          rx={s.r ?? (o.kind === "round" ? 18 : 0)}
+          {...cp}
+        />
       )}
       {o.text ? tx(b.x + b.w / 2, b.y + b.h / 2) : null}
       {o.code ? (
