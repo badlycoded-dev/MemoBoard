@@ -71,10 +71,34 @@ export const hit = (o: any, p: Pt, m: Map<string, any>) => {
     if (o.hidden) return false;
   }
   const b = box(o);
-  return p.x >= b.x && p.x <= b.x + b.w && p.y >= b.y && p.y <= b.y + b.h;
+  const q = toLocal(o, p);
+  return q.x >= b.x && q.x <= b.x + b.w && q.y >= b.y && q.y <= b.y + b.h;
 };
 
-/** Drag handles of an item: 8 edge/corner points for boxes, both end points for arrows and lines. */
+const rotPt = (p: Pt, c: Pt, deg: number): Pt => {
+  const a = (deg * Math.PI) / 180,
+    dx = p.x - c.x,
+    dy = p.y - c.y;
+  return {
+    x: c.x + dx * Math.cos(a) - dy * Math.sin(a),
+    y: c.y + dx * Math.sin(a) + dy * Math.cos(a),
+  };
+};
+const centerOf = (o: any): Pt => {
+  const b = box(o);
+  return { x: b.x + b.w / 2, y: b.y + b.h / 2 };
+};
+const transformable = (o: any) => !isArrow(o.kind) && o.kind !== "tip";
+
+/** Maps a world point into the item's own (unrotated, unmirrored) frame. */
+export function toLocal(o: any, p: Pt): Pt {
+  if (!transformable(o) || !(o.rot || o.flipX || o.flipY)) return p;
+  const c = centerOf(o),
+    q = rotPt(p, c, -(o.rot ?? 0));
+  return { x: o.flipX ? 2 * c.x - q.x : q.x, y: o.flipY ? 2 * c.y - q.y : q.y };
+}
+
+/** Drag handles: 8 edge/corner points plus a rotate handle for boxes, both ends for arrows and lines. */
 export function handlesOf(o: any, m: Map<string, any>): { id: string; x: number; y: number }[] {
   if (isArrow(o.kind)) {
     const { a, b } = ends(o, m);
@@ -84,37 +108,45 @@ export function handlesOf(o: any, m: Map<string, any>): { id: string; x: number;
     ];
   }
   const b = box(o),
-    cx = b.x + b.w / 2,
-    cy = b.y + b.h / 2,
+    c = centerOf(o),
     r = b.x + b.w,
     d = b.y + b.h;
+  const at = (id: string, x: number, y: number) => ({ id, ...rotPt({ x, y }, c, o.rot ?? 0) });
   return [
-    { id: "nw", x: b.x, y: b.y },
-    { id: "n", x: cx, y: b.y },
-    { id: "ne", x: r, y: b.y },
-    { id: "e", x: r, y: cy },
-    { id: "se", x: r, y: d },
-    { id: "s", x: cx, y: d },
-    { id: "sw", x: b.x, y: d },
-    { id: "w", x: b.x, y: cy },
+    at("nw", b.x, b.y),
+    at("n", c.x, b.y),
+    at("ne", r, b.y),
+    at("e", r, c.y),
+    at("se", r, d),
+    at("s", c.x, d),
+    at("sw", b.x, d),
+    at("w", b.x, c.y),
+    at("rot", c.x, b.y - 32),
   ];
 }
 
-/** Geometry patch produced by dragging `handle` of item `o` to point `p`. */
+/** Geometry patch produced by dragging `handle` of item `o` to world point `p`. */
 export function resized(o: any, handle: string, p: Pt) {
   if (isArrow(o.kind)) {
     return handle === "start"
       ? { x: p.x, y: p.y, w: o.x + o.w - p.x, h: o.y + o.h - p.y }
       : { w: p.x - o.x, h: p.y - o.y };
   }
-  const b = box(o);
+  const c = centerOf(o);
+  if (handle === "rot")
+    return { rot: Math.round((Math.atan2(p.y - c.y, p.x - c.x) * 180) / Math.PI + 90) };
+  const q = rotPt(p, c, -(o.rot ?? 0)),
+    b = box(o);
   let l = b.x,
     t = b.y,
     r = b.x + b.w,
     d = b.y + b.h;
-  if (handle.includes("w")) l = Math.min(p.x, r - 30);
-  if (handle.includes("e")) r = Math.max(p.x, l + 30);
-  if (handle.includes("n")) t = Math.min(p.y, d - 24);
-  if (handle.includes("s")) d = Math.max(p.y, t + 24);
-  return { x: l, y: t, w: r - l, h: d - t };
+  if (handle.includes("w")) l = Math.min(q.x, r - 30);
+  if (handle.includes("e")) r = Math.max(q.x, l + 30);
+  if (handle.includes("n")) t = Math.min(q.y, d - 24);
+  if (handle.includes("s")) d = Math.max(q.y, t + 24);
+  const w = r - l,
+    h = d - t,
+    mid = rotPt({ x: l + w / 2, y: t + h / 2 }, c, o.rot ?? 0);
+  return { x: mid.x - w / 2, y: mid.y - h / 2, w, h };
 }

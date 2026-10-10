@@ -37,13 +37,17 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
   const kind: string = form.o.kind;
   const line = isArrow(kind);
   const hasRadius = ["rect", "round", "pin", "code", "image"].includes(kind);
-  const hasContent = ["code", "pin", "image"].includes(kind);
   const canShow = kind === "pin" && !!file && (isImg(file.name) || isTextFile(file.name));
-  const tabs: [Tab, string][] = [
-    ["text", "Text"],
-    ["style", "Style"],
-    ...(hasContent ? ([["content", "Content"]] as [Tab, string][]) : []),
-  ];
+  const isPinLike = kind === "pin" || kind === "image";
+  const tabs: [Tab, string][] = isPinLike
+    ? [["content", "Content"]]
+    : [
+        ["text", "Text"],
+        ["style", "Style"],
+        ...(kind === "code" ? ([["content", "Content"]] as [Tab, string][]) : []),
+      ];
+  const active = tabs.some(([key]) => key === tab) ? tab : tabs[0][0];
+  const showCode = kind === "code" || (kind === "pin" && !!file && isTextFile(file.name));
   const set = (patch: Partial<EditForm>) => setForm({ ...form, ...patch });
   const setStyle = (patch: object) => set({ s: { ...form.s, ...patch } });
 
@@ -57,15 +61,15 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
               <Pressable
                 key={key}
                 onPress={() => setTab(key)}
-                style={[styles.tab, tab === key && styles.tabOn]}
+                style={[styles.tab, active === key && styles.tabOn]}
               >
-                <Text style={[styles.tabText, tab === key && styles.tabTextOn]}>{label}</Text>
+                <Text style={[styles.tabText, active === key && styles.tabTextOn]}>{label}</Text>
               </Pressable>
             ))}
           </View>
 
           <ScrollView style={styles.body}>
-            {tab === "text" && (
+            {active === "text" && (
               <>
                 <TextInput
                   multiline
@@ -94,7 +98,7 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
               </>
             )}
 
-            {tab === "style" && (
+            {active === "style" && (
               <>
                 <Stepper
                   label="Border"
@@ -112,6 +116,24 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
                     set={(r) => setStyle({ r })}
                   />
                 )}
+                {line && (
+                  <View style={styles.tabs}>
+                    {(["solid", "dashed", "dotted"] as const).map((d) => {
+                      const on = (form.s.dash ?? "solid") === d;
+                      return (
+                        <Pressable
+                          key={d}
+                          onPress={() => setStyle({ dash: d })}
+                          style={[styles.tab, on && styles.tabOn]}
+                        >
+                          <Text style={[styles.tabText, on && styles.tabTextOn]}>
+                            {d[0].toUpperCase() + d.slice(1)}
+                          </Text>
+                        </Pressable>
+                      );
+                    })}
+                  </View>
+                )}
                 <Text style={styles.label}>{line ? "Line color" : "Border color"}</Text>
                 <ColorSwatches v={form.s.stroke} on={(stroke) => setStyle({ stroke })} />
                 {!line && (
@@ -123,7 +145,7 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
               </>
             )}
 
-            {tab === "content" && (
+            {active === "content" && (
               <>
                 {canShow && (
                   <View style={styles.switchRow}>
@@ -135,15 +157,19 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
                     />
                   </View>
                 )}
-                <Text style={styles.label}>Code / text snippet</Text>
-                <TextInput
-                  multiline
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  value={form.code}
-                  onChangeText={(code) => set({ code })}
-                  style={[styles.input, styles.mono]}
-                />
+                {showCode && (
+                  <>
+                    <Text style={styles.label}>Code / text snippet</Text>
+                    <TextInput
+                      multiline
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      value={form.code}
+                      onChangeText={(code) => set({ code })}
+                      style={[styles.input, styles.mono]}
+                    />
+                  </>
+                )}
                 {kind === "code" && (
                   <Pressable onPress={onLoadText} style={styles.row}>
                     <MaterialCommunityIcons name="file-document-outline" size={20} color={BLUE} />

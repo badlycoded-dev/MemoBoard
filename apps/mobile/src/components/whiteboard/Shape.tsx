@@ -1,10 +1,20 @@
-import { Ellipse, Image as SvgImage, Line, Polygon, Rect, Text as SText } from "react-native-svg";
+import {
+  G,
+  Ellipse,
+  Image as SvgImage,
+  Line,
+  Polygon,
+  Rect,
+  Text as SText,
+} from "react-native-svg";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import type { ComponentProps } from "react";
 import { BLUE } from "@/theme/theme";
 import { useBoardTheme } from "./BoardTheme";
 import { box, ends, isArrow } from "./model";
-import { fileIcon, isChip, isImg, isTextFile } from "./utils";
+import { actionsOf, fileIcon, isChip, isImg, isTextFile } from "./utils";
 
-export function Shape({ o, m }: any) {
+function ShapeBody({ o, m }: any) {
   const T = useBoardTheme();
   const s = { ...o.style, stroke: T.vis(o.style.stroke), tc: T.vis(o.style.tc) },
     b = box(o);
@@ -13,6 +23,7 @@ export function Shape({ o, m }: any) {
     return (
       <>
         <Line
+          strokeDasharray={dashOf(s.dash)}
           x1={a.x}
           y1={a.y}
           x2={e.x}
@@ -50,9 +61,7 @@ export function Shape({ o, m }: any) {
             stroke="#F79009"
             strokeWidth={2}
           />
-          <SText x={an.x} y={an.y + 6} fontSize={16} textAnchor="middle">
-            💡
-          </SText>
+          <SIcon name="lightbulb-on-outline" x={an.x} y={an.y + 6} size={18} fill="#F79009" />
         </>
       );
     return (
@@ -94,15 +103,7 @@ export function Shape({ o, m }: any) {
         <SText x={b.x + 42} y={my + 5} fontSize={13} fill="#344054">
           {`| ${name.length > maxChars ? name.slice(0, maxChars - 1) + "…" : name}`}
         </SText>
-        <SText x={b.x + b.w - 66} y={my + 6} fontSize={16} textAnchor="middle" fill={BLUE}>
-          ⬇
-        </SText>
-        <SText x={b.x + b.w - 40} y={my + 6} fontSize={16} textAnchor="middle" fill="#F79009">
-          ✎
-        </SText>
-        <SText x={b.x + b.w - 14} y={my + 6} fontSize={16} textAnchor="middle" fill="#F04438">
-          ✕
-        </SText>
+        <ActionStrip o={o} b={b} />
       </>
     );
   }
@@ -125,6 +126,7 @@ export function Shape({ o, m }: any) {
           <Rect x={b.x} y={b.y} width={b.w} height={b.h} fill="#F2F4F7" />
         )}
         <Rect x={b.x} y={b.y} width={b.w} height={b.h} fill="none" stroke="#D0D5DD" />
+        <ActionStrip o={o} b={b} />
       </>
     );
   if (o.kind === "code" || (o.kind === "pin" && isTextFile(o.file?.name ?? ""))) {
@@ -138,6 +140,7 @@ export function Shape({ o, m }: any) {
         <SText x={b.x + 10} y={b.y + 16} fontSize={11} fill={T.text}>
           {o.kind === "pin" ? o.file?.name : (o.text ?? "snippet")}
         </SText>
+        <ActionStrip o={o} b={b} />
         {lines.slice(0, n).map((l: string, i: number) => (
           <SText
             key={i}
@@ -175,6 +178,7 @@ export function Shape({ o, m }: any) {
     return (
       <>
         <Line
+          strokeDasharray={dashOf(s.dash)}
           x1={a.x}
           y1={a.y}
           x2={e.x - hl * 0.6 * Math.cos(ang)}
@@ -210,15 +214,98 @@ export function Shape({ o, m }: any) {
       )}
       {o.text ? tx(b.x + b.w / 2, b.y + b.h / 2) : null}
       {o.code ? (
-        <SText x={b.x + b.w - 30} y={b.y - 6} fontSize={13} fill={BLUE}>
-          {"</>"}
-        </SText>
+        <SIcon name="code-tags" x={b.x + b.w - 20} y={b.y - 6} size={15} fill="#2848E0" />
       ) : null}
       {o.fileUrl ? (
-        <SText x={b.x + b.w - 4} y={b.y - 6} fontSize={13} textAnchor="end">
-          📎
-        </SText>
+        <SIcon name="paperclip" x={b.x + b.w - 6} y={b.y - 6} size={15} fill="#667085" />
       ) : null}
     </>
   );
+}
+
+type IconName = ComponentProps<typeof MaterialCommunityIcons>["name"];
+const dashOf = (d?: string) => (d === "dashed" ? "10 8" : d === "dotted" ? "2 8" : undefined);
+
+/** Material icon drawn inside the SVG canvas (the icon font is loaded by any rendered icon). */
+function SIcon({
+  name,
+  x,
+  y,
+  size = 16,
+  fill,
+}: {
+  name: IconName;
+  x: number;
+  y: number;
+  size?: number;
+  fill: string;
+}) {
+  const code = MaterialCommunityIcons.glyphMap[name] as unknown as number;
+  return (
+    <SText
+      x={x}
+      y={y}
+      fontFamily="material-community"
+      fontSize={size}
+      fill={fill}
+      textAnchor="middle"
+    >
+      {String.fromCodePoint(code)}
+    </SText>
+  );
+}
+
+const ACTION_ICON: Record<string, IconName> = {
+  delete: "close",
+  edit: "pencil",
+  download: "download",
+  copy: "content-copy",
+};
+const ACTION_COLOR: Record<string, string> = {
+  delete: "#F04438",
+  edit: "#F79009",
+  download: "#2848E0",
+  copy: "#667085",
+};
+
+/** Row of small action buttons (copy / download / edit / delete) in the top-right of a chip or viewer. */
+function ActionStrip({ o, b }: { o: any; b: ReturnType<typeof box> }) {
+  const acts = actionsOf(o);
+  const cy = isChip(o) ? b.y + b.h / 2 : b.y + 14;
+  return (
+    <>
+      {o.kind === "image" || (o.kind === "pin" && !isChip(o) && isImg(o.file?.name ?? "")) ? (
+        <Rect
+          x={b.x + b.w - 26 * acts.length - 6}
+          y={b.y + 2}
+          width={26 * acts.length + 4}
+          height={24}
+          rx={12}
+          fill="#fff"
+          opacity={0.85}
+        />
+      ) : null}
+      {acts.map((act, i) => (
+        <SIcon
+          key={act}
+          name={ACTION_ICON[act]}
+          x={b.x + b.w - 13 - 26 * i}
+          y={cy + 6}
+          size={17}
+          fill={ACTION_COLOR[act]}
+        />
+      ))}
+    </>
+  );
+}
+
+/** Draws an item, applying its rotation and mirroring around the box center. */
+export function Shape({ o, m }: any) {
+  const body = <ShapeBody o={o} m={m} />;
+  if (isArrow(o.kind) || o.kind === "tip" || !(o.rot || o.flipX || o.flipY)) return body;
+  const b = box(o),
+    cx = b.x + b.w / 2,
+    cy = b.y + b.h / 2;
+  const transform = `translate(${cx} ${cy}) rotate(${o.rot ?? 0}) scale(${o.flipX ? -1 : 1} ${o.flipY ? -1 : 1}) translate(${-cx} ${-cy})`;
+  return <G transform={transform}>{body}</G>;
 }

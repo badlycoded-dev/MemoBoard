@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Linking, PanResponder, Pressable, StyleSheet, Text, View } from "react-native";
-import Svg, { G, Path, Rect } from "react-native-svg";
+import Svg, { Polygon, G, Path, Rect } from "react-native-svg";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMutation, useQuery } from "convex/react";
 import * as DocumentPicker from "expo-document-picker";
@@ -17,7 +17,8 @@ import { BoardHeader } from "@/components/whiteboard/BoardHeader";
 import { Toolbar } from "@/components/whiteboard/Toolbar";
 import { EditSheet } from "@/components/whiteboard/EditSheet";
 import { handlesOf, resized } from "@/components/whiteboard/model";
-import { isChip, isTextFile, isImg, pathOf, strip, segD } from "@/components/whiteboard/utils";
+import { actionAt, isTextFile, isImg, pathOf, strip, segD } from "@/components/whiteboard/utils";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function BoardScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -463,15 +464,25 @@ function BoardScreen() {
     L.p = p;
     setDraft({ ...L });
   };
-  /** Taps on the download / edit / delete marks of a file chip. Returns true when handled. */
-  const chipTap = (o: any, p: Pt) => {
-    if (!isChip(o)) return false;
-    const b = box(o);
-    const dx = b.x + b.w - p.x;
-    if (dx < 0 || dx > 79 || p.y < b.y || p.y > b.y + b.h) return false;
-    if (dx < 27) del(o, false);
-    else if (dx < 53) openEdit(o);
-    else if (o.fileUrl) Linking.openURL(o.fileUrl);
+  /** Records a change of item fields so it can be undone. */
+  const change = (o: any, patch: any) => {
+    const before = Object.fromEntries(
+      Object.keys(patch).map((k) => [k, o[k] ?? (typeof patch[k] === "boolean" ? false : 0)]),
+    );
+    push({ ref: { id: o._id }, op: "upd", before, after: patch });
+    patchO({ id: o._id, patch });
+  };
+  const runAction = (o: any, act: string) => {
+    if (act === "delete") del(o, false);
+    else if (act === "edit") openEdit(o);
+    else if (act === "download") Linking.openURL(o.fileUrl);
+    else Clipboard.setStringAsync(o.code ?? "");
+  };
+  /** Taps on the copy / download / edit / delete buttons of chips and viewers. */
+  const actionTap = (o: any, p: Pt) => {
+    const act = actionAt(o, p);
+    if (!act) return false;
+    runAction(o, act);
     return true;
   };
   const up = async () => {
@@ -518,7 +529,7 @@ function BoardScreen() {
     } else {
       const patch = over[L.id];
       if (!patch) {
-        if (L.k === "move" && chipTap(L.o, L.s)) return;
+        if (L.k === "move" && actionTap(L.o, L.s)) return;
         const now = Date.now();
         if (L.k === "move" && lastTap.current.id === L.id && now - lastTap.current.t < 350)
           openEdit(L.o);
@@ -528,7 +539,7 @@ function BoardScreen() {
       push({
         ref: { id: L.id },
         op: "upd",
-        before: Object.fromEntries(Object.keys(patch).map((k) => [k, L.o[k]])),
+        before: Object.fromEntries(Object.keys(patch).map((k) => [k, L.o[k] ?? 0])),
         after: patch,
       });
       await patchO({ id: L.id, patch });
@@ -645,15 +656,27 @@ function BoardScreen() {
             {ghost && <Shape o={ghost} m={map} />}
             {sb && (
               <>
-                <Rect
-                  x={sb.x - 4}
-                  y={sb.y - 4}
-                  width={sb.w + 8}
-                  height={sb.h + 8}
-                  fill="none"
-                  stroke={BLUE}
-                  strokeDasharray="5 4"
-                />
+                {isArrow(selO.kind) || selO.kind === "tip" ? (
+                  <Rect
+                    x={sb.x - 4}
+                    y={sb.y - 4}
+                    width={sb.w + 8}
+                    height={sb.h + 8}
+                    fill="none"
+                    stroke={BLUE}
+                    strokeDasharray="5 4"
+                  />
+                ) : (
+                  <Polygon
+                    points={["nw", "ne", "se", "sw"]
+                      .map((id) => handlesOf(selO, map).find((h) => h.id === id)!)
+                      .map((h) => `${h.x},${h.y}`)
+                      .join(" ")}
+                    fill="none"
+                    stroke={BLUE}
+                    strokeDasharray="5 4"
+                  />
+                )}
                 {selO.kind !== "tip" &&
                   handlesOf(selO, map).map((h) => (
                     <Rect
@@ -663,7 +686,7 @@ function BoardScreen() {
                       width={12 / cam.k}
                       height={12 / cam.k}
                       rx={6 / cam.k}
-                      fill="#fff"
+                      fill={h.id === "rot" ? BLUE : "#fff"}
                       stroke={BLUE}
                       strokeWidth={2 / cam.k}
                     />
@@ -738,6 +761,24 @@ function BoardScreen() {
             <Pressable onPress={() => Clipboard.setStringAsync(selO.code ?? "")}>
               <Text style={{ color: BLUE, fontWeight: "800" }}>Copy</Text>
             </Pressable>
+          )}
+          {selO.kind !== "tip" && !isArrow(selO.kind) && (
+            <>
+              <Pressable onPress={() => change(selO, { flipX: !selO.flipX })}>
+                <MaterialCommunityIcons name="flip-horizontal" size={22} color={BLUE} />
+              </Pressable>
+              <Pressable onPress={() => change(selO, { flipY: !selO.flipY })}>
+                <MaterialCommunityIcons name="flip-vertical" size={22} color={BLUE} />
+              </Pressable>
+              <Pressable
+                onPress={() => change(selO, { rot: ((((selO.rot ?? 0) - 90) % 360) + 360) % 360 })}
+              >
+                <MaterialCommunityIcons name="rotate-left" size={22} color={BLUE} />
+              </Pressable>
+              <Pressable onPress={() => change(selO, { rot: ((selO.rot ?? 0) + 90) % 360 })}>
+                <MaterialCommunityIcons name="rotate-right" size={22} color={BLUE} />
+              </Pressable>
+            </>
           )}
           <Pressable onPress={() => openEdit(selO)}>
             <Text style={{ color: BLUE, fontWeight: "800" }}>Edit</Text>

@@ -47,11 +47,11 @@ export function Stepper({ label, v, set, min, max, step = 1 }: StepperProps) {
     <View style={styles.stepper}>
       <Text style={styles.stepLabel}>{label}</Text>
       <Pressable onPress={() => set(Math.max(min, v - step))} style={styles.stepBtn}>
-        <Text style={styles.stepGlyph}>−</Text>
+        <MaterialCommunityIcons name="minus" size={18} color="#1c2b4a" />
       </Pressable>
       <Text style={styles.stepValue}>{v}</Text>
       <Pressable onPress={() => set(Math.min(max, v + step))} style={styles.stepBtn}>
-        <Text style={styles.stepGlyph}>+</Text>
+        <MaterialCommunityIcons name="plus" size={18} color="#1c2b4a" />
       </Pressable>
     </View>
   );

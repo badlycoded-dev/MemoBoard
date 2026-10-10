@@ -1,3 +1,4 @@
+import { box, toLocal } from "./model";
 import type { Pt } from "./model";
 
 export const ext = (n: string) => (n.split(".").pop() || "").toLowerCase();
@@ -37,3 +38,27 @@ export const isTextFile = (n: string) =>
 export const isChip = (o: any) =>
   o.kind === "pin" &&
   !(o.showContent && (isImg(o.file?.name ?? "") || isTextFile(o.file?.name ?? "")));
+
+export type Act = "delete" | "edit" | "download" | "copy";
+const isCodeLike = (o: any) =>
+  o.kind === "code" || (o.kind === "pin" && !isChip(o) && isTextFile(o.file?.name ?? ""));
+const isViewer = (o: any) =>
+  o.kind === "code" || o.kind === "image" || (o.kind === "pin" && !isChip(o));
+
+/** Buttons shown on a file chip or media/code view, listed from the right edge inwards. */
+export const actionsOf = (o: any): Act[] => {
+  const acts: Act[] = ["delete", "edit"];
+  if (o.fileUrl) acts.push("download");
+  if (isCodeLike(o)) acts.push("copy");
+  return acts;
+};
+
+/** Which button (if any) sits under world point `p`: the whole chip, or the top strip of a viewer. */
+export const actionAt = (o: any, p: Pt): Act | null => {
+  if (!isChip(o) && !isViewer(o)) return null;
+  const b = box(o),
+    q = toLocal(o, p),
+    dx = b.x + b.w - q.x;
+  if (dx < 0 || q.y < b.y || q.y > b.y + (isChip(o) ? b.h : Math.min(28, b.h))) return null;
+  return actionsOf(o)[Math.floor(dx / 26)] ?? null;
+};
