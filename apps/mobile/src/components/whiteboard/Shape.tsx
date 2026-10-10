@@ -2,7 +2,7 @@ import { Ellipse, Image as SvgImage, Line, Polygon, Rect, Text as SText } from "
 import { BLUE } from "@/theme/theme";
 import { useBoardTheme } from "./BoardTheme";
 import { box, ends, isArrow } from "./model";
-import { fileIcon } from "./utils";
+import { fileIcon, isChip, isImg, isTextFile } from "./utils";
 
 export function Shape({ o, m }: any) {
   const T = useBoardTheme();
@@ -73,25 +73,40 @@ export function Shape({ o, m }: any) {
       </>
     );
   }
-  if (o.kind === "pin") {
-    const n = o.file?.name ?? "file",
-      my = b.y + b.h / 2;
+  if (isChip(o)) {
+    const name: string = o.file?.name ?? "file";
+    const my = b.y + b.h / 2;
+    const maxChars = Math.max(6, Math.floor((b.w - 120) / 7));
     return (
       <>
-        <Rect x={b.x} y={b.y} width={b.w} height={b.h} rx={10} fill="#fff" stroke="#D0D5DD" />
-        <SText x={b.x + 12} y={my + 7} fontSize={20}>
-          {fileIcon(n)}
+        <Rect
+          x={b.x}
+          y={b.y}
+          width={b.w}
+          height={b.h}
+          rx={s.r ?? b.h / 2}
+          fill="#F2F4F7"
+          stroke="#D0D5DD"
+        />
+        <SText x={b.x + 14} y={my + 7} fontSize={20}>
+          {fileIcon(name)}
         </SText>
-        <SText x={b.x + 42} y={my + 5} fontSize={13} fill={T.text}>
-          {n.length > 18 ? n.slice(0, 17) + "…" : n}
+        <SText x={b.x + 42} y={my + 5} fontSize={13} fill="#344054">
+          {`| ${name.length > maxChars ? name.slice(0, maxChars - 1) + "…" : name}`}
         </SText>
-        <SText x={b.x + b.w - 12} y={my + 6} fontSize={16} textAnchor="end" fill={BLUE}>
+        <SText x={b.x + b.w - 66} y={my + 6} fontSize={16} textAnchor="middle" fill={BLUE}>
           ⬇
+        </SText>
+        <SText x={b.x + b.w - 40} y={my + 6} fontSize={16} textAnchor="middle" fill="#F79009">
+          ✎
+        </SText>
+        <SText x={b.x + b.w - 14} y={my + 6} fontSize={16} textAnchor="middle" fill="#F04438">
+          ✕
         </SText>
       </>
     );
   }
-  if (o.kind === "image")
+  if (o.kind === "image" || (o.kind === "pin" && isImg(o.file?.name ?? "")))
     return (
       <>
         <SText x={b.x} y={b.y - 6} fontSize={11} fill="#667085">
@@ -112,7 +127,7 @@ export function Shape({ o, m }: any) {
         <Rect x={b.x} y={b.y} width={b.w} height={b.h} fill="none" stroke="#D0D5DD" />
       </>
     );
-  if (o.kind === "code") {
+  if (o.kind === "code" || (o.kind === "pin" && isTextFile(o.file?.name ?? ""))) {
     const lines = String(o.code ?? "").split("\n"),
       n = Math.max(1, Math.floor((b.h - 30) / 14)),
       mc = Math.max(4, Math.floor((b.w - 40) / 6.6));
@@ -121,7 +136,7 @@ export function Shape({ o, m }: any) {
         <Rect x={b.x} y={b.y} width={b.w} height={b.h} rx={8} fill="#F9FAFB" stroke="#98A2B3" />
         <Rect x={b.x} y={b.y} width={b.w} height={24} rx={8} fill="#E4E7EC" />
         <SText x={b.x + 10} y={b.y + 16} fontSize={11} fill={T.text}>
-          {o.text ?? "snippet"}
+          {o.kind === "pin" ? o.file?.name : (o.text ?? "snippet")}
         </SText>
         {lines.slice(0, n).map((l: string, i: number) => (
           <SText

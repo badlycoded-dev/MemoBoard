@@ -4,11 +4,12 @@ import { Pressable, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-
 import { ColorPicker } from "@/components/ColorPicker";
 import { Slider } from "@/components/ui/Slider";
 import { useBoardTheme } from "./BoardTheme";
+import { PIN_TYPES } from "./constants";
 import { DRAW_TOOLS, OBJECT_TOOLS, isDraw, isObj } from "./constants";
 import { ColorSwatches, ToolButton } from "./controls";
 import type { Tool } from "./model";
 
-export type Group = "draw" | "obj";
+export type Group = "draw" | "obj" | "pin";
 export type Sheet = "size" | "scale" | "color";
 export type Anchor = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
@@ -28,7 +29,7 @@ export type ToolbarActions = {
   addText: () => void;
   addTip: () => void;
   addCode: () => void;
-  addPin: () => void;
+  addPin: (mime?: string) => void;
   setZoom: (percent: number) => void;
   setColor: (color: string) => void;
   setWidth: (width: number) => void;
@@ -193,7 +194,7 @@ export function Toolbar({
           <ToolButton icon="format-text" on={actions.addText} />
           <ToolButton icon="lightbulb-on-outline" on={actions.addTip} />
           <ToolButton icon="code-tags" on={actions.addCode} />
-          <ToolButton icon="paperclip" on={actions.addPin} />
+          <ToolButton icon="paperclip" sel={group === "pin"} on={() => toggleGroup("pin")} />
           <View style={[hz ? styles.dividerH : styles.dividerV, { backgroundColor: T.border }]} />
           <View style={{ opacity: canUndo ? 1 : 0.3 }}>
             <ToolButton icon="undo" on={actions.undo} />
@@ -232,6 +233,29 @@ export function Toolbar({
             {colorButton}
             {sizeButton}
           </ScrollView>
+        </View>
+      )}
+
+      {group === "pin" && (
+        <View style={[card, subPos(6), styles.objectList]}>
+          {PIN_TYPES.map(([key, icon, name, mime]) => (
+            <Pressable
+              key={key}
+              onPress={() => {
+                actions.addPin(mime);
+                menu.setGroup(null);
+              }}
+              style={styles.objectRow}
+            >
+              <MaterialCommunityIcons
+                name={icon}
+                size={20}
+                color={T.text}
+                style={styles.objectGlyph}
+              />
+              <Text style={{ color: T.text }}>{name}</Text>
+            </Pressable>
+          ))}
         </View>
       )}
 

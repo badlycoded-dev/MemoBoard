@@ -9,12 +9,14 @@ import {
   Text,
   TextInput,
   View,
+  Switch,
 } from "react-native";
 import { BLUE } from "@/theme/theme";
 import { ColorSwatches, Stepper } from "./controls";
 import { isArrow } from "./model";
+import { isImg, isTextFile } from "./utils";
 
-export type EditForm = { id: string; o: any; text: string; code: string; s: any };
+export type EditForm = { id: string; o: any; text: string; code: string; s: any; show: boolean };
 type Tab = "text" | "style" | "content";
 
 type Props = {
@@ -36,6 +38,7 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
   const line = isArrow(kind);
   const hasRadius = ["rect", "round", "pin", "code", "image"].includes(kind);
   const hasContent = ["code", "pin", "image"].includes(kind);
+  const canShow = kind === "pin" && !!file && (isImg(file.name) || isTextFile(file.name));
   const tabs: [Tab, string][] = [
     ["text", "Text"],
     ["style", "Style"],
@@ -122,6 +125,16 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
 
             {tab === "content" && (
               <>
+                {canShow && (
+                  <View style={styles.switchRow}>
+                    <Text style={styles.label}>Show content</Text>
+                    <Switch
+                      value={form.show}
+                      onValueChange={(show) => set({ show })}
+                      trackColor={{ true: BLUE }}
+                    />
+                  </View>
+                )}
                 <Text style={styles.label}>Code / text snippet</Text>
                 <TextInput
                   multiline
@@ -208,6 +221,12 @@ const styles = StyleSheet.create({
   mono: { fontFamily: Platform.OS === "android" ? "monospace" : "Courier", minHeight: 120 },
   row: { flexDirection: "row", alignItems: "center", gap: 8, paddingVertical: 8 },
   label: { color: INK },
+  switchRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 4,
+  },
   link: { color: BLUE, fontWeight: "700" },
   footer: { flexDirection: "row", alignItems: "center", gap: 10, paddingTop: 8 },
   delete: { color: "#D92D20", fontWeight: "700" },

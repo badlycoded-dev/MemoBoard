@@ -27,3 +27,13 @@ export const segD = (p: Pt, a: Pt, b: Pt) => {
     t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / l));
   return Math.hypot(p.x - a.x - t * dx, p.y - a.y - t * dy);
 };
+
+export const isTextFile = (n: string) =>
+  /^(txt|md|log|json|csv|js|ts|tsx|jsx|py|java|c|cpp|cs|go|rs|html|css|xml|yml|yaml|sh|sql)$/.test(
+    ext(n),
+  );
+
+/** True while a pin is drawn as a compact file chip (its content is hidden). */
+export const isChip = (o: any) =>
+  o.kind === "pin" &&
+  !(o.showContent && (isImg(o.file?.name ?? "") || isTextFile(o.file?.name ?? "")));

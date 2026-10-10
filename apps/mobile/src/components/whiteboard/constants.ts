@@ -50,3 +50,12 @@ export const OBJECT_TOOLS: [Tool, IconName, string][] = [
 ];
 export const isDraw = (t: Tool) => DRAW_TOOLS.some((d) => d[0] === t),
   isObj = (t: Tool) => OBJECT_TOOLS.some((d) => d[0] === t);
+
+/** File types offered by the pin toolbar: [key, icon, label, picker mime filter]. */
+export const PIN_TYPES: [string, IconName, string, string][] = [
+  ["image", "image-outline", "Image", "image/*"],
+  ["video", "video-outline", "Video", "video/*"],
+  ["audio", "music-note-outline", "Audio", "audio/*"],
+  ["text", "file-document-outline", "Text file", "text/*"],
+  ["file", "paperclip", "Any file", "*/*"],
+];

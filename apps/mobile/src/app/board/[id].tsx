@@ -17,7 +17,7 @@ import { BoardHeader } from "@/components/whiteboard/BoardHeader";
 import { Toolbar } from "@/components/whiteboard/Toolbar";
 import { EditSheet } from "@/components/whiteboard/EditSheet";
 import { handlesOf, resized } from "@/components/whiteboard/model";
-import { isImg, pathOf, strip, segD } from "@/components/whiteboard/utils";
+import { isChip, isTextFile, isImg, pathOf, strip, segD } from "@/components/whiteboard/utils";
 
 function BoardScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -156,16 +156,37 @@ function BoardScreen() {
     }
   };
   const openEdit = (o: any) =>
-    setForm({ id: o._id, o, text: o.text ?? "", code: o.code ?? "", s: { ...o.style } });
-  const save = () => {
-    const o = form.o,
-      after = { text: form.text, code: form.code, style: form.s };
-    push({
-      ref: { id: o._id },
-      op: "upd",
-      before: { text: o.text ?? "", code: o.code ?? "", style: o.style },
-      after,
+    setForm({
+      id: o._id,
+      o,
+      text: o.text ?? "",
+      code: o.code ?? "",
+      s: { ...o.style },
+      show: !!o.showContent,
     });
+  const save = async () => {
+    const o = form.o;
+    const name: string = fo?.file?.name ?? "";
+    let code = form.code;
+    if (o.kind === "pin" && form.show && isTextFile(name) && !code && fo?.fileUrl) {
+      code = await (await fetch(fo.fileUrl)).text();
+    }
+    const after: any = { text: form.text, code, style: form.s, showContent: form.show };
+    const before: any = {
+      text: o.text ?? "",
+      code: o.code ?? "",
+      style: o.style,
+      showContent: !!o.showContent,
+    };
+    if (o.kind === "pin" && form.show !== !!o.showContent) {
+      // switching between file chip and media view resizes the item
+      Object.assign(
+        after,
+        form.show ? { w: Math.max(o.w, 240), h: isImg(name) ? 160 : 200 } : { w: 230, h: 46 },
+      );
+      Object.assign(before, { w: o.w, h: o.h });
+    }
+    push({ ref: { id: o._id }, op: "upd", before, after });
     patchO({ id: o._id, patch: after });
     setForm(null);
   };
@@ -320,27 +341,28 @@ function BoardScreen() {
       true,
     );
   };
-  const addPin = async () => {
-    const r = await DocumentPicker.getDocumentAsync({ copyToCacheDirectory: true });
+  const addPin = async (mime = "*/*") => {
+    const r = await DocumentPicker.getDocumentAsync({ type: mime, copyToCacheDirectory: true });
     if (r.canceled) return;
-    const a = r.assets[0],
-      blob = await (await fetch(a.uri)).blob();
+    const a = r.assets[0];
+    const blob = await (await fetch(a.uri)).blob();
     const res = await fetch(await upUrl(), {
       method: "POST",
       headers: { "Content-Type": a.mimeType ?? "application/octet-stream" },
       body: blob,
     });
-    const file = { storageId: (await res.json()).storageId, name: a.name },
-      m = mid(),
-      img = isImg(a.name);
+    const file = { storageId: (await res.json()).storageId, name: a.name };
+    const m = mid();
+    // New files start as a compact file chip; "Show content" in the editor reveals the media.
     place(
       {
-        kind: img ? "image" : "pin",
-        x: m.x - (img ? 120 : 95),
-        y: m.y - (img ? 80 : 20),
-        w: img ? 240 : 190,
-        h: img ? 160 : 40,
+        kind: "pin",
+        x: m.x - 115,
+        y: m.y - 23,
+        w: 230,
+        h: 46,
         file,
+        showContent: false,
         style: { ...defStyle, fill: "none" },
       },
       false,
@@ -441,6 +463,17 @@ function BoardScreen() {
     L.p = p;
     setDraft({ ...L });
   };
+  /** Taps on the download / edit / delete marks of a file chip. Returns true when handled. */
+  const chipTap = (o: any, p: Pt) => {
+    if (!isChip(o)) return false;
+    const b = box(o);
+    const dx = b.x + b.w - p.x;
+    if (dx < 0 || dx > 79 || p.y < b.y || p.y > b.y + b.h) return false;
+    if (dx < 27) del(o, false);
+    else if (dx < 53) openEdit(o);
+    else if (o.fileUrl) Linking.openURL(o.fileUrl);
+    return true;
+  };
   const up = async () => {
     if (pinch.current) {
       pinch.current = null;
@@ -485,6 +518,7 @@ function BoardScreen() {
     } else {
       const patch = over[L.id];
       if (!patch) {
+        if (L.k === "move" && chipTap(L.o, L.s)) return;
         const now = Date.now();
         if (L.k === "move" && lastTap.current.id === L.id && now - lastTap.current.t < 350)
           openEdit(L.o);
