@@ -57,5 +57,6 @@ export const PIN_TYPES: [string, IconName, string, string][] = [
   ["video", "video-outline", "Video", "video/*"],
   ["audio", "music-note-outline", "Audio", "audio/*"],
   ["text", "file-document-outline", "Text file", "text/*"],
+  ["link", "link-variant", "Link", "link"],
   ["file", "paperclip", "Any file", "*/*"],
 ];

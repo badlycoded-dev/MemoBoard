@@ -16,8 +16,19 @@ import { Shape } from "@/components/whiteboard/Shape";
 import { BoardHeader } from "@/components/whiteboard/BoardHeader";
 import { Toolbar } from "@/components/whiteboard/Toolbar";
 import { EditSheet } from "@/components/whiteboard/EditSheet";
+import { LinkPrompt } from "@/components/whiteboard/LinkPrompt";
+import { MediaLayer } from "@/components/whiteboard/MediaLayer";
 import { handlesOf, resized } from "@/components/whiteboard/model";
-import { actionAt, isTextFile, isImg, pathOf, strip, segD } from "@/components/whiteboard/utils";
+import {
+  isAudio,
+  isVideo,
+  actionAt,
+  isTextFile,
+  isImg,
+  pathOf,
+  strip,
+  segD,
+} from "@/components/whiteboard/utils";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function BoardScreen() {
@@ -50,6 +61,7 @@ function BoardScreen() {
   const [open, setOpen] = useState(false),
     [grp, setGrp] = useState<null | "draw" | "obj">(null),
     [sheet, setSheet] = useState<null | "size" | "scale" | "color">(null);
+  const [linkPrompt, setLinkPrompt] = useState(false);
   const dim = useRef({ w: 360, h: 640 });
   const [cam, setCam] = useState({ x: 0, y: 0, k: 1 }),
     pinch = useRef<any>(null);
@@ -164,6 +176,7 @@ function BoardScreen() {
       code: o.code ?? "",
       s: { ...o.style },
       show: !!o.showContent,
+      url: o.url ?? "",
     });
   const save = async () => {
     const o = form.o;
@@ -172,18 +185,26 @@ function BoardScreen() {
     if (o.kind === "pin" && form.show && isTextFile(name) && !code && fo?.fileUrl) {
       code = await (await fetch(fo.fileUrl)).text();
     }
-    const after: any = { text: form.text, code, style: form.s, showContent: form.show };
+    const after: any = {
+      text: form.text,
+      code,
+      style: form.s,
+      showContent: form.show,
+      ...(o.kind === "link" ? { url: form.url } : {}),
+    };
     const before: any = {
       text: o.text ?? "",
       code: o.code ?? "",
       style: o.style,
       showContent: !!o.showContent,
     };
-    if (o.kind === "pin" && form.show !== !!o.showContent) {
+    if ((o.kind === "pin" || o.kind === "link") && form.show !== !!o.showContent) {
       // switching between file chip and media view resizes the item
       Object.assign(
         after,
-        form.show ? { w: Math.max(o.w, 240), h: isImg(name) ? 160 : 200 } : { w: 230, h: 46 },
+        form.show
+          ? { w: Math.max(o.w, 240), h: isImg(name) ? 160 : isVideo(name) ? 180 : 200 }
+          : { w: 230, h: 46 },
       );
       Object.assign(before, { w: o.w, h: o.h });
     }
@@ -342,7 +363,28 @@ function BoardScreen() {
       true,
     );
   };
+  const addLink = (raw: string) => {
+    const url = /^https?:\/\//i.test(raw.trim()) ? raw.trim() : `https://${raw.trim()}`;
+    const m = mid();
+    place(
+      {
+        kind: "link",
+        url,
+        x: m.x - 115,
+        y: m.y - 23,
+        w: 230,
+        h: 46,
+        showContent: false,
+        style: { ...defStyle, fill: "none" },
+      },
+      false,
+    );
+  };
   const addPin = async (mime = "*/*") => {
+    if (mime === "link") {
+      setLinkPrompt(true);
+      return;
+    }
     const r = await DocumentPicker.getDocumentAsync({ type: mime, copyToCacheDirectory: true });
     if (r.canceled) return;
     const a = r.assets[0];
@@ -354,14 +396,15 @@ function BoardScreen() {
     });
     const file = { storageId: (await res.json()).storageId, name: a.name };
     const m = mid();
-    // New files start as a compact file chip; "Show content" in the editor reveals the media.
+    const audio = isAudio(a.name);
+    // New files start as a compact file chip (audio starts as a player); "Show content" in the editor reveals the media.
     place(
       {
         kind: "pin",
-        x: m.x - 115,
-        y: m.y - 23,
-        w: 230,
-        h: 46,
+        x: m.x - (audio ? 135 : 115),
+        y: m.y - (audio ? 42 : 23),
+        w: audio ? 270 : 230,
+        h: audio ? 84 : 46,
         file,
         showContent: false,
         style: { ...defStyle, fill: "none" },
@@ -476,6 +519,7 @@ function BoardScreen() {
     if (act === "delete") del(o, false);
     else if (act === "edit") openEdit(o);
     else if (act === "download") Linking.openURL(o.fileUrl);
+    else if (act === "open") Linking.openURL(o.url);
     else Clipboard.setStringAsync(o.code ?? "");
   };
   /** Taps on the copy / download / edit / delete buttons of chips and viewers. */
@@ -697,6 +741,8 @@ function BoardScreen() {
         </Svg>
       </View>
 
+      <MediaLayer objs={objs} cam={cam} />
+
       <BoardHeader
         title={board?.name ?? "Loading..."}
         accent={st.accent}
@@ -789,6 +835,14 @@ function BoardScreen() {
         </View>
       )}
 
+      <LinkPrompt
+        visible={linkPrompt}
+        onClose={() => setLinkPrompt(false)}
+        onAdd={(url) => {
+          setLinkPrompt(false);
+          addLink(url);
+        }}
+      />
       <EditSheet
         form={form}
         setForm={setForm}

@@ -12,7 +12,7 @@ import type { ComponentProps } from "react";
 import { BLUE } from "@/theme/theme";
 import { useBoardTheme } from "./BoardTheme";
 import { box, ends, isArrow } from "./model";
-import { actionsOf, fileIcon, isChip, isImg, isTextFile } from "./utils";
+import { hostOf, isAudio, isVideo, actionsOf, fileIcon, isChip, isImg, isTextFile } from "./utils";
 
 function ShapeBody({ o, m }: any) {
   const T = useBoardTheme();
@@ -82,6 +82,28 @@ function ShapeBody({ o, m }: any) {
       </>
     );
   }
+  if (o.kind === "link") {
+    const chip = isChip(o);
+    const my = chip ? b.y + b.h / 2 : b.y + 14;
+    return (
+      <>
+        <Rect
+          x={b.x}
+          y={b.y}
+          width={b.w}
+          height={b.h}
+          rx={s.r ?? (chip ? b.h / 2 : 14)}
+          fill={chip ? "#F2F4F7" : "#fff"}
+          stroke="#D0D5DD"
+        />
+        <SIcon name="link-variant" x={b.x + 18} y={my + 7} size={20} fill="#2848E0" />
+        <SText x={b.x + 38} y={my + 5} fontSize={13} fill="#344054">
+          {`| ${hostOf(o.url).slice(0, Math.max(6, Math.floor((b.w - 130) / 7)))}`}
+        </SText>
+        <ActionStrip o={o} b={b} />
+      </>
+    );
+  }
   if (isChip(o)) {
     const name: string = o.file?.name ?? "file";
     const my = b.y + b.h / 2;
@@ -102,6 +124,27 @@ function ShapeBody({ o, m }: any) {
         </SText>
         <SText x={b.x + 42} y={my + 5} fontSize={13} fill="#344054">
           {`| ${name.length > maxChars ? name.slice(0, maxChars - 1) + "…" : name}`}
+        </SText>
+        <ActionStrip o={o} b={b} />
+      </>
+    );
+  }
+  if (o.kind === "pin" && (isAudio(o.file?.name ?? "") || isVideo(o.file?.name ?? ""))) {
+    const audio = isAudio(o.file?.name ?? "");
+    const name: string = o.file?.name ?? "";
+    return (
+      <>
+        <Rect
+          x={b.x}
+          y={b.y}
+          width={b.w}
+          height={b.h}
+          rx={s.r ?? 14}
+          fill={audio ? "#F2F4F7" : "#101828"}
+          stroke="#D0D5DD"
+        />
+        <SText x={b.x + 10} y={b.y + 17} fontSize={12} fill={audio ? "#344054" : "#fff"}>
+          {name.length > 24 ? name.slice(0, 23) + "…" : name}
         </SText>
         <ActionStrip o={o} b={b} />
       </>

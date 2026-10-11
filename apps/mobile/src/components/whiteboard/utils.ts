@@ -35,19 +35,32 @@ export const isTextFile = (n: string) =>
   );
 
 /** True while a pin is drawn as a compact file chip (its content is hidden). */
-export const isChip = (o: any) =>
-  o.kind === "pin" &&
-  !(o.showContent && (isImg(o.file?.name ?? "") || isTextFile(o.file?.name ?? "")));
+export const isAudio = (n: string) => /^(mp3|wav|ogg|m4a|aac|flac)$/.test(ext(n));
+export const isVideo = (n: string) => /^(mp4|mov|mkv|webm|avi|m4v)$/.test(ext(n));
+export const hostOf = (u?: string) => (u ?? "").replace(/^https?:\/\/(www\.)?/, "").split("/")[0];
+export const youtubeId = (u: string) =>
+  u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/)?.[1];
 
-export type Act = "delete" | "edit" | "download" | "copy";
+/** True while an item is drawn as a compact chip (its content is hidden). */
+export const isChip = (o: any) => {
+  const name = o.file?.name ?? "";
+  if (o.kind === "link") return !o.showContent;
+  if (o.kind !== "pin" || isAudio(name)) return false;
+  return !(o.showContent && (isImg(name) || isTextFile(name) || isVideo(name)));
+};
+
+export type Act = "delete" | "edit" | "download" | "copy" | "open";
 const isCodeLike = (o: any) =>
   o.kind === "code" || (o.kind === "pin" && !isChip(o) && isTextFile(o.file?.name ?? ""));
 const isViewer = (o: any) =>
-  o.kind === "code" || o.kind === "image" || (o.kind === "pin" && !isChip(o));
+  o.kind === "code" ||
+  o.kind === "image" ||
+  ((o.kind === "pin" || o.kind === "link") && !isChip(o));
 
 /** Buttons shown on a file chip or media/code view, listed from the right edge inwards. */
 export const actionsOf = (o: any): Act[] => {
   const acts: Act[] = ["delete", "edit"];
+  if (o.kind === "link") acts.push("open");
   if (o.fileUrl) acts.push("download");
   if (isCodeLike(o)) acts.push("copy");
   return acts;

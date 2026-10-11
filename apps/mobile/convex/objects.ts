@@ -10,7 +10,7 @@ export const list = query({
 });
 export const add = mutation({
   args: { boardId: v.id("boards"), kind: v.string(), x: v.number(), y: v.number(), w: v.number(), h: v.number(), style,
-    text: v.optional(v.string()), code: v.optional(v.string()), hidden: v.optional(v.boolean()), showContent: v.optional(v.boolean()),
+    text: v.optional(v.string()), code: v.optional(v.string()), hidden: v.optional(v.boolean()), showContent: v.optional(v.boolean()), url: v.optional(v.string()),
     rot: v.optional(v.number()), flipX: v.optional(v.boolean()), flipY: v.optional(v.boolean()), fromId: v.optional(v.string()), toId: v.optional(v.string()),
     file: v.optional(v.object({ storageId: v.id("_storage"), name: v.string() })) },
   handler: (ctx, a) => ctx.db.insert("wb_objects", a),

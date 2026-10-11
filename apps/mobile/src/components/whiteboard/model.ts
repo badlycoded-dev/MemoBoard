@@ -166,7 +166,7 @@ export function resized(o: any, handle: string, p: Pt) {
 }
 
 /** Pins, file chips and images: scalable only from the corners. */
-export const isPinLike = (o: any) => o.kind === "pin" || o.kind === "image";
+export const isPinLike = (o: any) => o.kind === "pin" || o.kind === "image" || o.kind === "link";
 
 /** Drag handles shown for a selected item (corner handles only for pins). */
 export function handlesOf(o: any, m: Map<string, any>) {

@@ -14,9 +14,17 @@ import {
 import { BLUE } from "@/theme/theme";
 import { ColorSwatches, Stepper } from "./controls";
 import { isArrow } from "./model";
-import { isImg, isTextFile } from "./utils";
+import { isImg, isTextFile, isVideo } from "./utils";
 
-export type EditForm = { id: string; o: any; text: string; code: string; s: any; show: boolean };
+export type EditForm = {
+  id: string;
+  o: any;
+  text: string;
+  code: string;
+  s: any;
+  show: boolean;
+  url?: string;
+};
 type Tab = "text" | "style" | "content";
 
 type Props = {
@@ -37,8 +45,10 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
   const kind: string = form.o.kind;
   const line = isArrow(kind);
   const hasRadius = ["rect", "round", "pin", "code", "image"].includes(kind);
-  const canShow = kind === "pin" && !!file && (isImg(file.name) || isTextFile(file.name));
-  const isPinLike = kind === "pin" || kind === "image";
+  const canShow =
+    kind === "link" ||
+    (kind === "pin" && !!file && (isImg(file.name) || isTextFile(file.name) || isVideo(file.name)));
+  const isPinLike = kind === "pin" || kind === "image" || kind === "link";
   const tabs: [Tab, string][] = isPinLike
     ? [["content", "Content"]]
     : [
@@ -147,6 +157,19 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
 
             {active === "content" && (
               <>
+                {kind === "link" && (
+                  <>
+                    <Text style={styles.label}>Link</Text>
+                    <TextInput
+                      value={form.url ?? ""}
+                      onChangeText={(url) => set({ url })}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      keyboardType="url"
+                      style={styles.input}
+                    />
+                  </>
+                )}
                 {canShow && (
                   <View style={styles.switchRow}>
                     <Text style={styles.label}>Show content</Text>
@@ -176,12 +199,14 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
                     <Text style={styles.link}>Load text file…</Text>
                   </Pressable>
                 )}
-                <Pressable onPress={onAttach} style={styles.row}>
-                  <MaterialCommunityIcons name="paperclip" size={20} color={BLUE} />
-                  <Text style={styles.link}>
-                    {file ? `Replace file (${file.name})` : "Attach file"}
-                  </Text>
-                </Pressable>
+                {kind !== "link" && (
+                  <Pressable onPress={onAttach} style={styles.row}>
+                    <MaterialCommunityIcons name="paperclip" size={20} color={BLUE} />
+                    <Text style={styles.link}>
+                      {file ? `Replace file (${file.name})` : "Attach file"}
+                    </Text>
+                  </Pressable>
+                )}
               </>
             )}
           </ScrollView>
