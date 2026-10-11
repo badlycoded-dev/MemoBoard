@@ -30,6 +30,7 @@ export type ToolbarActions = {
   addTip: () => void;
   addCode: () => void;
   addPin: (mime?: string) => void;
+  openEmoji: () => void;
   setZoom: (percent: number) => void;
   setColor: (color: string) => void;
   setWidth: (width: number) => void;
@@ -195,6 +196,7 @@ export function Toolbar({
           <ToolButton icon="lightbulb-on-outline" on={actions.addTip} />
           <ToolButton icon="code-tags" on={actions.addCode} />
           <ToolButton icon="paperclip" sel={group === "pin"} on={() => toggleGroup("pin")} />
+          <ToolButton icon="emoticon-outline" on={actions.openEmoji} />
           <View style={[hz ? styles.dividerH : styles.dividerV, { backgroundColor: T.border }]} />
           <View style={{ opacity: canUndo ? 1 : 0.3 }}>
             <ToolButton icon="undo" on={actions.undo} />

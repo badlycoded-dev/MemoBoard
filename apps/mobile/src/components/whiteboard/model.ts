@@ -26,7 +26,7 @@ export type Pt = { x: number; y: number };
 export const isArrow = (k: string) => k.startsWith("arrow") || k === "line";
 export const box = (o: any) =>
   o.kind === "tip"
-    ? { x: o.x, y: o.y, w: 180, h: 38 }
+    ? { x: o.x, y: o.y, w: 190, h: 44 }
     : {
         x: Math.min(o.x, o.x + o.w),
         y: Math.min(o.y, o.y + o.h),
@@ -172,4 +172,12 @@ export const isPinLike = (o: any) => o.kind === "pin" || o.kind === "image" || o
 export function handlesOf(o: any, m: Map<string, any>) {
   const all = allHandles(o, m);
   return isPinLike(o) ? all.filter((h) => h.id.length === 2 || h.id === "rot") : all;
+}
+
+/** Rotates a line or arrow about its middle by `deg` degrees (for lines without linked ends). */
+export function rotatedLine(o: any, deg: number) {
+  const c = { x: o.x + o.w / 2, y: o.y + o.h / 2 };
+  const a = rotPt({ x: o.x, y: o.y }, c, deg);
+  const b = rotPt({ x: o.x + o.w, y: o.y + o.h }, c, deg);
+  return { x: a.x, y: a.y, w: b.x - a.x, h: b.y - a.y };
 }

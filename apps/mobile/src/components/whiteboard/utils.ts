@@ -75,3 +75,30 @@ export const actionAt = (o: any, p: Pt): Act | null => {
   if (dx < 0 || q.y < b.y || q.y > b.y + (isChip(o) ? b.h : Math.min(28, b.h))) return null;
   return actionsOf(o)[Math.floor(dx / 26)] ?? null;
 };
+
+export const isGif = (n: string) => ext(n) === "gif";
+
+/** HTML for the official TikTok / Instagram / X embed scripts, or null for other links. */
+export const embedHtml = (url: string): string | null => {
+  const page = (body: string) =>
+    `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;display:flex;justify-content:center}</style></head><body>${body}</body></html>`;
+  const host = hostOf(url);
+  if (/(^|\.)(x|twitter)\.com$/.test(host)) {
+    const href = url.replace("//x.com", "//twitter.com").replace("//www.x.com", "//twitter.com");
+    return page(
+      `<blockquote class="twitter-tweet"><a href="${href}"></a></blockquote><script async src="https://platform.twitter.com/widgets.js"></script>`,
+    );
+  }
+  if (host.endsWith("instagram.com")) {
+    return page(
+      `<blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14" style="width:100%"></blockquote><script async src="https://www.instagram.com/embed.js"></script>`,
+    );
+  }
+  const tiktok = url.match(/tiktok\.com\/.*\/video\/(\d+)/);
+  if (host.endsWith("tiktok.com") && tiktok) {
+    return page(
+      `<blockquote class="tiktok-embed" cite="${url}" data-video-id="${tiktok[1]}" style="max-width:605px;min-width:325px"><section></section></blockquote><script async src="https://www.tiktok.com/embed.js"></script>`,
+    );
+  }
+  return null;
+};

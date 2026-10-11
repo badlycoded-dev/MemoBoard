@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Linking, Pressable, Text, View } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import { BLUE } from "@/theme/theme";
-import { isArrow } from "@/components/whiteboard/model";
+import { rotatedLine, isArrow } from "@/components/whiteboard/model";
 
 /** Floating bar under a selected item: flip, rotate, type-specific buttons, edit and delete. */
 export function SelectionBar({ visible, patchO, selO, card, hz, st, change, openEdit, del }: any) {
@@ -34,6 +34,16 @@ export function SelectionBar({ visible, patchO, selO, card, hz, st, change, open
         <Pressable onPress={() => Clipboard.setStringAsync(selO.code ?? "")}>
           <Text style={{ color: BLUE, fontWeight: "800" }}>Copy</Text>
         </Pressable>
+      )}
+      {isArrow(selO.kind) && (
+        <>
+          <Pressable onPress={() => change(selO, rotatedLine(selO, -90))}>
+            <MaterialCommunityIcons name="rotate-left" size={22} color={BLUE} />
+          </Pressable>
+          <Pressable onPress={() => change(selO, rotatedLine(selO, 90))}>
+            <MaterialCommunityIcons name="rotate-right" size={22} color={BLUE} />
+          </Pressable>
+        </>
       )}
       {selO.kind !== "tip" && !isArrow(selO.kind) && (
         <>

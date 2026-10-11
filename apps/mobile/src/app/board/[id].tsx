@@ -19,6 +19,7 @@ import { useCamera } from "@/hooks/useCamera";
 import { useHistory } from "@/hooks/useHistory";
 import { useItemActions } from "@/hooks/useItemActions";
 import { EditSheet } from "@/components/whiteboard/EditSheet";
+import { EmojiPicker } from "@/components/whiteboard/EmojiPicker";
 import { LinkPrompt } from "@/components/whiteboard/LinkPrompt";
 import { MediaLayer } from "@/components/whiteboard/MediaLayer";
 import { handlesOf, resized } from "@/components/whiteboard/model";
@@ -54,6 +55,7 @@ function BoardScreen() {
     [grp, setGrp] = useState<null | "draw" | "obj">(null),
     [sheet, setSheet] = useState<null | "size" | "scale" | "color">(null);
   const [linkPrompt, setLinkPrompt] = useState(false);
+  const [emojiPicker, setEmojiPicker] = useState(false);
   const dim = useRef({ w: 360, h: 640 });
   const {
     cam,
@@ -211,7 +213,7 @@ function BoardScreen() {
       setTool("pen");
     }
   };
-  const { openEdit, save, attach, addText, addTip, addCode, addLink, addPin, loadText } =
+  const { addEmoji, openEdit, save, attach, addText, addTip, addCode, addLink, addPin, loadText } =
     useItemActions({
       board,
       upUrl,
@@ -450,6 +452,7 @@ function BoardScreen() {
           addTip,
           addCode,
           addPin,
+          openEmoji: () => setEmojiPicker(true),
           setZoom,
           setColor,
           setWidth: (width: number) => setCfg({ ...cfg, [tool]: { ...c, width } }),
@@ -468,6 +471,14 @@ function BoardScreen() {
         patchO={patchO}
       />
 
+      <EmojiPicker
+        visible={emojiPicker}
+        onClose={() => setEmojiPicker(false)}
+        onPick={(emoji) => {
+          setEmojiPicker(false);
+          addEmoji(emoji);
+        }}
+      />
       <LinkPrompt
         visible={linkPrompt}
         onClose={() => setLinkPrompt(false)}

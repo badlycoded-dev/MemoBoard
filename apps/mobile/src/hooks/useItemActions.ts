@@ -202,7 +202,23 @@ export function useItemActions(deps: any) {
     setForm((f: any) => ({ ...f, code: t, text: a.name }));
   };
 
+  const addEmoji = (emoji: string) => {
+    const m = mid();
+    place(
+      {
+        kind: "text",
+        x: m.x - 40,
+        y: m.y - 40,
+        w: 80,
+        h: 80,
+        text: emoji,
+        style: { ...defStyle, stroke: "none", fill: "none", fs: 56 },
+      },
+      false,
+    );
+  };
   return {
+    addEmoji,
     openEdit,
     save,
     attach,

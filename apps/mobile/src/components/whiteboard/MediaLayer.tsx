@@ -2,10 +2,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { ReactNode, useMemo, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { box } from "./model";
-import { isAudio, isChip, isVideo, youtubeId } from "./utils";
+import { embedHtml, hostOf, isGif, isAudio, isChip, isVideo, youtubeId } from "./utils";
 
 type Cam = { x: number; y: number; k: number };
 
@@ -21,16 +21,62 @@ const waveform = (seed: string, count: number) => {
   });
 };
 
+/** Decodes the audio inside a hidden web view (Web Audio API) to get its real loudness peaks. */
+const peaksHtml = (url: string, n: number) => `<script>
+(async () => {
+  try {
+    const buf = await (await fetch(${JSON.stringify(url)})).arrayBuffer();
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const data = (await ctx.decodeAudioData(buf)).getChannelData(0);
+    const size = Math.floor(data.length / ${n}), out = [];
+    for (let i = 0; i < ${n}; i++) {
+      let max = 0;
+      for (let j = i * size; j < (i + 1) * size; j += 40) max = Math.max(max, Math.abs(data[j] || 0));
+      out.push(max);
+    }
+    const top = Math.max(...out, 0.001);
+    window.ReactNativeWebView.postMessage(JSON.stringify(out.map((v) => v / top)));
+  } catch (e) {}
+})();
+</script>`;
+
+function PeaksProbe({
+  uri,
+  count,
+  onPeaks,
+}: {
+  uri: string;
+  count: number;
+  onPeaks: (p: number[]) => void;
+}) {
+  const origin = uri.match(/^https?:\/\/[^/]+/)?.[0] ?? "https://localhost";
+  return (
+    <View style={{ width: 0, height: 0, opacity: 0 }}>
+      <WebView
+        source={{ html: peaksHtml(uri, count), baseUrl: origin }}
+        originWhitelist={["*"]}
+        javaScriptEnabled
+        onMessage={(e) => onPeaks(JSON.parse(e.nativeEvent.data))}
+      />
+    </View>
+  );
+}
+
 function AudioPlayer({ uri, width }: { uri: string; width: number }) {
   const player = useAudioPlayer(uri);
   const status = useAudioPlayerStatus(player);
   const [muted, setMuted] = useState(false);
   const waveWidth = Math.max(60, width - 170);
-  const levels = useMemo(() => waveform(uri, 26), [uri]);
+  const [peaks, setPeaks] = useState<number[] | null>(null);
+  const levels = useMemo(
+    () => (peaks ? peaks.map((v) => 0.12 + 0.88 * v) : waveform(uri, 32)),
+    [uri, peaks],
+  );
   const progress = status.duration ? status.currentTime / status.duration : 0;
 
   return (
     <View style={styles.audio}>
+      <PeaksProbe uri={uri} count={32} onPeaks={setPeaks} />
       <Pressable
         onPress={() => (status.playing ? player.pause() : player.play())}
         style={styles.play}
@@ -84,6 +130,7 @@ function VideoBox({ uri }: { uri: string }) {
       style={StyleSheet.absoluteFill}
       nativeControls
       contentFit="contain"
+      surfaceType="textureView"
     />
   );
 }
@@ -91,9 +138,16 @@ function VideoBox({ uri }: { uri: string }) {
 /** YouTube links use the embed player; every other link loads as a normal web page. */
 function LinkEmbed({ url }: { url: string }) {
   const id = youtubeId(url);
+  const html = embedHtml(url);
+  const source = html
+    ? { html, baseUrl: `https://${hostOf(url)}` }
+    : { uri: id ? `https://www.youtube.com/embed/${id}` : url };
   return (
     <WebView
-      source={{ uri: id ? `https://www.youtube.com/embed/${id}` : url }}
+      source={source}
+      originWhitelist={["*"]}
+      javaScriptEnabled
+      domStorageEnabled
       allowsFullscreenVideo
     />
   );
@@ -106,6 +160,11 @@ function contentOf(o: any, width: number): ReactNode {
     return <AudioPlayer uri={o.fileUrl} width={width - 12} />;
   if (o.kind === "pin" && o.fileUrl && isVideo(name) && !isChip(o))
     return <VideoBox uri={o.fileUrl} />;
+  if (o.kind === "pin" && o.fileUrl && isGif(name) && !isChip(o)) {
+    return (
+      <Image source={{ uri: o.fileUrl }} style={StyleSheet.absoluteFill} resizeMode="contain" />
+    );
+  }
   if (o.kind === "link" && o.url && !isChip(o)) return <LinkEmbed url={o.url} />;
   return null;
 }

@@ -1,4 +1,5 @@
 import {
+  TSpan,
   G,
   Ellipse,
   Image as SvgImage,
@@ -41,7 +42,7 @@ function ShapeBody({ o, m }: any) {
             fill={s.tc}
             textAnchor="middle"
           >
-            {o.text}
+            {styledSpans(String(o.text))}
           </SText>
         ) : null}
       </>
@@ -49,35 +50,53 @@ function ShapeBody({ o, m }: any) {
   }
   if (o.kind === "tip") {
     const an = { x: o.x + o.w, y: o.y + o.h };
-    if (o.hidden)
+    if (o.hidden) {
       return (
         <>
           <Ellipse
             cx={an.x}
             cy={an.y}
-            rx={15}
-            ry={15}
-            fill="#FEF0C7"
-            stroke="#F79009"
+            rx={16}
+            ry={16}
+            fill="#FFF4CC"
+            stroke="#F5B301"
             strokeWidth={2}
           />
-          <SIcon name="lightbulb-on-outline" x={an.x} y={an.y + 6} size={18} fill="#F79009" />
+          <SIcon name="lightbulb-on-outline" x={an.x} y={an.y + 6} size={18} fill="#B7791F" />
         </>
       );
+    }
     return (
       <>
-        <Line x1={an.x} y1={an.y} x2={o.x + 90} y2={o.y + 19} stroke="#98A2B3" strokeWidth={1.5} />
-        <Ellipse cx={an.x} cy={an.y} rx={5} ry={5} fill="#F79009" />
-        <Rect x={o.x} y={o.y} width={180} height={38} rx={10} fill="#F2F4F7" stroke="#D0D5DD" />
+        <Line
+          x1={an.x}
+          y1={an.y}
+          x2={o.x + 24}
+          y2={o.y + 38}
+          stroke="#F5B301"
+          strokeWidth={2}
+          strokeDasharray="4 4"
+        />
+        <Ellipse cx={an.x} cy={an.y} rx={7} ry={7} fill="#fff" stroke="#F5B301" strokeWidth={3} />
+        <Rect
+          x={o.x}
+          y={o.y}
+          width={190}
+          height={44}
+          rx={16}
+          fill="#FFF4CC"
+          stroke="#F5B301"
+          strokeWidth={1.5}
+        />
+        <SIcon name="lightbulb-on-outline" x={o.x + 22} y={o.y + 28} size={18} fill="#B7791F" />
         <SText
-          x={o.x + 90}
-          y={o.y + 24}
+          x={o.x + 40}
+          y={o.y + 27}
           fontSize={s.fs}
           fill={s.tc}
           fontWeight={s.bold ? "700" : "400"}
-          textAnchor="middle"
         >
-          {String(o.text ?? "").slice(0, 24)}
+          {styledSpans(String(o.text ?? "").slice(0, 22))}
         </SText>
       </>
     );
@@ -210,7 +229,7 @@ function ShapeBody({ o, m }: any) {
           fill={s.tc}
           textAnchor="middle"
         >
-          {l}
+          {styledSpans(l)}
         </SText>
       ));
   if (isArrow(o.kind)) {
@@ -351,4 +370,41 @@ export function Shape({ o, m }: any) {
     cy = b.y + b.h / 2;
   const transform = `translate(${cx} ${cy}) rotate(${o.rot ?? 0}) scale(${o.flipX ? -1 : 1} ${o.flipY ? -1 : 1}) translate(${-cx} ${-cy})`;
   return <G transform={transform}>{body}</G>;
+}
+
+const STYLE_TOKENS = /(\*\*[^*]+\*\*|__[^_]+__|~~[^~]+~~|\*[^*]+\*|\{#[0-9a-fA-F]{3,8}\|[^}]+\})/;
+
+/** Inline text syntax: **bold**, *italic*, __underline__, ~~strike~~ and {#e4572e|colored}. */
+function styledSpans(text: string) {
+  return text
+    .split(STYLE_TOKENS)
+    .filter(Boolean)
+    .map((part, i) => {
+      let props: any = {};
+      let body = part;
+      if (/^\*\*[^*]+\*\*$/.test(part)) {
+        props = { fontWeight: "700" };
+        body = part.slice(2, -2);
+      } else if (/^__[^_]+__$/.test(part)) {
+        props = { textDecoration: "underline" };
+        body = part.slice(2, -2);
+      } else if (/^~~[^~]+~~$/.test(part)) {
+        props = { textDecoration: "line-through" };
+        body = part.slice(2, -2);
+      } else if (/^\*[^*]+\*$/.test(part)) {
+        props = { fontStyle: "italic" };
+        body = part.slice(1, -1);
+      } else {
+        const m = part.match(/^\{(#[0-9a-fA-F]{3,8})\|([^}]+)\}$/);
+        if (m) {
+          props = { fill: m[1] };
+          body = m[2];
+        }
+      }
+      return (
+        <TSpan key={i} {...props}>
+          {body}
+        </TSpan>
+      );
+    });
 }

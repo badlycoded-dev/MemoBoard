@@ -83,7 +83,7 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
               <>
                 <TextInput
                   multiline
-                  placeholder="Text"
+                  placeholder="Text  (**bold** *italic* __underline__ ~~strike~~ {#e4572e|color})"
                   value={form.text}
                   onChangeText={(text) => set({ text })}
                   style={styles.input}
