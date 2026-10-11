@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { Linking, PanResponder, Pressable, StyleSheet, Text, View } from "react-native";
-import Svg, { Polygon, G, Path, Rect } from "react-native-svg";
+import { Linking, PanResponder, View } from "react-native";
+import Svg from "react-native-svg";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMutation, useQuery } from "convex/react";
 import * as DocumentPicker from "expo-document-picker";
@@ -8,28 +8,21 @@ import * as Clipboard from "expo-clipboard";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { api } from "@/services/api";
 import { useSettings } from "@/services/settings";
-import { BLUE } from "@/theme/theme";
 import { BoardThemeProvider, useBoardTheme } from "@/components/whiteboard/BoardTheme";
 import { INITIAL_TOOL_CONFIG } from "@/components/whiteboard/constants";
 import { Tool, SHAPES, defStyle, isArrow, box, ends, hit, Pt } from "@/components/whiteboard/model";
-import { Shape } from "@/components/whiteboard/Shape";
 import { BoardHeader } from "@/components/whiteboard/BoardHeader";
 import { Toolbar } from "@/components/whiteboard/Toolbar";
+import { BoardCanvas } from "@/components/whiteboard/BoardCanvas";
+import { SelectionBar } from "@/components/whiteboard/SelectionBar";
+import { useCamera } from "@/hooks/useCamera";
+import { useHistory } from "@/hooks/useHistory";
+import { useItemActions } from "@/hooks/useItemActions";
 import { EditSheet } from "@/components/whiteboard/EditSheet";
 import { LinkPrompt } from "@/components/whiteboard/LinkPrompt";
 import { MediaLayer } from "@/components/whiteboard/MediaLayer";
 import { handlesOf, resized } from "@/components/whiteboard/model";
-import {
-  isAudio,
-  isVideo,
-  actionAt,
-  isTextFile,
-  isImg,
-  pathOf,
-  strip,
-  segD,
-} from "@/components/whiteboard/utils";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { actionAt, strip, segD } from "@/components/whiteboard/utils";
 
 function BoardScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -57,20 +50,28 @@ function BoardScreen() {
   const [draft, setDraft] = useState<any>(null),
     [over, setOver] = useState<Record<string, any>>({}),
     [pend, setPend] = useState<any[]>([]);
-  const [, tick] = useState(0);
   const [open, setOpen] = useState(false),
     [grp, setGrp] = useState<null | "draw" | "obj">(null),
     [sheet, setSheet] = useState<null | "size" | "scale" | "color">(null);
   const [linkPrompt, setLinkPrompt] = useState(false);
   const dim = useRef({ w: 360, h: 640 });
-  const [cam, setCam] = useState({ x: 0, y: 0, k: 1 }),
-    pinch = useRef<any>(null);
+  const {
+    cam,
+    setCam,
+    pinch,
+    setZoom,
+    toWorld: W,
+    pinchTo: pinchFn,
+    wheel,
+  } = useCamera(dim, () => {
+    live.current = null;
+    setDraft(null);
+    setOver({});
+  });
   const live = useRef<any>(null),
     gone = useRef(new Set<string>()),
     H = useRef<any>({});
-  const undoS = useRef<any[]>([]),
-    redoS = useRef<any[]>([]),
-    origin = useRef({ x: 0, y: 0 }),
+  const origin = useRef({ x: 0, y: 0 }),
     lastTap = useRef({ id: "", t: 0 });
 
   const pan = useRef(
@@ -110,10 +111,8 @@ function BoardScreen() {
     fo = form ? map.get(form.id) : null;
   const top = (p: Pt, noArrow = false) =>
     [...objs].reverse().find((o) => !(noArrow && isArrow(o.kind)) && hit(o, p, map));
-  const push = (e: any) => {
-    undoS.current.push(e);
-    redoS.current = [];
-  };
+  const history = useHistory({ addS, rmS, addO, rmO, patchO, boardId: board?._id, gone });
+  const { push } = history;
 
   const create = async (isS: boolean, data: any) => {
     const tmp = { _id: "t" + Math.random(), ...data, isS };
@@ -124,35 +123,6 @@ function BoardScreen() {
       return ref;
     } finally {
       setPend((v) => v.filter((x) => x !== tmp));
-    }
-  };
-  const apply = async (e: any, undoing: boolean) => {
-    if (e.op === "batch") {
-      for (const it of undoing ? [...e.items].reverse() : e.items) await apply(it, undoing);
-      return;
-    }
-    if (e.op === "upd") return patchO({ id: e.ref.id, patch: undoing ? e.before : e.after });
-    if ((e.op === "add") === !undoing)
-      e.ref.id = String(await (e.s ? addS : addO)({ boardId: board!._id, ...e.data }));
-    else {
-      gone.current.add(e.ref.id);
-      await (e.s ? rmS : rmO)({ id: e.ref.id });
-    }
-  };
-  const doUndo = async () => {
-    const e = undoS.current.pop();
-    if (e) {
-      await apply(e, true);
-      redoS.current.push(e);
-      tick((n) => n + 1);
-    }
-  };
-  const doRedo = async () => {
-    const e = redoS.current.pop();
-    if (e) {
-      await apply(e, false);
-      undoS.current.push(e);
-      tick((n) => n + 1);
     }
   };
   const del = (o: any, isS: boolean) => {
@@ -168,66 +138,6 @@ function BoardScreen() {
       setCtl(false);
     }
   };
-  const openEdit = (o: any) =>
-    setForm({
-      id: o._id,
-      o,
-      text: o.text ?? "",
-      code: o.code ?? "",
-      s: { ...o.style },
-      show: !!o.showContent,
-      url: o.url ?? "",
-    });
-  const save = async () => {
-    const o = form.o;
-    const name: string = fo?.file?.name ?? "";
-    let code = form.code;
-    if (o.kind === "pin" && form.show && isTextFile(name) && !code && fo?.fileUrl) {
-      code = await (await fetch(fo.fileUrl)).text();
-    }
-    const after: any = {
-      text: form.text,
-      code,
-      style: form.s,
-      showContent: form.show,
-      ...(o.kind === "link" ? { url: form.url } : {}),
-    };
-    const before: any = {
-      text: o.text ?? "",
-      code: o.code ?? "",
-      style: o.style,
-      showContent: !!o.showContent,
-    };
-    if ((o.kind === "pin" || o.kind === "link") && form.show !== !!o.showContent) {
-      // switching between file chip and media view resizes the item
-      Object.assign(
-        after,
-        form.show
-          ? { w: Math.max(o.w, 240), h: isImg(name) ? 160 : isVideo(name) ? 180 : 200 }
-          : { w: 230, h: 46 },
-      );
-      Object.assign(before, { w: o.w, h: o.h });
-    }
-    push({ ref: { id: o._id }, op: "upd", before, after });
-    patchO({ id: o._id, patch: after });
-    setForm(null);
-  };
-  const attach = async () => {
-    const r = await DocumentPicker.getDocumentAsync({ copyToCacheDirectory: true });
-    if (r.canceled) return;
-    const a = r.assets[0],
-      blob = await (await fetch(a.uri)).blob();
-    const res = await fetch(await upUrl(), {
-      method: "POST",
-      headers: { "Content-Type": a.mimeType ?? "application/octet-stream" },
-      body: blob,
-    });
-    await patchO({
-      id: form.id,
-      patch: { file: { storageId: (await res.json()).storageId, name: a.name } },
-    });
-  };
-
   const erase = (p: Pt) => {
     const r = cfg.eraser.width;
     for (const s of strokes) {
@@ -301,132 +211,24 @@ function BoardScreen() {
       setTool("pen");
     }
   };
-  const mid = () => W({ x: dim.current.w / 2, y: dim.current.h / 2 });
-  const place = async (data: any, edit: boolean) => {
-    const ref = await create(false, data);
-    setSel(ref.id);
-    setTool("select");
-    setGrp(null);
-    setSheet(null);
-    if (edit)
-      setForm({
-        id: ref.id,
-        o: { ...data, _id: ref.id },
-        text: data.text ?? "",
-        code: data.code ?? "",
-        s: { ...data.style },
-      });
-  };
-  const addText = () => {
-    const m = mid();
-    place(
-      {
-        kind: "text",
-        x: m.x - 100,
-        y: m.y - 20,
-        w: 200,
-        h: 40,
-        text: "Text",
-        style: { ...defStyle, stroke: "none", fill: "none", fs: 22 },
-      },
-      true,
-    );
-  };
-  const addTip = () => {
-    const m = mid();
-    place(
-      {
-        kind: "tip",
-        x: m.x + 30,
-        y: m.y - 60,
-        w: -30,
-        h: 60,
-        text: "Hint",
-        style: { ...defStyle, fs: 14 },
-      },
-      true,
-    );
-  };
-  const addCode = () => {
-    const m = mid();
-    place(
-      {
-        kind: "code",
-        x: m.x - 150,
-        y: m.y - 100,
-        w: 300,
-        h: 200,
-        text: "snippet.txt",
-        code: "",
-        style: { ...defStyle, fill: "#F9FAFB", sw: 1, fs: 11 },
-      },
-      true,
-    );
-  };
-  const addLink = (raw: string) => {
-    const url = /^https?:\/\//i.test(raw.trim()) ? raw.trim() : `https://${raw.trim()}`;
-    const m = mid();
-    place(
-      {
-        kind: "link",
-        url,
-        x: m.x - 115,
-        y: m.y - 23,
-        w: 230,
-        h: 46,
-        showContent: false,
-        style: { ...defStyle, fill: "none" },
-      },
-      false,
-    );
-  };
-  const addPin = async (mime = "*/*") => {
-    if (mime === "link") {
-      setLinkPrompt(true);
-      return;
-    }
-    const r = await DocumentPicker.getDocumentAsync({ type: mime, copyToCacheDirectory: true });
-    if (r.canceled) return;
-    const a = r.assets[0];
-    const blob = await (await fetch(a.uri)).blob();
-    const res = await fetch(await upUrl(), {
-      method: "POST",
-      headers: { "Content-Type": a.mimeType ?? "application/octet-stream" },
-      body: blob,
+  const { openEdit, save, attach, addText, addTip, addCode, addLink, addPin, loadText } =
+    useItemActions({
+      board,
+      upUrl,
+      patchO,
+      form,
+      setForm,
+      fo,
+      push,
+      create,
+      setSel,
+      setTool,
+      setGrp,
+      setSheet,
+      setLinkPrompt,
+      dim,
+      W,
     });
-    const file = { storageId: (await res.json()).storageId, name: a.name };
-    const m = mid();
-    const audio = isAudio(a.name);
-    // New files start as a compact file chip (audio starts as a player); "Show content" in the editor reveals the media.
-    place(
-      {
-        kind: "pin",
-        x: m.x - (audio ? 135 : 115),
-        y: m.y - (audio ? 42 : 23),
-        w: audio ? 270 : 230,
-        h: audio ? 84 : 46,
-        file,
-        showContent: false,
-        style: { ...defStyle, fill: "none" },
-      },
-      false,
-    );
-  };
-  const loadText = async () => {
-    const r = await DocumentPicker.getDocumentAsync({ type: "text/*", copyToCacheDirectory: true });
-    if (r.canceled) return;
-    const a = r.assets[0],
-      t = await (await fetch(a.uri)).text();
-    setForm((f: any) => ({ ...f, code: t, text: a.name }));
-  };
-  const setZoom = (pct: number) => {
-    const k = pct / 100,
-      cx = dim.current.w / 2,
-      cy = dim.current.h / 2,
-      wx = (cx - cam.x) / cam.k,
-      wy = (cy - cam.y) / cam.k;
-    setCam({ k, x: cx - wx * k, y: cy - wy * k });
-  };
   const setColor = (x: string) =>
     setCfg(
       Object.fromEntries(
@@ -436,34 +238,6 @@ function BoardScreen() {
         ]),
       ),
     );
-  const W = (p: Pt): Pt => ({ x: (p.x - cam.x) / cam.k, y: (p.y - cam.y) / cam.k });
-  const pinchFn = (t: any[]) => {
-    const a = t[0],
-      b = t[1],
-      d = Math.hypot(a.locationX - b.locationX, a.locationY - b.locationY) || 1;
-    const m = { x: (a.locationX + b.locationX) / 2, y: (a.locationY + b.locationY) / 2 };
-    if (!pinch.current) {
-      live.current = null;
-      setDraft(null);
-      setOver({});
-      pinch.current = { d, m, cam };
-      return;
-    }
-    const s = pinch.current,
-      k = Math.min(5, Math.max(0.2, (s.cam.k * d) / s.d));
-    const wx = (s.m.x - s.cam.x) / s.cam.k,
-      wy = (s.m.y - s.cam.y) / s.cam.k;
-    setCam({ k, x: m.x - wx * k, y: m.y - wy * k });
-  };
-  const wheel = (e: any) => {
-    const r = e.currentTarget?.getBoundingClientRect?.(),
-      mx = (e.clientX ?? 0) - (r?.left ?? 0),
-      my = (e.clientY ?? 0) - (r?.top ?? 0);
-    const k = Math.min(5, Math.max(0.2, cam.k * (e.deltaY < 0 ? 1.1 : 1 / 1.1))),
-      wx = (mx - cam.x) / cam.k,
-      wy = (my - cam.y) / cam.k;
-    setCam({ k, x: mx - wx * k, y: my - wy * k });
-  };
   const down = (sp: Pt) => {
     const p = W(sp);
     if (!board || form) return;
@@ -623,32 +397,6 @@ function BoardScreen() {
         h: Math.abs(a.y - b.y),
       };
     })();
-  const line = (s: any, k: any) => (
-    <Path
-      key={k}
-      d={pathOf(s.points)}
-      stroke={T.vis(s.color)}
-      strokeWidth={s.width}
-      fill="none"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      opacity={s.tool === "wood" ? 0.9 : s.tool === "marker" ? 0.4 : 1}
-    />
-  );
-  const grain = (s: any, k: any) =>
-    s.tool === "wood" ? (
-      <Path
-        key={k + "g"}
-        d={pathOf(s.points)}
-        stroke="#FFFFFF"
-        strokeOpacity={0.4}
-        strokeWidth={Math.max(1, s.width * 0.45)}
-        strokeDasharray="1 6"
-        fill="none"
-        strokeLinecap="round"
-      />
-    ) : null;
-
   return (
     <View
       style={{ flex: 1 }}
@@ -656,90 +404,20 @@ function BoardScreen() {
         dim.current = { w: e.nativeEvent.layout.width, h: e.nativeEvent.layout.height };
       }}
     >
-      <View
-        {...pan.panHandlers}
-        {...({ onWheel: wheel } as any)}
-        collapsable={false}
-        style={{ flex: 1, backgroundColor: T.canvas }}
-      >
-        <Svg pointerEvents="none" width="100%" height="100%" style={StyleSheet.absoluteFill}>
-          <G transform={`translate(${cam.x} ${cam.y}) scale(${cam.k})`}>
-            {strokes.map((s, i) => [line(s, s._id ?? i), grain(s, s._id ?? i)])}
-            {draft?.k === "draw" && [
-              line(
-                {
-                  tool,
-                  color: c.color,
-                  width: c.width,
-                  points: draft.pts.length === 2 ? [...draft.pts, ...draft.pts] : draft.pts,
-                },
-                "live",
-              ),
-              grain(
-                {
-                  tool,
-                  width: c.width,
-                  points: draft.pts.length === 2 ? [...draft.pts, ...draft.pts] : draft.pts,
-                },
-                "live",
-              ),
-            ]}
-            {draft?.k === "cut" && (
-              <Path
-                d={pathOf(draft.pts.length === 2 ? [...draft.pts, ...draft.pts] : draft.pts)}
-                stroke={T.canvas}
-                strokeWidth={c.width}
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            )}
-            {objs.map((o) => (
-              <Shape key={o._id} o={o} m={map} />
-            ))}
-            {ghost && <Shape o={ghost} m={map} />}
-            {sb && (
-              <>
-                {isArrow(selO.kind) || selO.kind === "tip" ? (
-                  <Rect
-                    x={sb.x - 4}
-                    y={sb.y - 4}
-                    width={sb.w + 8}
-                    height={sb.h + 8}
-                    fill="none"
-                    stroke={BLUE}
-                    strokeDasharray="5 4"
-                  />
-                ) : (
-                  <Polygon
-                    points={["nw", "ne", "se", "sw"]
-                      .map((id) => handlesOf(selO, map).find((h) => h.id === id)!)
-                      .map((h) => `${h.x},${h.y}`)
-                      .join(" ")}
-                    fill="none"
-                    stroke={BLUE}
-                    strokeDasharray="5 4"
-                  />
-                )}
-                {selO.kind !== "tip" &&
-                  handlesOf(selO, map).map((h) => (
-                    <Rect
-                      key={h.id}
-                      x={h.x - 6 / cam.k}
-                      y={h.y - 6 / cam.k}
-                      width={12 / cam.k}
-                      height={12 / cam.k}
-                      rx={6 / cam.k}
-                      fill={h.id === "rot" ? BLUE : "#fff"}
-                      stroke={BLUE}
-                      strokeWidth={2 / cam.k}
-                    />
-                  ))}
-              </>
-            )}
-          </G>
-        </Svg>
-      </View>
+      <BoardCanvas
+        strokes={strokes}
+        draft={draft}
+        tool={tool}
+        c={c}
+        objs={objs}
+        map={map}
+        ghost={ghost}
+        sb={sb}
+        selO={selO}
+        cam={cam}
+        pan={pan}
+        wheel={wheel}
+      />
 
       <MediaLayer objs={objs} cam={cam} />
 
@@ -756,8 +434,8 @@ function BoardScreen() {
         tool={tool}
         cfg={cfg}
         zoomPct={Math.round(cam.k * 100)}
-        canUndo={undoS.current.length > 0}
-        canRedo={redoS.current.length > 0}
+        canUndo={history.canUndo}
+        canRedo={history.canRedo}
         top0={ins.top + 60}
         safe={{ left: ins.left, right: ins.right, bottom: ins.bottom }}
         anchor={st.toolbarAnchor}
@@ -766,8 +444,8 @@ function BoardScreen() {
         menu={{ open, setOpen, group: grp, setGroup: setGrp, sheet, setSheet }}
         actions={{
           setTool,
-          undo: doUndo,
-          redo: doRedo,
+          undo: history.undo,
+          redo: history.redo,
           addText,
           addTip,
           addCode,
@@ -778,62 +456,17 @@ function BoardScreen() {
         }}
       />
 
-      {selO && tool === "select" && !form && (
-        <View
-          style={[
-            card,
-            {
-              bottom: hz && st.toolbarAnchor.startsWith("bottom") ? 72 : 16,
-              alignSelf: "center",
-              flexDirection: "row",
-              gap: 16,
-              paddingHorizontal: 20,
-            },
-          ]}
-        >
-          {selO.kind === "tip" && (
-            <Pressable onPress={() => patchO({ id: selO._id, patch: { hidden: !selO.hidden } })}>
-              <Text style={{ color: BLUE, fontWeight: "800" }}>
-                {selO.hidden ? "Show" : "Hide"}
-              </Text>
-            </Pressable>
-          )}
-          {(selO.kind === "pin" || selO.kind === "image") && selO.fileUrl && (
-            <Pressable onPress={() => Linking.openURL(selO.fileUrl)}>
-              <Text style={{ color: BLUE, fontWeight: "800" }}>Open</Text>
-            </Pressable>
-          )}
-          {selO.kind === "code" && (
-            <Pressable onPress={() => Clipboard.setStringAsync(selO.code ?? "")}>
-              <Text style={{ color: BLUE, fontWeight: "800" }}>Copy</Text>
-            </Pressable>
-          )}
-          {selO.kind !== "tip" && !isArrow(selO.kind) && (
-            <>
-              <Pressable onPress={() => change(selO, { flipX: !selO.flipX })}>
-                <MaterialCommunityIcons name="flip-horizontal" size={22} color={BLUE} />
-              </Pressable>
-              <Pressable onPress={() => change(selO, { flipY: !selO.flipY })}>
-                <MaterialCommunityIcons name="flip-vertical" size={22} color={BLUE} />
-              </Pressable>
-              <Pressable
-                onPress={() => change(selO, { rot: ((((selO.rot ?? 0) - 90) % 360) + 360) % 360 })}
-              >
-                <MaterialCommunityIcons name="rotate-left" size={22} color={BLUE} />
-              </Pressable>
-              <Pressable onPress={() => change(selO, { rot: ((selO.rot ?? 0) + 90) % 360 })}>
-                <MaterialCommunityIcons name="rotate-right" size={22} color={BLUE} />
-              </Pressable>
-            </>
-          )}
-          <Pressable onPress={() => openEdit(selO)}>
-            <Text style={{ color: BLUE, fontWeight: "800" }}>Edit</Text>
-          </Pressable>
-          <Pressable onPress={() => del(selO, false)}>
-            <Text style={{ color: "#C0392B", fontWeight: "800" }}>Delete</Text>
-          </Pressable>
-        </View>
-      )}
+      <SelectionBar
+        visible={!!selO && tool === "select" && !form}
+        selO={selO}
+        card={card}
+        hz={hz}
+        st={st}
+        change={change}
+        openEdit={openEdit}
+        del={del}
+        patchO={patchO}
+      />
 
       <LinkPrompt
         visible={linkPrompt}
