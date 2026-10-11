@@ -99,7 +99,7 @@ export function toLocal(o: any, p: Pt): Pt {
 }
 
 /** Drag handles: 8 edge/corner points plus a rotate handle for boxes, both ends for arrows and lines. */
-export function handlesOf(o: any, m: Map<string, any>): { id: string; x: number; y: number }[] {
+function allHandles(o: any, m: Map<string, any>): { id: string; x: number; y: number }[] {
   if (isArrow(o.kind)) {
     const { a, b } = ends(o, m);
     return [
@@ -137,6 +137,20 @@ export function resized(o: any, handle: string, p: Pt) {
     return { rot: Math.round((Math.atan2(p.y - c.y, p.x - c.x) * 180) / Math.PI + 90) };
   const q = rotPt(p, c, -(o.rot ?? 0)),
     b = box(o);
+  if (isPinLike(o)) {
+    // Pins scale proportionally from a corner; the opposite corner stays fixed.
+    const west = handle.includes("w"),
+      north = handle.includes("n");
+    const fx = west ? b.x + b.w : b.x,
+      fy = north ? b.y + b.h : b.y;
+    const k = Math.max(Math.abs(q.x - fx) / b.w, Math.abs(q.y - fy) / b.h, 0.3);
+    const pw = b.w * k,
+      ph = b.h * k;
+    const pl = west ? fx - pw : fx,
+      pt = north ? fy - ph : fy;
+    const pm = rotPt({ x: pl + pw / 2, y: pt + ph / 2 }, c, o.rot ?? 0);
+    return { x: pm.x - pw / 2, y: pm.y - ph / 2, w: pw, h: ph };
+  }
   let l = b.x,
     t = b.y,
     r = b.x + b.w,
@@ -149,4 +163,13 @@ export function resized(o: any, handle: string, p: Pt) {
     h = d - t,
     mid = rotPt({ x: l + w / 2, y: t + h / 2 }, c, o.rot ?? 0);
   return { x: mid.x - w / 2, y: mid.y - h / 2, w, h };
+}
+
+/** Pins, file chips and images: scalable only from the corners. */
+export const isPinLike = (o: any) => o.kind === "pin" || o.kind === "image";
+
+/** Drag handles shown for a selected item (corner handles only for pins). */
+export function handlesOf(o: any, m: Map<string, any>) {
+  const all = allHandles(o, m);
+  return isPinLike(o) ? all.filter((h) => h.id.length === 2 || h.id === "rot") : all;
 }
