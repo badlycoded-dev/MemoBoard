@@ -2300,3 +2300,205 @@
 {"_e":"metro:bundling:progress","_t":1791714439397,"id":"5","progress":0.999,"total":133,"current":132}
 {"_e":"metro:bundling:progress","_t":1791714439515,"id":"5","progress":0.999,"total":133,"current":133}
 {"_e":"metro:bundling:done","_t":1791714440368,"id":"5","total":133,"ms":2086.129}
+{"_e":"root:init","_t":1791714473967,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791714473968,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791714473972,"mode":"development","files":["../..\\..\\.env.local"],"env":{"CONVEX_DEPLOYMENT":"dev:agreeable-spaniel-360","EXPO_PUBLIC_CONVEX_SITE_URL":"https://agreeable-spaniel-360.eu-west-1.convex.site","EXPO_PUBLIC_CONVEX_URL":"https://agreeable-spaniel-360.eu-west-1.convex.cloud"}}
+{"_e":"devserver:start","_t":1791714474615,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\src\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791714475185,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":true,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791714475620,"plugins":[]}
+{"_e":"metro:instantiate","_t":1791714484162,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791714486454,"id":"2","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714486455,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791714486456,"id":"3","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791714486456,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714486456,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714486459,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714486459,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714486559,"id":"2","progress":0.2304,"total":25,"current":12}
+{"_e":"metro:bundling:progress","_t":1791714486559,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714486659,"id":"2","progress":0.2304,"total":129,"current":36}
+{"_e":"metro:bundling:progress","_t":1791714486659,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714486759,"id":"2","progress":0.2304,"total":220,"current":99}
+{"_e":"metro:bundling:progress","_t":1791714486759,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714486859,"id":"2","progress":0.2304,"total":220,"current":99}
+{"_e":"metro:bundling:progress","_t":1791714486859,"id":"3","progress":0.14892347191567948,"total":298,"current":115}
+{"_e":"metro:bundling:progress","_t":1791714486959,"id":"2","progress":0.3040440213119049,"total":321,"current":177}
+{"_e":"metro:bundling:progress","_t":1791714486959,"id":"3","progress":0.14892347191567948,"total":298,"current":115}
+{"_e":"metro:bundling:progress","_t":1791714487059,"id":"2","progress":0.3040440213119049,"total":321,"current":177}
+{"_e":"metro:bundling:progress","_t":1791714487059,"id":"3","progress":0.1883232467070132,"total":371,"current":161}
+{"_e":"metro:bundling:progress","_t":1791714487160,"id":"2","progress":0.3040440213119049,"total":321,"current":177}
+{"_e":"metro:bundling:progress","_t":1791714487160,"id":"3","progress":0.30239237748017206,"total":511,"current":281}
+{"_e":"metro:bundling:progress","_t":1791714487268,"id":"2","progress":0.3040440213119049,"total":321,"current":177}
+{"_e":"metro:bundling:progress","_t":1791714487268,"id":"3","progress":0.35260666023005893,"total":549,"current":326}
+{"_e":"metro:bundling:progress","_t":1791714487368,"id":"2","progress":0.5116397589579967,"total":569,"current":407}
+{"_e":"metro:bundling:progress","_t":1791714487368,"id":"3","progress":0.35260666023005893,"total":549,"current":326}
+{"_e":"metro:bundling:progress","_t":1791714487468,"id":"2","progress":0.5116397589579967,"total":569,"current":407}
+{"_e":"metro:bundling:progress","_t":1791714487468,"id":"3","progress":0.4831945270672218,"total":656,"current":456}
+{"_e":"metro:bundling:progress","_t":1791714487570,"id":"2","progress":0.5178618219931871,"total":642,"current":462}
+{"_e":"metro:bundling:progress","_t":1791714487570,"id":"3","progress":0.4831945270672218,"total":656,"current":456}
+{"_e":"metro:bundling:progress","_t":1791714487684,"id":"2","progress":0.6006250000000001,"total":680,"current":527}
+{"_e":"metro:bundling:progress","_t":1791714487684,"id":"3","progress":0.4831945270672218,"total":656,"current":456}
+{"_e":"metro:bundling:progress","_t":1791714487784,"id":"2","progress":0.6006250000000001,"total":680,"current":527}
+{"_e":"metro:bundling:progress","_t":1791714487785,"id":"3","progress":0.5649033298850255,"total":781,"current":587}
+{"_e":"metro:bundling:progress","_t":1791714487884,"id":"2","progress":0.6006250000000001,"total":680,"current":527}
+{"_e":"metro:bundling:progress","_t":1791714487884,"id":"3","progress":0.6224248276424339,"total":886,"current":699}
+{"_e":"metro:bundling:progress","_t":1791714487984,"id":"2","progress":0.7768263874427321,"total":784,"current":691}
+{"_e":"metro:bundling:progress","_t":1791714487984,"id":"3","progress":0.6224248276424339,"total":886,"current":699}
+{"_e":"metro:bundling:progress","_t":1791714488084,"id":"2","progress":0.7768263874427321,"total":784,"current":691}
+{"_e":"metro:bundling:progress","_t":1791714488084,"id":"3","progress":0.7767579788437723,"total":986,"current":869}
+{"_e":"metro:bundling:progress","_t":1791714488184,"id":"2","progress":0.7768263874427321,"total":923,"current":800}
+{"_e":"metro:bundling:progress","_t":1791714488184,"id":"3","progress":0.7767579788437723,"total":986,"current":869}
+{"_e":"metro:bundling:progress","_t":1791714488284,"id":"2","progress":0.9062125188251314,"total":999,"current":951}
+{"_e":"metro:bundling:progress","_t":1791714488284,"id":"3","progress":0.7767579788437723,"total":986,"current":869}
+{"_e":"metro:bundling:progress","_t":1791714488384,"id":"2","progress":0.9062125188251314,"total":1060,"current":1000}
+{"_e":"metro:bundling:progress","_t":1791714488384,"id":"3","progress":0.7767579788437723,"total":986,"current":869}
+{"_e":"metro:bundling:progress","_t":1791714488484,"id":"2","progress":0.9062125188251314,"total":1060,"current":1000}
+{"_e":"metro:bundling:progress","_t":1791714488484,"id":"3","progress":0.9573761720424562,"total":1114,"current":1090}
+{"_e":"metro:bundling:progress","_t":1791714488584,"id":"2","progress":0.9836737436173072,"total":1098,"current":1089}
+{"_e":"metro:bundling:progress","_t":1791714488584,"id":"3","progress":0.9573761720424562,"total":1114,"current":1090}
+{"_e":"metro:bundling:progress","_t":1791714488687,"id":"2","progress":0.9836737436173072,"total":1098,"current":1089}
+{"_e":"metro:bundling:progress","_t":1791714488687,"id":"3","progress":0.9894459841549788,"total":1134,"current":1128}
+{"_e":"metro:bundling:progress","_t":1791714488790,"id":"2","progress":0.9909379715080255,"total":1101,"current":1096}
+{"_e":"metro:bundling:progress","_t":1791714488791,"id":"3","progress":0.9894459841549788,"total":1134,"current":1128}
+{"_e":"metro:bundling:progress","_t":1791714489293,"id":"2","progress":0.9909379715080255,"total":1101,"current":1096}
+{"_e":"metro:bundling:progress","_t":1791714489293,"id":"3","progress":0.9929577683839883,"total":1134,"current":1130}
+{"_e":"metro:bundling:progress","_t":1791714489393,"id":"2","progress":0.9909379715080255,"total":1101,"current":1096}
+{"_e":"metro:bundling:progress","_t":1791714489393,"id":"3","progress":0.9929577683839883,"total":1140,"current":1134}
+{"_e":"metro:bundling:progress","_t":1791714489509,"id":"2","progress":0.999,"total":1107,"current":1107}
+{"_e":"metro:bundling:progress","_t":1791714489509,"id":"3","progress":0.9929577683839883,"total":1140,"current":1134}
+{"_e":"metro:bundling:progress","_t":1791714489608,"id":"2","progress":0.999,"total":1111,"current":1109}
+{"_e":"metro:bundling:progress","_t":1791714489608,"id":"3","progress":0.9929577683839883,"total":1140,"current":1134}
+{"_e":"metro:bundling:done","_t":1791714489664,"id":"3","total":1140,"ms":3208.3743}
+{"_e":"metro:bundling:progress","_t":1791714489665,"id":"2","progress":0.999,"total":1111,"current":1109}
+{"_e":"metro:bundling:progress","_t":1791714490389,"id":"2","progress":0.999,"total":1111,"current":1109}
+{"_e":"metro:bundling:progress","_t":1791714490399,"id":"2","progress":0.999,"total":1112,"current":1112}
+{"_e":"metro:bundling:done","_t":1791714490526,"id":"2","total":1112,"ms":4071.873}
+{"_e":"metro:bundling:started","_t":1791714490562,"id":"4","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714490562,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714490567,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714490667,"id":"4","progress":0.04064776274713839,"total":124,"current":25}
+{"_e":"metro:bundling:progress","_t":1791714490767,"id":"4","progress":0.19017468483238167,"total":266,"current":116}
+{"_e":"metro:bundling:progress","_t":1791714490867,"id":"4","progress":0.2658305010667725,"total":417,"current":215}
+{"_e":"metro:bundling:progress","_t":1791714490968,"id":"4","progress":0.3980160376789698,"total":531,"current":335}
+{"_e":"metro:bundling:progress","_t":1791714491068,"id":"4","progress":0.5098920779208633,"total":654,"current":467}
+{"_e":"metro:bundling:progress","_t":1791714491168,"id":"4","progress":0.6966333932667864,"total":762,"current":636}
+{"_e":"metro:bundling:progress","_t":1791714491268,"id":"4","progress":0.6966333932667864,"total":853,"current":711}
+{"_e":"metro:bundling:progress","_t":1791714491368,"id":"4","progress":0.7985513807152557,"total":987,"current":882}
+{"_e":"metro:bundling:progress","_t":1791714491468,"id":"4","progress":0.9765033057851239,"total":1100,"current":1087}
+{"_e":"metro:bundling:done","_t":1791714491533,"id":"4","total":1100,"ms":971.5835}
+{"_e":"metro:client_log","_t":1791714492052,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791714492055,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791714492171,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791714492182,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791714502451,"level":"warn","data":["An error occurred in the <SIcon> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791714502530,"level":"error","data":["[RangeError: Invalid code point NaN]","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 294 |\u001b[39m       textAnchor\u001b[33m=\u001b[39m\u001b[32m\"middle\"\u001b[39m\n \u001b[90m 295 |\u001b[39m     \u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 296 |\u001b[39m       {\u001b[33mString\u001b[39m\u001b[33m.\u001b[39mfromCodePoint(code)}\n \u001b[90m     |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 297 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mSText\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 298 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 299 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  SIcon (src\\components\\whiteboard\\Shape.tsx:296:14)\u001b[39m","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 330 |\u001b[39m       ) \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m}\n \u001b[90m 331 |\u001b[39m       {acts\u001b[33m.\u001b[39mmap((act\u001b[33m,\u001b[39m i) \u001b[33m=>\u001b[39m (\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 332 |\u001b[39m         \u001b[33m<\u001b[39m\u001b[33mSIcon\u001b[39m\n \u001b[90m     |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 333 |\u001b[39m           key\u001b[33m=\u001b[39m{act}\n \u001b[90m 334 |\u001b[39m           name\u001b[33m=\u001b[39m{\u001b[33mACTION_ICON\u001b[39m[act]}\n \u001b[90m 335 |\u001b[39m           x\u001b[33m=\u001b[39m{b\u001b[33m.\u001b[39mx \u001b[33m+\u001b[39m b\u001b[33m.\u001b[39mw \u001b[33m-\u001b[39m \u001b[35m13\u001b[39m \u001b[33m-\u001b[39m \u001b[35m26\u001b[39m \u001b[33m*\u001b[39m i}\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  acts.map$argument_0 (src\\components\\whiteboard\\Shape.tsx:332:9)\u001b[39m\n\u001b[90m  ActionStrip (src\\components\\whiteboard\\Shape.tsx:331:12)\u001b[39m\n\u001b[90m  ShapeBody (src\\components\\whiteboard\\Shape.tsx:103:9)\u001b[39m\n\u001b[90m  Shape (src\\components\\whiteboard\\Shape.tsx:347:16)\u001b[39m\n\u001b[90m  objs.map$argument_0 (src\\app\\board\\[id].tsx:697:15)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:696:19)\u001b[39m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:865:7)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791714516882,"id":"c","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714516882,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791714516883,"id":"d","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791714516883,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714516883,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714516885,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714516885,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714516909,"id":"d","total":1,"ms":26.5609}
+{"_e":"metro:bundling:progress","_t":1791714516910,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714517047,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714517343,"id":"c","total":1,"ms":460.6011}
+{"_e":"metro:bundling:started","_t":1791714517368,"id":"e","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714517368,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714517454,"id":"e","total":1,"ms":85.3064}
+{"_e":"metro:client_log","_t":1791714517684,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791714517684,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791714518540,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791714518545,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791714518718,"level":"warn","data":["An error occurred in the <SIcon> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791714518773,"level":"error","data":["[RangeError: Invalid code point NaN]","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 294 |\u001b[39m       textAnchor\u001b[33m=\u001b[39m\u001b[32m\"middle\"\u001b[39m\n \u001b[90m 295 |\u001b[39m     \u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 296 |\u001b[39m       {\u001b[33mString\u001b[39m\u001b[33m.\u001b[39mfromCodePoint(code)}\n \u001b[90m     |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 297 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mSText\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 298 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 299 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  SIcon (src\\components\\whiteboard\\Shape.tsx:296:14)\u001b[39m","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 330 |\u001b[39m       ) \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m}\n \u001b[90m 331 |\u001b[39m       {acts\u001b[33m.\u001b[39mmap((act\u001b[33m,\u001b[39m i) \u001b[33m=>\u001b[39m (\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 332 |\u001b[39m         \u001b[33m<\u001b[39m\u001b[33mSIcon\u001b[39m\n \u001b[90m     |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 333 |\u001b[39m           key\u001b[33m=\u001b[39m{act}\n \u001b[90m 334 |\u001b[39m           name\u001b[33m=\u001b[39m{\u001b[33mACTION_ICON\u001b[39m[act]}\n \u001b[90m 335 |\u001b[39m           x\u001b[33m=\u001b[39m{b\u001b[33m.\u001b[39mx \u001b[33m+\u001b[39m b\u001b[33m.\u001b[39mw \u001b[33m-\u001b[39m \u001b[35m13\u001b[39m \u001b[33m-\u001b[39m \u001b[35m26\u001b[39m \u001b[33m*\u001b[39m i}\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  acts.map$argument_0 (src\\components\\whiteboard\\Shape.tsx:332:9)\u001b[39m\n\u001b[90m  ActionStrip (src\\components\\whiteboard\\Shape.tsx:331:12)\u001b[39m\n\u001b[90m  ShapeBody (src\\components\\whiteboard\\Shape.tsx:103:9)\u001b[39m\n\u001b[90m  Shape (src\\components\\whiteboard\\Shape.tsx:347:16)\u001b[39m\n\u001b[90m  objs.map$argument_0 (src\\app\\board\\[id].tsx:697:15)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:696:19)\u001b[39m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:865:7)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791714580882,"id":"m","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714580882,"id":"m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791714580883,"id":"n","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791714580883,"id":"m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714580883,"id":"n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714580928,"id":"n","total":1,"ms":45.6567}
+{"_e":"metro:bundling:progress","_t":1791714580928,"id":"m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714581253,"id":"m","total":1,"ms":370.7737}
+{"_e":"metro:bundling:started","_t":1791714581279,"id":"o","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714581279,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714581334,"id":"o","total":1,"ms":55.0083}
+{"_e":"metro:client_log","_t":1791714581592,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791714581593,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791714581624,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791714581628,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:bundling:started","_t":1791714584108,"id":"r","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714584108,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791714584108,"id":"s","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791714584109,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714584109,"id":"s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714584154,"id":"s","total":1,"ms":45.3979}
+{"_e":"metro:bundling:progress","_t":1791714584154,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714584534,"id":"r","total":1,"ms":425.8269}
+{"_e":"metro:bundling:started","_t":1791714584553,"id":"t","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714584553,"id":"t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714584606,"id":"t","total":1,"ms":52.2186}
+{"_e":"metro:client_log","_t":1791714584852,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791714584853,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791714586074,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791714586079,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791714618107,"level":"warn","data":["An error occurred in the <SIcon> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791714618175,"level":"error","data":["[RangeError: Invalid code point NaN]","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 294 |\u001b[39m       textAnchor\u001b[33m=\u001b[39m\u001b[32m\"middle\"\u001b[39m\n \u001b[90m 295 |\u001b[39m     \u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 296 |\u001b[39m       {\u001b[33mString\u001b[39m\u001b[33m.\u001b[39mfromCodePoint(code)}\n \u001b[90m     |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 297 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mSText\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 298 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 299 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  SIcon (src\\components\\whiteboard\\Shape.tsx:296:14)\u001b[39m","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 330 |\u001b[39m       ) \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m}\n \u001b[90m 331 |\u001b[39m       {acts\u001b[33m.\u001b[39mmap((act\u001b[33m,\u001b[39m i) \u001b[33m=>\u001b[39m (\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 332 |\u001b[39m         \u001b[33m<\u001b[39m\u001b[33mSIcon\u001b[39m\n \u001b[90m     |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 333 |\u001b[39m           key\u001b[33m=\u001b[39m{act}\n \u001b[90m 334 |\u001b[39m           name\u001b[33m=\u001b[39m{\u001b[33mACTION_ICON\u001b[39m[act]}\n \u001b[90m 335 |\u001b[39m           x\u001b[33m=\u001b[39m{b\u001b[33m.\u001b[39mx \u001b[33m+\u001b[39m b\u001b[33m.\u001b[39mw \u001b[33m-\u001b[39m \u001b[35m13\u001b[39m \u001b[33m-\u001b[39m \u001b[35m26\u001b[39m \u001b[33m*\u001b[39m i}\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  acts.map$argument_0 (src\\components\\whiteboard\\Shape.tsx:332:9)\u001b[39m\n\u001b[90m  ActionStrip (src\\components\\whiteboard\\Shape.tsx:331:12)\u001b[39m\n\u001b[90m  ShapeBody (src\\components\\whiteboard\\Shape.tsx:103:9)\u001b[39m\n\u001b[90m  Shape (src\\components\\whiteboard\\Shape.tsx:347:16)\u001b[39m\n\u001b[90m  objs.map$argument_0 (src\\app\\board\\[id].tsx:697:15)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:696:19)\u001b[39m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:865:7)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791714625928,"id":"11","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714625928,"id":"11","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791714625928,"id":"12","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791714625928,"id":"11","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714625928,"id":"12","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714625978,"id":"12","total":1,"ms":50.2479}
+{"_e":"metro:bundling:progress","_t":1791714625979,"id":"11","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714626403,"id":"11","total":1,"ms":474.628}
+{"_e":"metro:bundling:started","_t":1791714626423,"id":"13","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714626423,"id":"13","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714626475,"id":"13","total":1,"ms":52.1304}
+{"_e":"metro:client_log","_t":1791714626779,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791714626779,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791714626817,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791714626821,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791714627319,"level":"warn","data":["An error occurred in the <SIcon> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791714627355,"level":"error","data":["[RangeError: Invalid code point NaN]","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 294 |\u001b[39m       textAnchor\u001b[33m=\u001b[39m\u001b[32m\"middle\"\u001b[39m\n \u001b[90m 295 |\u001b[39m     \u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 296 |\u001b[39m       {\u001b[33mString\u001b[39m\u001b[33m.\u001b[39mfromCodePoint(code)}\n \u001b[90m     |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 297 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mSText\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 298 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 299 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  SIcon (src\\components\\whiteboard\\Shape.tsx:296:14)\u001b[39m","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 330 |\u001b[39m       ) \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m}\n \u001b[90m 331 |\u001b[39m       {acts\u001b[33m.\u001b[39mmap((act\u001b[33m,\u001b[39m i) \u001b[33m=>\u001b[39m (\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 332 |\u001b[39m         \u001b[33m<\u001b[39m\u001b[33mSIcon\u001b[39m\n \u001b[90m     |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 333 |\u001b[39m           key\u001b[33m=\u001b[39m{act}\n \u001b[90m 334 |\u001b[39m           name\u001b[33m=\u001b[39m{\u001b[33mACTION_ICON\u001b[39m[act]}\n \u001b[90m 335 |\u001b[39m           x\u001b[33m=\u001b[39m{b\u001b[33m.\u001b[39mx \u001b[33m+\u001b[39m b\u001b[33m.\u001b[39mw \u001b[33m-\u001b[39m \u001b[35m13\u001b[39m \u001b[33m-\u001b[39m \u001b[35m26\u001b[39m \u001b[33m*\u001b[39m i}\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  acts.map$argument_0 (src\\components\\whiteboard\\Shape.tsx:332:9)\u001b[39m\n\u001b[90m  ActionStrip (src\\components\\whiteboard\\Shape.tsx:331:12)\u001b[39m\n\u001b[90m  ShapeBody (src\\components\\whiteboard\\Shape.tsx:103:9)\u001b[39m\n\u001b[90m  Shape (src\\components\\whiteboard\\Shape.tsx:347:16)\u001b[39m\n\u001b[90m  objs.map$argument_0 (src\\app\\board\\[id].tsx:697:15)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:696:19)\u001b[39m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:865:7)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791714655665,"id":"1b","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714655665,"id":"1b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791714655666,"id":"1c","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791714655666,"id":"1b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791714655666,"id":"1c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714655697,"id":"1c","total":1,"ms":31.5495}
+{"_e":"metro:bundling:progress","_t":1791714655697,"id":"1b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714656024,"id":"1b","total":1,"ms":358.5224}
+{"_e":"metro:bundling:started","_t":1791714656044,"id":"1d","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791714656044,"id":"1d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791714656104,"id":"1d","total":1,"ms":60.0531}
+{"_e":"metro:client_log","_t":1791714656311,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791714656312,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791714656341,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791714656345,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791714743713,"level":"warn","data":["An error occurred in the <BoardScreen> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791714743808,"level":"error","data":["[ReferenceError: MaterialCommunityIcons is not defined]","\n\n\u001b[1mCode: [id].tsx\u001b[22m\n\u001b[0m \u001b[90m 811 |\u001b[39m             \u001b[33m<\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 812 |\u001b[39m               \u001b[33m<\u001b[39m\u001b[33mPressable\u001b[39m onPress\u001b[33m=\u001b[39m{() \u001b[33m=>\u001b[39m change(selO\u001b[33m,\u001b[39m { flipX\u001b[33m:\u001b[39m \u001b[33m!\u001b[39mselO\u001b[33m.\u001b[39mflipX })}\u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 813 |\u001b[39m                 \u001b[33m<\u001b[39m\u001b[33mMaterialCommunityIcons\u001b[39m name\u001b[33m=\u001b[39m\u001b[32m\"flip-horizontal\"\u001b[39m size\u001b[33m=\u001b[39m{\u001b[35m22\u001b[39m} color\u001b[33m=\u001b[39m{\u001b[33mBLUE\u001b[39m} \u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m     |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 814 |\u001b[39m               \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mPressable\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 815 |\u001b[39m               \u001b[33m<\u001b[39m\u001b[33mPressable\u001b[39m onPress\u001b[33m=\u001b[39m{() \u001b[33m=>\u001b[39m change(selO\u001b[33m,\u001b[39m { flipY\u001b[33m:\u001b[39m \u001b[33m!\u001b[39mselO\u001b[33m.\u001b[39mflipY })}\u001b[33m>\u001b[39m\n \u001b[90m 816 |\u001b[39m                 \u001b[33m<\u001b[39m\u001b[33mMaterialCommunityIcons\u001b[39m name\u001b[33m=\u001b[39m\u001b[32m\"flip-vertical\"\u001b[39m size\u001b[33m=\u001b[39m{\u001b[35m22\u001b[39m} color\u001b[33m=\u001b[39m{\u001b[33mBLUE\u001b[39m} \u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:813:18)\u001b[39m","\n\n\u001b[1mCode: [id].tsx\u001b[22m\n\u001b[0m \u001b[90m 863 |\u001b[39m   \u001b[36mreturn\u001b[39m (\n \u001b[90m 864 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33mBoardThemeProvider\u001b[39m mode\u001b[33m=\u001b[39m{theme}\u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 865 |\u001b[39m       \u001b[33m<\u001b[39m\u001b[33mBoardScreen\u001b[39m \u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m     |\u001b[39m       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 866 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mBoardThemeProvider\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 867 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 868 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:865:7)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:client_log","_t":1791715108726,"level":"warn","data":["An error occurred in the <BoardScreen> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791715108880,"level":"error","data":["[TypeError: Cannot read properties of undefined (reading 'color')]","\n\n\u001b[1mCode: [id].tsx\u001b[22m\n\u001b[0m \u001b[90m 608 |\u001b[39m             w\u001b[33m:\u001b[39m ar \u001b[33m?\u001b[39m p\u001b[33m.\u001b[39mx \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39mx \u001b[33m:\u001b[39m \u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mabs(p\u001b[33m.\u001b[39mx \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39mx)\u001b[33m,\u001b[39m\n \u001b[90m 609 |\u001b[39m             h\u001b[33m:\u001b[39m ar \u001b[33m?\u001b[39m p\u001b[33m.\u001b[39my \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39my \u001b[33m:\u001b[39m \u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mabs(p\u001b[33m.\u001b[39my \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39my)\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 610 |\u001b[39m             style\u001b[33m:\u001b[39m { \u001b[33m...\u001b[39mdefStyle\u001b[33m,\u001b[39m stroke\u001b[33m:\u001b[39m c\u001b[33m.\u001b[39mcolor\u001b[33m,\u001b[39m sw\u001b[33m:\u001b[39m c\u001b[33m.\u001b[39mwidth\u001b[33m,\u001b[39m fill\u001b[33m:\u001b[39m \u001b[32m\"none\"\u001b[39m }\u001b[33m,\u001b[39m\n \u001b[90m     |\u001b[39m                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 611 |\u001b[39m           }\u001b[33m;\u001b[39m\n \u001b[90m 612 |\u001b[39m         })()\n \u001b[90m 613 |\u001b[39m       \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  <anonymous> (src\\app\\board\\[id].tsx:610:45)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:612:10)\u001b[39m","\n\n\u001b[1mCode: [id].tsx\u001b[22m\n\u001b[0m \u001b[90m 861 |\u001b[39m\n \u001b[90m 862 |\u001b[39m \u001b[36mexport\u001b[39m \u001b[36mdefault\u001b[39m \u001b[36mfunction\u001b[39m \u001b[33mWhiteboard\u001b[39m() {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 863 |\u001b[39m   \u001b[36mconst\u001b[39m { theme } \u001b[33m=\u001b[39m useSettings()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 864 |\u001b[39m   \u001b[36mreturn\u001b[39m (\n \u001b[90m 865 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33mBoardThemeProvider\u001b[39m mode\u001b[33m=\u001b[39m{theme}\u001b[33m>\u001b[39m\n \u001b[90m 866 |\u001b[39m       \u001b[33m<\u001b[39m\u001b[33mBoardScreen\u001b[39m \u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:863:35)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791715120313,"id":"1q","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791715120314,"id":"1q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791715120314,"id":"1r","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791715120314,"id":"1q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791715120314,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791715120315,"id":"1q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791715120315,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791715120422,"id":"1q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791715120422,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791715120770,"id":"1q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791715120770,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791715120845,"id":"1q","total":1,"ms":531.4027}
+{"_e":"metro:bundling:progress","_t":1791715120845,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791715120949,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791715120974,"id":"1r","total":1,"ms":660.0873}
+{"_e":"metro:bundling:started","_t":1791715121678,"id":"1s","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791715121679,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791715121788,"id":"1s","total":1,"ms":109.0522}
+{"_e":"metro:client_log","_t":1791715122269,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791715122270,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791715122366,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791715122376,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
