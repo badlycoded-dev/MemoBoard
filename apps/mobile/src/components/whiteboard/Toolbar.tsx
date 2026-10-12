@@ -86,7 +86,8 @@ export function Toolbar({
   const c = cfg[tool];
   const current = [...DRAW_TOOLS, ...OBJECT_TOOLS].find((t) => t[0] === tool);
   const isEraser = tool.startsWith("eraser");
-  const hasSize = tool !== "select" && tool !== "pipette";
+  const hasSize =
+    tool !== "select" && tool !== "pipette" && !["text", "tip", "code", "emoji"].includes(tool);
   const hasColor = hasSize && !isEraser && tool !== "wood";
 
   useEffect(() => {
@@ -192,11 +193,11 @@ export function Toolbar({
             sel={isObj(tool)}
             on={() => toggleGroup("obj")}
           />
-          <ToolButton icon="format-text" on={actions.addText} />
-          <ToolButton icon="lightbulb-on-outline" on={actions.addTip} />
-          <ToolButton icon="code-tags" on={actions.addCode} />
+          <ToolButton icon="format-text" sel={tool === "text"} on={() => choose("text")} />
+          <ToolButton icon="lightbulb-on-outline" sel={tool === "tip"} on={() => choose("tip")} />
+          <ToolButton icon="code-tags" sel={tool === "code"} on={() => choose("code")} />
           <ToolButton icon="paperclip" sel={group === "pin"} on={() => toggleGroup("pin")} />
-          <ToolButton icon="emoticon-outline" on={actions.openEmoji} />
+          <ToolButton icon="emoticon-outline" sel={tool === "emoji"} on={() => choose("emoji")} />
           <View style={[hz ? styles.dividerH : styles.dividerV, { backgroundColor: T.border }]} />
           <View style={{ opacity: canUndo ? 1 : 0.3 }}>
             <ToolButton icon="undo" on={actions.undo} />

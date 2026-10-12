@@ -1,10 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import Svg, { Polygon, G, Path, Rect } from "react-native-svg";
 import { BLUE } from "@/theme/theme";
+import { useBoardTheme } from "@/components/whiteboard/BoardTheme";
 import { isArrow, handlesOf } from "@/components/whiteboard/model";
 import { Shape } from "@/components/whiteboard/Shape";
 import { pathOf } from "@/components/whiteboard/utils";
-import { useBoardTheme } from "./BoardTheme";
 
 /** The SVG drawing surface: strokes, items, live previews and the selection outline. */
 export function BoardCanvas({
@@ -87,9 +87,11 @@ export function BoardCanvas({
               strokeLinejoin="round"
             />
           )}
-          {objs.map((o) => (
-            <Shape key={o._id} o={o} m={map} />
-          ))}
+          {objs
+            .filter((o: any) => o.kind !== "tip")
+            .map((o) => (
+              <Shape key={o._id} o={o} m={map} />
+            ))}
           {ghost && <Shape o={ghost} m={map} />}
           {sb && (
             <>

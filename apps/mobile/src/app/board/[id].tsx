@@ -19,6 +19,7 @@ import { useCamera } from "@/hooks/useCamera";
 import { useHistory } from "@/hooks/useHistory";
 import { useItemActions } from "@/hooks/useItemActions";
 import { EditSheet } from "@/components/whiteboard/EditSheet";
+import { TopLayer } from "@/components/whiteboard/TopLayer";
 import { EmojiPicker } from "@/components/whiteboard/EmojiPicker";
 import { LinkPrompt } from "@/components/whiteboard/LinkPrompt";
 import { MediaLayer } from "@/components/whiteboard/MediaLayer";
@@ -56,6 +57,8 @@ function BoardScreen() {
     [sheet, setSheet] = useState<null | "size" | "scale" | "color">(null);
   const [linkPrompt, setLinkPrompt] = useState(false);
   const [emojiPicker, setEmojiPicker] = useState(false);
+  const dropPoint = useRef<Pt | null>(null);
+  const emojiAt = useRef<Pt | null>(null);
   const dim = useRef({ w: 360, h: 640 });
   const {
     cam,
@@ -215,6 +218,7 @@ function BoardScreen() {
   };
   const { addEmoji, openEdit, save, attach, addText, addTip, addCode, addLink, addPin, loadText } =
     useItemActions({
+      dropPoint,
       board,
       upUrl,
       patchO,
@@ -240,11 +244,22 @@ function BoardScreen() {
         ]),
       ),
     );
+  /** Runs a create action at board point `p` instead of the view center. */
+  const dropAt = (action: () => void, p: Pt) => {
+    dropPoint.current = p;
+    action();
+    dropPoint.current = null;
+  };
   const down = (sp: Pt) => {
     const p = W(sp);
     if (!board || form) return;
     if (["pen", "marker", "wood"].includes(tool)) live.current = { k: "draw", pts: [p.x, p.y] };
-    else if (tool === "pipette") pipette(p);
+    else if (tool === "text" || tool === "tip" || tool === "code")
+      dropAt(tool === "text" ? addText : tool === "tip" ? addTip : addCode, p);
+    else if (tool === "emoji") {
+      emojiAt.current = p;
+      setEmojiPicker(true);
+    } else if (tool === "pipette") pipette(p);
     else if (tool === "eraser2") live.current = { k: "cut", pts: [p.x, p.y] };
     else if (tool === "eraser") {
       live.current = { k: "erase" };
@@ -422,6 +437,7 @@ function BoardScreen() {
       />
 
       <MediaLayer objs={objs} cam={cam} />
+      <TopLayer objs={objs} map={map} cam={cam} />
 
       <BoardHeader
         title={board?.name ?? "Loading..."}
@@ -476,7 +492,10 @@ function BoardScreen() {
         onClose={() => setEmojiPicker(false)}
         onPick={(emoji) => {
           setEmojiPicker(false);
+          dropPoint.current = emojiAt.current;
           addEmoji(emoji);
+          dropPoint.current = null;
+          emojiAt.current = null;
         }}
       />
       <LinkPrompt

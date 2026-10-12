@@ -303,6 +303,7 @@ function SIcon({
   fill: string;
 }) {
   const code = MaterialCommunityIcons.glyphMap[name] as unknown as number;
+  if (!code) return null;
   return (
     <SText
       x={x}
@@ -319,12 +320,14 @@ function SIcon({
 
 const ACTION_ICON: Record<string, IconName> = {
   delete: "close",
+  open: "open-in-new",
   edit: "pencil",
   download: "download",
   copy: "content-copy",
 };
 const ACTION_COLOR: Record<string, string> = {
   delete: "#F04438",
+  open: "#2848E0",
   edit: "#F79009",
   download: "#2848E0",
   copy: "#667085",

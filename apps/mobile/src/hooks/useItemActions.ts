@@ -6,6 +6,7 @@ import { isAudio, isVideo, isTextFile, isImg } from "@/components/whiteboard/uti
 /** Actions that create and edit board items (text, tips, code, files, links) and the edit sheet. */
 export function useItemActions(deps: any) {
   const {
+    dropPoint,
     board,
     upUrl,
     patchO,
@@ -55,12 +56,14 @@ export function useItemActions(deps: any) {
     };
     if ((o.kind === "pin" || o.kind === "link") && form.show !== !!o.showContent) {
       // switching between file chip and media view resizes the item
-      Object.assign(
-        after,
-        form.show
-          ? { w: Math.max(o.w, 240), h: isImg(name) ? 160 : isVideo(name) ? 180 : 200 }
-          : { w: 230, h: 46 },
-      );
+      const size = isVideo(name)
+        ? { w: 480, h: 300 }
+        : isImg(name)
+          ? { w: 320, h: 240 }
+          : o.kind === "link"
+            ? { w: 420, h: 300 }
+            : { w: 360, h: 240 };
+      Object.assign(after, form.show ? size : { w: 230, h: 46 });
       Object.assign(before, { w: o.w, h: o.h });
     }
     push({ ref: { id: o._id }, op: "upd", before, after });
@@ -83,7 +86,7 @@ export function useItemActions(deps: any) {
     });
   };
 
-  const mid = () => W({ x: dim.current.w / 2, y: dim.current.h / 2 });
+  const mid = () => dropPoint.current ?? W({ x: dim.current.w / 2, y: dim.current.h / 2 });
   const place = async (data: any, edit: boolean) => {
     const ref = await create(false, data);
     setSel(ref.id);

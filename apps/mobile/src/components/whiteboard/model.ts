@@ -12,7 +12,11 @@ export type Tool =
   | "triangle"
   | "arrow"
   | "arrowThick"
-  | "line";
+  | "line"
+  | "text"
+  | "tip"
+  | "code"
+  | "emoji";
 export const SHAPES = ["rect", "round", "ellipse", "triangle", "arrow", "arrowThick", "line"];
 export const defStyle = {
   stroke: "#12275C",

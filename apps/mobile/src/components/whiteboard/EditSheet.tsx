@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { BLUE } from "@/theme/theme";
 import { ColorSwatches, Stepper } from "./controls";
+import { SymbolRow } from "./EmojiPicker";
 import { isArrow } from "./model";
 import { isImg, isTextFile, isVideo } from "./utils";
 
@@ -88,6 +89,7 @@ export function EditSheet({ form, setForm, file, onSave, onDelete, onAttach, onL
                   onChangeText={(text) => set({ text })}
                   style={styles.input}
                 />
+                <SymbolRow onPick={(sym) => set({ text: form.text + sym })} />
                 <Stepper
                   label="Text size"
                   v={form.s.fs}

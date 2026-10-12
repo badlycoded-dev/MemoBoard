@@ -1,8 +1,8 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { useVideoPlayer, VideoView } from "expo-video";
-import { ReactNode, useMemo, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { useRef, ReactNode, useMemo, useState } from "react";
+import { PanResponder, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { box } from "./model";
 import { embedHtml, hostOf, isGif, isAudio, isChip, isVideo, youtubeId } from "./utils";
@@ -62,11 +62,35 @@ function PeaksProbe({
   );
 }
 
+/** Tap or drag across the waveform to seek; works on native and web (no locationX needed). */
+function useScrub(width: number, onSeek: (fraction: number) => void) {
+  const latest = useRef({ width, onSeek });
+  latest.current = { width, onSeek };
+  const x0 = useRef(0);
+  const set = (x: number) => {
+    const f = Math.max(0, Math.min(1, x / latest.current.width));
+    if (Number.isFinite(f)) latest.current.onSeek(f);
+  };
+  return useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderTerminationRequest: () => false,
+      onPanResponderGrant: (e) => {
+        x0.current = e.nativeEvent.locationX ?? 0;
+        set(x0.current);
+      },
+      onPanResponderMove: (_, g) => set(x0.current + g.dx),
+    }),
+  ).current.panHandlers;
+}
+
 function AudioPlayer({ uri, width }: { uri: string; width: number }) {
   const player = useAudioPlayer(uri);
   const status = useAudioPlayerStatus(player);
   const [muted, setMuted] = useState(false);
   const waveWidth = Math.max(60, width - 170);
+  const scrub = useScrub(waveWidth, (f) => status.duration && player.seekTo(f * status.duration));
   const [peaks, setPeaks] = useState<number[] | null>(null);
   const levels = useMemo(
     () => (peaks ? peaks.map((v) => 0.12 + 0.88 * v) : waveform(uri, 32)),
@@ -83,12 +107,7 @@ function AudioPlayer({ uri, width }: { uri: string; width: number }) {
       >
         <MaterialCommunityIcons name={status.playing ? "pause" : "play"} size={22} color="#fff" />
       </Pressable>
-      <Pressable
-        style={[styles.wave, { width: waveWidth }]}
-        onPress={(e) =>
-          status.duration && player.seekTo((e.nativeEvent.locationX / waveWidth) * status.duration)
-        }
-      >
+      <View {...scrub} style={[styles.wave, { width: waveWidth }]}>
         {levels.map((level, i) => (
           <View
             key={i}
@@ -102,7 +121,7 @@ function AudioPlayer({ uri, width }: { uri: string; width: number }) {
             ]}
           />
         ))}
-      </Pressable>
+      </View>
       <Text style={styles.time}>
         {fmt(status.currentTime)} / {fmt(status.duration || 0)}
       </Text>
@@ -123,11 +142,14 @@ function AudioPlayer({ uri, width }: { uri: string; width: number }) {
 }
 
 function VideoBox({ uri }: { uri: string }) {
-  const player = useVideoPlayer(uri);
+  const player = useVideoPlayer(uri, (p) => {
+    p.muted = false;
+    p.volume = 1;
+  });
   return (
     <VideoView
       player={player}
-      style={StyleSheet.absoluteFill}
+      style={{ width: "100%", height: "100%" }}
       nativeControls
       contentFit="contain"
       surfaceType="textureView"

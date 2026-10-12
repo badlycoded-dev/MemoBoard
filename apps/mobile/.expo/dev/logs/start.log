@@ -2502,3 +2502,535 @@
 {"_e":"metro:client_log","_t":1791715122270,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
 {"_e":"metro:client_log","_t":1791715122366,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
 {"_e":"metro:client_log","_t":1791715122376,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"root:init","_t":1791737577260,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791737577289,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791737577317,"mode":"development","files":["../..\\..\\.env.local"],"env":{"CONVEX_DEPLOYMENT":"dev:agreeable-spaniel-360","EXPO_PUBLIC_CONVEX_SITE_URL":"https://agreeable-spaniel-360.eu-west-1.convex.site","EXPO_PUBLIC_CONVEX_URL":"https://agreeable-spaniel-360.eu-west-1.convex.cloud"}}
+{"_e":"devserver:start","_t":1791737595940,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\src\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791737615498,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":true,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791737623345,"plugins":[]}
+{"_e":"metro:instantiate","_t":1791737648496,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791737950205,"id":"2","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791737950206,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791737950208,"id":"3","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791737950208,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791737950208,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791737950233,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791737950233,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791737950332,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791737950332,"id":"3","progress":0.07821028440103417,"total":118,"current":33}
+{"_e":"metro:bundling:progress","_t":1791737950484,"id":"2","progress":0.140625,"total":32,"current":12}
+{"_e":"metro:bundling:progress","_t":1791737950484,"id":"3","progress":0.07821028440103417,"total":118,"current":33}
+{"_e":"metro:bundling:progress","_t":1791737950584,"id":"2","progress":0.140625,"total":32,"current":12}
+{"_e":"metro:bundling:progress","_t":1791737950584,"id":"3","progress":0.1753257783493897,"total":203,"current":85}
+{"_e":"metro:bundling:progress","_t":1791737950684,"id":"2","progress":0.140625,"total":176,"current":59}
+{"_e":"metro:bundling:progress","_t":1791737950684,"id":"3","progress":0.1753257783493897,"total":203,"current":85}
+{"_e":"metro:bundling:progress","_t":1791737950799,"id":"2","progress":0.140625,"total":176,"current":59}
+{"_e":"metro:bundling:progress","_t":1791737950799,"id":"3","progress":0.2039542143600416,"total":372,"current":168}
+{"_e":"metro:bundling:progress","_t":1791737950892,"id":"2","progress":0.140625,"total":176,"current":59}
+{"_e":"metro:bundling:progress","_t":1791737950892,"id":"3","progress":0.35046399999999994,"total":500,"current":296}
+{"_e":"metro:bundling:progress","_t":1791737950992,"id":"2","progress":0.2880911308679276,"total":313,"current":168}
+{"_e":"metro:bundling:progress","_t":1791737950992,"id":"3","progress":0.35046399999999994,"total":500,"current":296}
+{"_e":"metro:bundling:progress","_t":1791737951092,"id":"2","progress":0.37954400510204084,"total":336,"current":207}
+{"_e":"metro:bundling:progress","_t":1791737951092,"id":"3","progress":0.35046399999999994,"total":500,"current":296}
+{"_e":"metro:bundling:progress","_t":1791737951193,"id":"2","progress":0.37954400510204084,"total":336,"current":207}
+{"_e":"metro:bundling:progress","_t":1791737951193,"id":"3","progress":0.4380381218342168,"total":553,"current":366}
+{"_e":"metro:bundling:progress","_t":1791737951293,"id":"2","progress":0.37954400510204084,"total":336,"current":207}
+{"_e":"metro:bundling:progress","_t":1791737951293,"id":"3","progress":0.5300678018736091,"total":695,"current":506}
+{"_e":"metro:bundling:progress","_t":1791737951419,"id":"2","progress":0.37954400510204084,"total":447,"current":272}
+{"_e":"metro:bundling:progress","_t":1791737951419,"id":"3","progress":0.5300678018736091,"total":695,"current":506}
+{"_e":"metro:bundling:progress","_t":1791737951519,"id":"2","progress":0.37954400510204084,"total":447,"current":272}
+{"_e":"metro:bundling:progress","_t":1791737951519,"id":"3","progress":0.5300678018736091,"total":731,"current":524}
+{"_e":"metro:bundling:progress","_t":1791737951619,"id":"2","progress":0.37954400510204084,"total":447,"current":272}
+{"_e":"metro:bundling:progress","_t":1791737951619,"id":"3","progress":0.655328798185941,"total":861,"current":697}
+{"_e":"metro:bundling:progress","_t":1791737951720,"id":"2","progress":0.5089864112274449,"total":670,"current":478}
+{"_e":"metro:bundling:progress","_t":1791737951720,"id":"3","progress":0.655328798185941,"total":861,"current":697}
+{"_e":"metro:bundling:progress","_t":1791737951837,"id":"2","progress":0.5089864112274449,"total":670,"current":478}
+{"_e":"metro:bundling:progress","_t":1791737951837,"id":"3","progress":0.7927812218943865,"total":967,"current":861}
+{"_e":"metro:bundling:progress","_t":1791737951937,"id":"2","progress":0.7234298250923848,"total":823,"current":700}
+{"_e":"metro:bundling:progress","_t":1791737951937,"id":"3","progress":0.7927812218943865,"total":967,"current":861}
+{"_e":"metro:bundling:progress","_t":1791737952037,"id":"2","progress":0.7234298250923848,"total":823,"current":700}
+{"_e":"metro:bundling:progress","_t":1791737952037,"id":"3","progress":0.942097442445184,"total":1021,"current":991}
+{"_e":"metro:bundling:progress","_t":1791737952137,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737952137,"id":"3","progress":0.942097442445184,"total":1021,"current":991}
+{"_e":"metro:bundling:progress","_t":1791737952240,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737952240,"id":"3","progress":0.9981421276654552,"total":1076,"current":1075}
+{"_e":"metro:bundling:progress","_t":1791737964001,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737964001,"id":"3","progress":0.999,"total":1076,"current":1076}
+{"_e":"metro:bundling:progress","_t":1791737964102,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737964102,"id":"3","progress":0.999,"total":1103,"current":1092}
+{"_e":"metro:bundling:progress","_t":1791737964202,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737964202,"id":"3","progress":0.999,"total":1127,"current":1106}
+{"_e":"metro:bundling:progress","_t":1791737964305,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737964305,"id":"3","progress":0.999,"total":1139,"current":1129}
+{"_e":"metro:bundling:progress","_t":1791737964404,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737964405,"id":"3","progress":0.999,"total":1146,"current":1140}
+{"_e":"metro:bundling:progress","_t":1791737964511,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737964511,"id":"3","progress":0.999,"total":1146,"current":1141}
+{"_e":"metro:bundling:progress","_t":1791737966472,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737966472,"id":"3","progress":0.999,"total":1146,"current":1142}
+{"_e":"metro:bundling:progress","_t":1791737966580,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737966580,"id":"3","progress":0.999,"total":1146,"current":1143}
+{"_e":"metro:bundling:progress","_t":1791737966685,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737966843,"id":"2","progress":0.8846064311189384,"total":1009,"current":949}
+{"_e":"metro:bundling:progress","_t":1791737966902,"id":"2","progress":0.999,"total":1043,"current":1043}
+{"_e":"metro:bundling:progress","_t":1791737967007,"id":"2","progress":0.999,"total":1065,"current":1052}
+{"_e":"metro:bundling:progress","_t":1791737967118,"id":"2","progress":0.999,"total":1083,"current":1068}
+{"_e":"metro:bundling:started","_t":1791737967204,"id":"5","platform":"web","environment":null,"entry":".expo\\static-tmp\\_error.js"}
+{"_e":"metro:bundling:progress","_t":1791737967204,"id":"2","progress":0.999,"total":1083,"current":1068}
+{"_e":"metro:bundling:progress","_t":1791737967204,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791737967217,"id":"2","progress":0.999,"total":1090,"current":1073}
+{"_e":"metro:bundling:progress","_t":1791737967218,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791737967316,"id":"2","progress":0.999,"total":1106,"current":1098}
+{"_e":"metro:bundling:progress","_t":1791737967316,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791737967417,"id":"2","progress":0.999,"total":1106,"current":1098}
+{"_e":"metro:bundling:progress","_t":1791737967417,"id":"5","progress":0.09972299168975068,"total":19,"current":6}
+{"_e":"metro:bundling:progress","_t":1791737967533,"id":"2","progress":0.999,"total":1106,"current":1098}
+{"_e":"metro:bundling:progress","_t":1791737967533,"id":"5","progress":0.25,"total":40,"current":20}
+{"_e":"metro:bundling:progress","_t":1791737967633,"id":"2","progress":0.999,"total":1106,"current":1098}
+{"_e":"metro:bundling:progress","_t":1791737967633,"id":"5","progress":0.4213604185903355,"total":57,"current":37}
+{"_e":"metro:bundling:progress","_t":1791737967736,"id":"2","progress":0.999,"total":1114,"current":1109}
+{"_e":"metro:bundling:progress","_t":1791737967737,"id":"5","progress":0.4213604185903355,"total":57,"current":37}
+{"_e":"metro:bundling:progress","_t":1791737967838,"id":"2","progress":0.999,"total":1114,"current":1109}
+{"_e":"metro:bundling:progress","_t":1791737967839,"id":"5","progress":0.494384765625,"total":64,"current":45}
+{"_e":"metro:bundling:progress","_t":1791737967936,"id":"2","progress":0.999,"total":1114,"current":1109}
+{"_e":"metro:bundling:progress","_t":1791737967936,"id":"5","progress":0.7511111111111112,"total":90,"current":78}
+{"_e":"metro:bundling:progress","_t":1791737968036,"id":"2","progress":0.999,"total":1114,"current":1109}
+{"_e":"metro:bundling:progress","_t":1791737968036,"id":"5","progress":0.8416799932665602,"total":109,"current":100}
+{"_e":"metro:bundling:progress","_t":1791737968175,"id":"2","progress":0.999,"total":1114,"current":1109}
+{"_e":"metro:bundling:progress","_t":1791737968175,"id":"5","progress":0.999,"total":133,"current":133}
+{"_e":"metro:bundling:done","_t":1791737968419,"id":"5","total":133,"ms":1215.2057}
+{"_e":"metro:bundling:progress","_t":1791737968419,"id":"2","progress":0.999,"total":1114,"current":1109}
+{"_e":"metro:bundling:progress","_t":1791737968423,"id":"2","progress":0.999,"total":1116,"current":1114}
+{"_e":"metro:bundling:progress","_t":1791737968426,"id":"2","progress":0.999,"total":1116,"current":1115}
+{"_e":"metro:bundling:started","_t":1791738004551,"id":"a","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791738004551,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791738004551,"id":"b","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791738004552,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738004552,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738004554,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738004554,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738004654,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738004654,"id":"b","progress":0.09765625,"total":128,"current":40}
+{"_e":"metro:bundling:progress","_t":1791738004758,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738004758,"id":"b","progress":0.09765625,"total":282,"current":83}
+{"_e":"metro:bundling:progress","_t":1791738004858,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738004858,"id":"b","progress":0.18097738164280702,"total":362,"current":154}
+{"_e":"metro:bundling:progress","_t":1791738004958,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738004958,"id":"b","progress":0.28416781480416053,"total":514,"current":274}
+{"_e":"metro:bundling:progress","_t":1791738005058,"id":"a","progress":0.3778789752815726,"total":462,"current":284}
+{"_e":"metro:bundling:progress","_t":1791738005058,"id":"b","progress":0.28416781480416053,"total":514,"current":274}
+{"_e":"metro:bundling:progress","_t":1791738005158,"id":"a","progress":0.3778789752815726,"total":462,"current":284}
+{"_e":"metro:bundling:progress","_t":1791738005158,"id":"b","progress":0.4823703587365232,"total":658,"current":457}
+{"_e":"metro:bundling:progress","_t":1791738005258,"id":"a","progress":0.5208261329479164,"total":618,"current":446}
+{"_e":"metro:bundling:progress","_t":1791738005258,"id":"b","progress":0.4823703587365232,"total":658,"current":457}
+{"_e":"metro:bundling:progress","_t":1791738005378,"id":"a","progress":0.5625,"total":664,"current":498}
+{"_e":"metro:bundling:progress","_t":1791738005378,"id":"b","progress":0.4823703587365232,"total":658,"current":457}
+{"_e":"metro:bundling:progress","_t":1791738005478,"id":"a","progress":0.5625,"total":664,"current":498}
+{"_e":"metro:bundling:progress","_t":1791738005478,"id":"b","progress":0.6389703715301442,"total":932,"current":745}
+{"_e":"metro:bundling:progress","_t":1791738005578,"id":"a","progress":0.7310640416171473,"total":876,"current":749}
+{"_e":"metro:bundling:progress","_t":1791738005578,"id":"b","progress":0.6389703715301442,"total":932,"current":745}
+{"_e":"metro:bundling:progress","_t":1791738005678,"id":"a","progress":0.7367975096244175,"total":932,"current":800}
+{"_e":"metro:bundling:progress","_t":1791738005678,"id":"b","progress":0.6389703715301442,"total":932,"current":745}
+{"_e":"metro:bundling:progress","_t":1791738005778,"id":"a","progress":0.9071175417098689,"total":1030,"current":981}
+{"_e":"metro:bundling:progress","_t":1791738005778,"id":"b","progress":0.6389703715301442,"total":932,"current":745}
+{"_e":"metro:bundling:progress","_t":1791738005906,"id":"a","progress":0.9071175417098689,"total":1030,"current":981}
+{"_e":"metro:bundling:progress","_t":1791738005906,"id":"b","progress":0.999,"total":1150,"current":1150}
+{"_e":"metro:bundling:done","_t":1791738005945,"id":"b","total":1150,"ms":1393.4976}
+{"_e":"metro:bundling:progress","_t":1791738005945,"id":"a","progress":0.9071175417098689,"total":1030,"current":981}
+{"_e":"metro:bundling:done","_t":1791738006655,"id":"a","total":1030,"ms":2103.8174}
+{"_e":"metro:bundling:started","_t":1791738006674,"id":"c","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791738006675,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738006677,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738006777,"id":"c","progress":0.06103806228373703,"total":170,"current":42}
+{"_e":"metro:bundling:progress","_t":1791738006877,"id":"c","progress":0.28994082840236685,"total":312,"current":168}
+{"_e":"metro:bundling:progress","_t":1791738006977,"id":"c","progress":0.3738586806406561,"total":507,"current":310}
+{"_e":"metro:bundling:progress","_t":1791738007077,"id":"c","progress":0.47432101977107183,"total":620,"current":427}
+{"_e":"metro:bundling:progress","_t":1791738007194,"id":"c","progress":0.6910472488315054,"total":735,"current":611}
+{"_e":"metro:bundling:progress","_t":1791738007294,"id":"c","progress":0.7108029989743816,"total":854,"current":720}
+{"_e":"metro:bundling:progress","_t":1791738007394,"id":"c","progress":0.9120063112503398,"total":1022,"current":976}
+{"_e":"metro:bundling:done","_t":1791738007514,"id":"c","total":1022,"ms":839.39}
+{"_e":"metro:client_log","_t":1791738007876,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791738007877,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791738008882,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791738008890,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791738164765,"level":"warn","data":["An error occurred in the <SIcon> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791738164819,"level":"error","data":["[RangeError: Invalid code point NaN]","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 313 |\u001b[39m       textAnchor\u001b[33m=\u001b[39m\u001b[32m\"middle\"\u001b[39m\n \u001b[90m 314 |\u001b[39m     \u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 315 |\u001b[39m       {\u001b[33mString\u001b[39m\u001b[33m.\u001b[39mfromCodePoint(code)}\n \u001b[90m     |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 316 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mSText\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 317 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 318 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  SIcon (src\\components\\whiteboard\\Shape.tsx:315:14)\u001b[39m","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 349 |\u001b[39m       ) \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m}\n \u001b[90m 350 |\u001b[39m       {acts\u001b[33m.\u001b[39mmap((act\u001b[33m,\u001b[39m i) \u001b[33m=>\u001b[39m (\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 351 |\u001b[39m         \u001b[33m<\u001b[39m\u001b[33mSIcon\u001b[39m\n \u001b[90m     |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 352 |\u001b[39m           key\u001b[33m=\u001b[39m{act}\n \u001b[90m 353 |\u001b[39m           name\u001b[33m=\u001b[39m{\u001b[33mACTION_ICON\u001b[39m[act]}\n \u001b[90m 354 |\u001b[39m           x\u001b[33m=\u001b[39m{b\u001b[33m.\u001b[39mx \u001b[33m+\u001b[39m b\u001b[33m.\u001b[39mw \u001b[33m-\u001b[39m \u001b[35m13\u001b[39m \u001b[33m-\u001b[39m \u001b[35m26\u001b[39m \u001b[33m*\u001b[39m i}\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  acts.map$argument_0 (src\\components\\whiteboard\\Shape.tsx:351:9)\u001b[39m\n\u001b[90m  ActionStrip (src\\components\\whiteboard\\Shape.tsx:350:12)\u001b[39m\n\u001b[90m  ShapeBody (src\\components\\whiteboard\\Shape.tsx:122:9)\u001b[39m\n\u001b[90m  Shape (src\\components\\whiteboard\\Shape.tsx:366:16)\u001b[39m\n\u001b[90m  BoardCanvas (src\\components\\whiteboard\\BoardCanvas.tsx:65:31)\u001b[39m\n\u001b[90m  BoardCanvas (src\\components\\whiteboard\\BoardCanvas.tsx:79:12)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:409:7)\u001b[39m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:506:16)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791738403320,"id":"k","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791738403320,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791738403320,"id":"l","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791738403320,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403321,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403322,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403322,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403424,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403424,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403538,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403539,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403560,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403560,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403663,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403664,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403767,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403767,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403878,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403878,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791738403962,"id":"k","total":1,"ms":642.3335}
+{"_e":"metro:bundling:progress","_t":1791738403962,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791738403999,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791738404013,"id":"l","total":1,"ms":692.3508}
+{"_e":"metro:bundling:started","_t":1791738404471,"id":"m","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791738404471,"id":"m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791738404532,"id":"m","total":1,"ms":61.0657}
+{"_e":"metro:client_log","_t":1791738404923,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791738404923,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791738404987,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791738404993,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791738405497,"level":"warn","data":["An error occurred in the <SIcon> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791738405536,"level":"error","data":["[RangeError: Invalid code point NaN]","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 313 |\u001b[39m       textAnchor\u001b[33m=\u001b[39m\u001b[32m\"middle\"\u001b[39m\n \u001b[90m 314 |\u001b[39m     \u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 315 |\u001b[39m       {\u001b[33mString\u001b[39m\u001b[33m.\u001b[39mfromCodePoint(code)}\n \u001b[90m     |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 316 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mSText\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 317 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 318 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  SIcon (src\\components\\whiteboard\\Shape.tsx:315:14)\u001b[39m","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 349 |\u001b[39m       ) \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m}\n \u001b[90m 350 |\u001b[39m       {acts\u001b[33m.\u001b[39mmap((act\u001b[33m,\u001b[39m i) \u001b[33m=>\u001b[39m (\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 351 |\u001b[39m         \u001b[33m<\u001b[39m\u001b[33mSIcon\u001b[39m\n \u001b[90m     |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 352 |\u001b[39m           key\u001b[33m=\u001b[39m{act}\n \u001b[90m 353 |\u001b[39m           name\u001b[33m=\u001b[39m{\u001b[33mACTION_ICON\u001b[39m[act]}\n \u001b[90m 354 |\u001b[39m           x\u001b[33m=\u001b[39m{b\u001b[33m.\u001b[39mx \u001b[33m+\u001b[39m b\u001b[33m.\u001b[39mw \u001b[33m-\u001b[39m \u001b[35m13\u001b[39m \u001b[33m-\u001b[39m \u001b[35m26\u001b[39m \u001b[33m*\u001b[39m i}\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  acts.map$argument_0 (src\\components\\whiteboard\\Shape.tsx:351:9)\u001b[39m\n\u001b[90m  ActionStrip (src\\components\\whiteboard\\Shape.tsx:350:12)\u001b[39m\n\u001b[90m  ShapeBody (src\\components\\whiteboard\\Shape.tsx:122:9)\u001b[39m\n\u001b[90m  Shape (src\\components\\whiteboard\\Shape.tsx:366:16)\u001b[39m\n\u001b[90m  objs.map$argument_0 (src\\components\\whiteboard\\BoardCanvas.tsx:91:13)\u001b[39m\n\u001b[90m  BoardCanvas (src\\components\\whiteboard\\BoardCanvas.tsx:90:16)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:409:7)\u001b[39m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:510:7)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791739096143,"id":"u","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791739096143,"id":"u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791739096144,"id":"v","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791739096144,"id":"u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791739096144,"id":"v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791739096189,"id":"v","total":1,"ms":45.8481}
+{"_e":"metro:bundling:progress","_t":1791739096190,"id":"u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791739096508,"id":"u","total":1,"ms":365.0827}
+{"_e":"metro:bundling:started","_t":1791739096538,"id":"w","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791739096538,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791739096588,"id":"w","total":1,"ms":50.0072}
+{"_e":"metro:client_log","_t":1791739096815,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791739096816,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791739096864,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791739096872,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791739101059,"level":"warn","data":["An error occurred in the <BoardScreen> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791739101108,"level":"error","data":["[TypeError: Cannot read properties of undefined (reading 'color')]","\n\n\u001b[1mCode: [id].tsx\u001b[22m\n\u001b[0m \u001b[90m 384 |\u001b[39m             w\u001b[33m:\u001b[39m ar \u001b[33m?\u001b[39m p\u001b[33m.\u001b[39mx \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39mx \u001b[33m:\u001b[39m \u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mabs(p\u001b[33m.\u001b[39mx \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39mx)\u001b[33m,\u001b[39m\n \u001b[90m 385 |\u001b[39m             h\u001b[33m:\u001b[39m ar \u001b[33m?\u001b[39m p\u001b[33m.\u001b[39my \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39my \u001b[33m:\u001b[39m \u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mabs(p\u001b[33m.\u001b[39my \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39my)\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 386 |\u001b[39m             style\u001b[33m:\u001b[39m { \u001b[33m...\u001b[39mdefStyle\u001b[33m,\u001b[39m stroke\u001b[33m:\u001b[39m c\u001b[33m.\u001b[39mcolor\u001b[33m,\u001b[39m sw\u001b[33m:\u001b[39m c\u001b[33m.\u001b[39mwidth\u001b[33m,\u001b[39m fill\u001b[33m:\u001b[39m \u001b[32m\"none\"\u001b[39m }\u001b[33m,\u001b[39m\n \u001b[90m     |\u001b[39m                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 387 |\u001b[39m           }\u001b[33m;\u001b[39m\n \u001b[90m 388 |\u001b[39m         })()\n \u001b[90m 389 |\u001b[39m       \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  <anonymous> (src\\app\\board\\[id].tsx:386:45)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:388:10)\u001b[39m","\n\n\u001b[1mCode: [id].tsx\u001b[22m\n\u001b[0m \u001b[90m 508 |\u001b[39m   \u001b[36mreturn\u001b[39m (\n \u001b[90m 509 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33mBoardThemeProvider\u001b[39m mode\u001b[33m=\u001b[39m{theme}\u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 510 |\u001b[39m       \u001b[33m<\u001b[39m\u001b[33mBoardScreen\u001b[39m \u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m     |\u001b[39m       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 511 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mBoardThemeProvider\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 512 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 513 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:510:7)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791739110522,"id":"14","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791739110522,"id":"14","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791739110522,"id":"15","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791739110522,"id":"14","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791739110522,"id":"15","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791739110569,"id":"15","total":1,"ms":46.8864}
+{"_e":"metro:bundling:progress","_t":1791739110569,"id":"14","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791739110861,"id":"14","total":1,"ms":339.2738}
+{"_e":"metro:bundling:started","_t":1791739110881,"id":"16","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791739110881,"id":"16","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791739110929,"id":"16","total":1,"ms":48.5225}
+{"_e":"metro:client_log","_t":1791739111107,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791739111107,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791739111139,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791739111142,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791739239647,"level":"error","data":["[TypeError: Failed to set the 'currentTime' property on 'HTMLMediaElement': The provided double value is non-finite.]","\n\n\u001b[1mCode: MediaLayer.tsx\u001b[22m\n\u001b[0m \u001b[90m 87 |\u001b[39m         style\u001b[33m=\u001b[39m{[styles\u001b[33m.\u001b[39mwave\u001b[33m,\u001b[39m { width\u001b[33m:\u001b[39m waveWidth }]}\n \u001b[90m 88 |\u001b[39m         onPress\u001b[33m=\u001b[39m{(e) \u001b[33m=>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 89 |\u001b[39m           status\u001b[33m.\u001b[39mduration \u001b[33m&&\u001b[39m player\u001b[33m.\u001b[39mseekTo((e\u001b[33m.\u001b[39mnativeEvent\u001b[33m.\u001b[39mlocationX \u001b[33m/\u001b[39m waveWidth) \u001b[33m*\u001b[39m status\u001b[33m.\u001b[39mduration)\n \u001b[90m    |\u001b[39m                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 90 |\u001b[39m         }\n \u001b[90m 91 |\u001b[39m       \u001b[33m>\u001b[39m\n \u001b[90m 92 |\u001b[39m         {levels\u001b[33m.\u001b[39mmap((level\u001b[33m,\u001b[39m i) \u001b[33m=>\u001b[39m (\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  Pressable.props.onPress (src\\components\\whiteboard\\MediaLayer.tsx:89:37)\u001b[39m"]}
+{"_e":"root:init","_t":1791809325762,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791809325792,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791809325824,"mode":"development","files":["../..\\..\\.env.local"],"env":{"CONVEX_DEPLOYMENT":"dev:agreeable-spaniel-360","EXPO_PUBLIC_CONVEX_SITE_URL":"https://agreeable-spaniel-360.eu-west-1.convex.site","EXPO_PUBLIC_CONVEX_URL":"https://agreeable-spaniel-360.eu-west-1.convex.cloud"}}
+{"_e":"devserver:start","_t":1791809339450,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\src\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791809351046,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":true,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791809355052,"plugins":[]}
+{"_e":"metro:instantiate","_t":1791809382527,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791809410422,"id":"2","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791809410423,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791809410425,"id":"3","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791809410426,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809410426,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809410455,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809410455,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809410556,"id":"2","progress":0.08163265306122448,"total":28,"current":8}
+{"_e":"metro:bundling:progress","_t":1791809410556,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809410662,"id":"2","progress":0.08163265306122448,"total":28,"current":8}
+{"_e":"metro:bundling:progress","_t":1791809410662,"id":"3","progress":0.1371742112482853,"total":54,"current":20}
+{"_e":"metro:bundling:progress","_t":1791809410763,"id":"2","progress":0.08163265306122448,"total":28,"current":8}
+{"_e":"metro:bundling:progress","_t":1791809410763,"id":"3","progress":0.1371742112482853,"total":128,"current":41}
+{"_e":"metro:bundling:progress","_t":1791809410864,"id":"2","progress":0.144156252680946,"total":187,"current":71}
+{"_e":"metro:bundling:progress","_t":1791809410864,"id":"3","progress":0.1371742112482853,"total":128,"current":41}
+{"_e":"metro:bundling:progress","_t":1791809410964,"id":"2","progress":0.144156252680946,"total":187,"current":71}
+{"_e":"metro:bundling:progress","_t":1791809410964,"id":"3","progress":0.1371742112482853,"total":157,"current":52}
+{"_e":"metro:bundling:progress","_t":1791809411064,"id":"2","progress":0.144156252680946,"total":187,"current":71}
+{"_e":"metro:bundling:progress","_t":1791809411064,"id":"3","progress":0.1547583619655692,"total":333,"current":131}
+{"_e":"metro:bundling:progress","_t":1791809411176,"id":"2","progress":0.2706811541271001,"total":296,"current":154}
+{"_e":"metro:bundling:progress","_t":1791809411176,"id":"3","progress":0.1547583619655692,"total":333,"current":131}
+{"_e":"metro:bundling:progress","_t":1791809411278,"id":"2","progress":0.4206448979591837,"total":350,"current":227}
+{"_e":"metro:bundling:progress","_t":1791809411279,"id":"3","progress":0.1547583619655692,"total":333,"current":131}
+{"_e":"metro:bundling:progress","_t":1791809411378,"id":"2","progress":0.4206448979591837,"total":350,"current":227}
+{"_e":"metro:bundling:progress","_t":1791809411378,"id":"3","progress":0.1567677600556572,"total":394,"current":156}
+{"_e":"metro:bundling:progress","_t":1791809411478,"id":"2","progress":0.4206448979591837,"total":350,"current":227}
+{"_e":"metro:bundling:progress","_t":1791809411478,"id":"3","progress":0.2521881733757937,"total":458,"current":230}
+{"_e":"metro:bundling:progress","_t":1791809411578,"id":"2","progress":0.4206448979591837,"total":350,"current":227}
+{"_e":"metro:bundling:progress","_t":1791809411578,"id":"3","progress":0.35869447070332444,"total":551,"current":330}
+{"_e":"metro:bundling:progress","_t":1791809411678,"id":"2","progress":0.48974686814318746,"total":553,"current":387}
+{"_e":"metro:bundling:progress","_t":1791809411678,"id":"3","progress":0.35869447070332444,"total":551,"current":330}
+{"_e":"metro:bundling:progress","_t":1791809411778,"id":"2","progress":0.48974686814318746,"total":616,"current":430}
+{"_e":"metro:bundling:progress","_t":1791809411778,"id":"3","progress":0.35869447070332444,"total":551,"current":330}
+{"_e":"metro:bundling:progress","_t":1791809411879,"id":"2","progress":0.48974686814318746,"total":616,"current":430}
+{"_e":"metro:bundling:progress","_t":1791809411879,"id":"3","progress":0.469970526895596,"total":671,"current":460}
+{"_e":"metro:bundling:progress","_t":1791809411979,"id":"2","progress":0.5086232798509706,"total":645,"current":460}
+{"_e":"metro:bundling:progress","_t":1791809411979,"id":"3","progress":0.469970526895596,"total":671,"current":460}
+{"_e":"metro:bundling:progress","_t":1791809412079,"id":"2","progress":0.721268641041798,"total":690,"current":586}
+{"_e":"metro:bundling:progress","_t":1791809412079,"id":"3","progress":0.469970526895596,"total":671,"current":460}
+{"_e":"metro:bundling:progress","_t":1791809412179,"id":"2","progress":0.721268641041798,"total":690,"current":586}
+{"_e":"metro:bundling:progress","_t":1791809412179,"id":"3","progress":0.5111581797536903,"total":856,"current":612}
+{"_e":"metro:bundling:progress","_t":1791809412279,"id":"2","progress":0.721268641041798,"total":690,"current":586}
+{"_e":"metro:bundling:progress","_t":1791809412279,"id":"3","progress":0.6213911267110229,"total":973,"current":767}
+{"_e":"metro:bundling:progress","_t":1791809412379,"id":"2","progress":0.7906100609090246,"total":812,"current":722}
+{"_e":"metro:bundling:progress","_t":1791809412379,"id":"3","progress":0.6213911267110229,"total":973,"current":767}
+{"_e":"metro:bundling:progress","_t":1791809412495,"id":"2","progress":0.7906100609090246,"total":812,"current":722}
+{"_e":"metro:bundling:progress","_t":1791809412495,"id":"3","progress":0.8561566917690581,"total":1044,"current":966}
+{"_e":"metro:bundling:progress","_t":1791809412595,"id":"2","progress":0.7906100609090246,"total":812,"current":722}
+{"_e":"metro:bundling:progress","_t":1791809412595,"id":"3","progress":0.8984524157139328,"total":1055,"current":1000}
+{"_e":"metro:bundling:progress","_t":1791809412695,"id":"2","progress":0.7906100609090246,"total":812,"current":722}
+{"_e":"metro:bundling:progress","_t":1791809412695,"id":"3","progress":0.9584695841547232,"total":1096,"current":1073}
+{"_e":"metro:bundling:progress","_t":1791809412796,"id":"2","progress":0.978456646118156,"total":1108,"current":1096}
+{"_e":"metro:bundling:progress","_t":1791809412796,"id":"3","progress":0.9584695841547232,"total":1096,"current":1073}
+{"_e":"metro:bundling:progress","_t":1791809412899,"id":"2","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:progress","_t":1791809412899,"id":"3","progress":0.9584695841547232,"total":1096,"current":1073}
+{"_e":"metro:bundling:progress","_t":1791809413096,"id":"2","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:progress","_t":1791809413096,"id":"3","progress":0.9982631353690102,"total":1151,"current":1150}
+{"_e":"metro:bundling:progress","_t":1791809413118,"id":"2","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:progress","_t":1791809413118,"id":"3","progress":0.999,"total":1151,"current":1151}
+{"_e":"metro:bundling:done","_t":1791809413211,"id":"3","total":1151,"ms":2785.0898}
+{"_e":"metro:bundling:progress","_t":1791809413211,"id":"2","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:done","_t":1791809413853,"id":"2","total":1118,"ms":3430.7964}
+{"_e":"metro:bundling:started","_t":1791809413915,"id":"4","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791809413915,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809413918,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809414018,"id":"4","progress":0.10980007702811528,"total":169,"current":56}
+{"_e":"metro:bundling:progress","_t":1791809414119,"id":"4","progress":0.2734957359937071,"total":283,"current":148}
+{"_e":"metro:bundling:progress","_t":1791809414221,"id":"4","progress":0.325452657726717,"total":454,"current":259}
+{"_e":"metro:bundling:progress","_t":1791809414321,"id":"4","progress":0.48270861000600035,"total":593,"current":412}
+{"_e":"metro:bundling:progress","_t":1791809414430,"id":"4","progress":0.5423523914936856,"total":664,"current":489}
+{"_e":"metro:bundling:progress","_t":1791809414531,"id":"4","progress":0.7466511402292274,"total":802,"current":693}
+{"_e":"metro:bundling:progress","_t":1791809414631,"id":"4","progress":0.7550515942621685,"total":969,"current":842}
+{"_e":"metro:bundling:progress","_t":1791809414731,"id":"4","progress":0.885507018624307,"total":1085,"current":1021}
+{"_e":"metro:bundling:progress","_t":1791809414832,"id":"4","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:done","_t":1791809414883,"id":"4","total":1118,"ms":968.1327}
+{"_e":"metro:client_log","_t":1791809415431,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791809415431,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791809416882,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791809416890,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791809696368,"level":"warn","data":["An error occurred in the <SIcon> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791809696498,"level":"error","data":["[RangeError: Invalid code point NaN]","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 313 |\u001b[39m       textAnchor\u001b[33m=\u001b[39m\u001b[32m\"middle\"\u001b[39m\n \u001b[90m 314 |\u001b[39m     \u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 315 |\u001b[39m       {\u001b[33mString\u001b[39m\u001b[33m.\u001b[39mfromCodePoint(code)}\n \u001b[90m     |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 316 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mSText\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 317 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 318 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  SIcon (src\\components\\whiteboard\\Shape.tsx:315:14)\u001b[39m","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 349 |\u001b[39m       ) \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m}\n \u001b[90m 350 |\u001b[39m       {acts\u001b[33m.\u001b[39mmap((act\u001b[33m,\u001b[39m i) \u001b[33m=>\u001b[39m (\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 351 |\u001b[39m         \u001b[33m<\u001b[39m\u001b[33mSIcon\u001b[39m\n \u001b[90m     |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 352 |\u001b[39m           key\u001b[33m=\u001b[39m{act}\n \u001b[90m 353 |\u001b[39m           name\u001b[33m=\u001b[39m{\u001b[33mACTION_ICON\u001b[39m[act]}\n \u001b[90m 354 |\u001b[39m           x\u001b[33m=\u001b[39m{b\u001b[33m.\u001b[39mx \u001b[33m+\u001b[39m b\u001b[33m.\u001b[39mw \u001b[33m-\u001b[39m \u001b[35m13\u001b[39m \u001b[33m-\u001b[39m \u001b[35m26\u001b[39m \u001b[33m*\u001b[39m i}\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  acts.map$argument_0 (src\\components\\whiteboard\\Shape.tsx:351:9)\u001b[39m\n\u001b[90m  ActionStrip (src\\components\\whiteboard\\Shape.tsx:350:12)\u001b[39m\n\u001b[90m  ShapeBody (src\\components\\whiteboard\\Shape.tsx:122:9)\u001b[39m\n\u001b[90m  Shape (src\\components\\whiteboard\\Shape.tsx:366:16)\u001b[39m\n\u001b[90m  objs.map$argument_0 (src\\components\\whiteboard\\BoardCanvas.tsx:91:13)\u001b[39m\n\u001b[90m  BoardCanvas (src\\components\\whiteboard\\BoardCanvas.tsx:90:16)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:409:7)\u001b[39m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:510:7)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791809740950,"id":"d","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791809740950,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791809740951,"id":"e","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791809740951,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809740951,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809740955,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809740955,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741089,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741089,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741479,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741479,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741579,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741579,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741679,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741679,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741779,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741779,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741879,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741879,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741979,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809741980,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742079,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742079,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742179,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742179,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742279,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742279,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742380,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742380,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742480,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742481,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742580,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742580,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742681,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742681,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742781,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742781,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742881,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742881,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742982,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809742982,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743082,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743082,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743182,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743182,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743282,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743282,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743386,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743386,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743563,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743563,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743641,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809743641,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791809743726,"id":"e","total":1,"ms":2775.0477}
+{"_e":"metro:bundling:progress","_t":1791809743726,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791809744980,"id":"d","total":1,"ms":4029.4611}
+{"_e":"metro:bundling:started","_t":1791809745114,"id":"f","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791809745116,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791809745337,"id":"f","total":1,"ms":221.9887}
+{"_e":"metro:client_log","_t":1791809746710,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791809746711,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791809747001,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791809747019,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791809747688,"level":"warn","data":["An error occurred in the <SIcon> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791809747877,"level":"error","data":["[RangeError: Invalid code point NaN]","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 313 |\u001b[39m       textAnchor\u001b[33m=\u001b[39m\u001b[32m\"middle\"\u001b[39m\n \u001b[90m 314 |\u001b[39m     \u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 315 |\u001b[39m       {\u001b[33mString\u001b[39m\u001b[33m.\u001b[39mfromCodePoint(code)}\n \u001b[90m     |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 316 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mSText\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 317 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 318 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  SIcon (src\\components\\whiteboard\\Shape.tsx:315:14)\u001b[39m","\n\n\u001b[1mCode: Shape.tsx\u001b[22m\n\u001b[0m \u001b[90m 349 |\u001b[39m       ) \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m}\n \u001b[90m 350 |\u001b[39m       {acts\u001b[33m.\u001b[39mmap((act\u001b[33m,\u001b[39m i) \u001b[33m=>\u001b[39m (\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 351 |\u001b[39m         \u001b[33m<\u001b[39m\u001b[33mSIcon\u001b[39m\n \u001b[90m     |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 352 |\u001b[39m           key\u001b[33m=\u001b[39m{act}\n \u001b[90m 353 |\u001b[39m           name\u001b[33m=\u001b[39m{\u001b[33mACTION_ICON\u001b[39m[act]}\n \u001b[90m 354 |\u001b[39m           x\u001b[33m=\u001b[39m{b\u001b[33m.\u001b[39mx \u001b[33m+\u001b[39m b\u001b[33m.\u001b[39mw \u001b[33m-\u001b[39m \u001b[35m13\u001b[39m \u001b[33m-\u001b[39m \u001b[35m26\u001b[39m \u001b[33m*\u001b[39m i}\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  acts.map$argument_0 (src\\components\\whiteboard\\Shape.tsx:351:9)\u001b[39m\n\u001b[90m  ActionStrip (src\\components\\whiteboard\\Shape.tsx:350:12)\u001b[39m\n\u001b[90m  ShapeBody (src\\components\\whiteboard\\Shape.tsx:122:9)\u001b[39m\n\u001b[90m  Shape (src\\components\\whiteboard\\Shape.tsx:366:16)\u001b[39m\n\u001b[90m  objs.map$argument_0 (src\\components\\whiteboard\\BoardCanvas.tsx:91:13)\u001b[39m\n\u001b[90m  BoardCanvas (src\\components\\whiteboard\\BoardCanvas.tsx:90:16)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:409:7)\u001b[39m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:510:7)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791809780442,"id":"n","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791809780442,"id":"n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791809780443,"id":"o","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791809780443,"id":"n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791809780443,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791809780495,"id":"o","total":1,"ms":52.3703}
+{"_e":"metro:bundling:progress","_t":1791809780495,"id":"n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791809780812,"id":"n","total":1,"ms":370.0761}
+{"_e":"metro:bundling:started","_t":1791809780838,"id":"p","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791809780838,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791809780910,"id":"p","total":1,"ms":72.5217}
+{"_e":"metro:client_log","_t":1791809781152,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791809781152,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791809781188,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791809781196,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1791809814599,"level":"error","data":["[TypeError: Failed to set the 'currentTime' property on 'HTMLMediaElement': The provided double value is non-finite.]","\n\n\u001b[1mCode: MediaLayer.tsx\u001b[22m\n\u001b[0m \u001b[90m 87 |\u001b[39m         style\u001b[33m=\u001b[39m{[styles\u001b[33m.\u001b[39mwave\u001b[33m,\u001b[39m { width\u001b[33m:\u001b[39m waveWidth }]}\n \u001b[90m 88 |\u001b[39m         onPress\u001b[33m=\u001b[39m{(e) \u001b[33m=>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 89 |\u001b[39m           status\u001b[33m.\u001b[39mduration \u001b[33m&&\u001b[39m player\u001b[33m.\u001b[39mseekTo((e\u001b[33m.\u001b[39mnativeEvent\u001b[33m.\u001b[39mlocationX \u001b[33m/\u001b[39m waveWidth) \u001b[33m*\u001b[39m status\u001b[33m.\u001b[39mduration)\n \u001b[90m    |\u001b[39m                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 90 |\u001b[39m         }\n \u001b[90m 91 |\u001b[39m       \u001b[33m>\u001b[39m\n \u001b[90m 92 |\u001b[39m         {levels\u001b[33m.\u001b[39mmap((level\u001b[33m,\u001b[39m i) \u001b[33m=>\u001b[39m (\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  Pressable.props.onPress (src\\components\\whiteboard\\MediaLayer.tsx:89:37)\u001b[39m"]}
+{"_e":"root:init","_t":1791836234993,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791836235028,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791836235076,"mode":"development","files":["../..\\..\\.env.local"],"env":{"CONVEX_DEPLOYMENT":"dev:agreeable-spaniel-360","EXPO_PUBLIC_CONVEX_SITE_URL":"https://agreeable-spaniel-360.eu-west-1.convex.site","EXPO_PUBLIC_CONVEX_URL":"https://agreeable-spaniel-360.eu-west-1.convex.cloud"}}
+{"_e":"devserver:start","_t":1791836255540,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\src\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791836272266,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":true,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791836279194,"plugins":[]}
+{"_e":"metro:instantiate","_t":1791836302663,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791836307116,"id":"2","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791836307117,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791836307119,"id":"3","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791836307119,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836307120,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836307141,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836307142,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836307298,"id":"2","progress":0.1335059171597633,"total":52,"current":19}
+{"_e":"metro:bundling:progress","_t":1791836307298,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836307398,"id":"2","progress":0.1335059171597633,"total":142,"current":38}
+{"_e":"metro:bundling:progress","_t":1791836307398,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836307498,"id":"2","progress":0.1444,"total":250,"current":95}
+{"_e":"metro:bundling:progress","_t":1791836307498,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836307599,"id":"2","progress":0.19864214675475877,"total":267,"current":119}
+{"_e":"metro:bundling:progress","_t":1791836307599,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836307699,"id":"2","progress":0.19864214675475877,"total":267,"current":119}
+{"_e":"metro:bundling:progress","_t":1791836307699,"id":"3","progress":0.2239962706136006,"total":393,"current":186}
+{"_e":"metro:bundling:progress","_t":1791836307800,"id":"2","progress":0.19864214675475877,"total":267,"current":119}
+{"_e":"metro:bundling:progress","_t":1791836307800,"id":"3","progress":0.27643745350196625,"total":485,"current":255}
+{"_e":"metro:bundling:progress","_t":1791836307911,"id":"2","progress":0.2895464852607709,"total":420,"current":226}
+{"_e":"metro:bundling:progress","_t":1791836307911,"id":"3","progress":0.27643745350196625,"total":485,"current":255}
+{"_e":"metro:bundling:progress","_t":1791836308011,"id":"2","progress":0.2895464852607709,"total":420,"current":226}
+{"_e":"metro:bundling:progress","_t":1791836308011,"id":"3","progress":0.3325941895784147,"total":541,"current":312}
+{"_e":"metro:bundling:progress","_t":1791836308111,"id":"2","progress":0.3773818322668363,"total":503,"current":309}
+{"_e":"metro:bundling:progress","_t":1791836308111,"id":"3","progress":0.3325941895784147,"total":541,"current":312}
+{"_e":"metro:bundling:progress","_t":1791836308211,"id":"2","progress":0.3773818322668363,"total":503,"current":309}
+{"_e":"metro:bundling:progress","_t":1791836308211,"id":"3","progress":0.4636961451247166,"total":630,"current":429}
+{"_e":"metro:bundling:progress","_t":1791836308312,"id":"2","progress":0.3773818322668363,"total":503,"current":309}
+{"_e":"metro:bundling:progress","_t":1791836308312,"id":"3","progress":0.49706230228716997,"total":756,"current":533}
+{"_e":"metro:bundling:progress","_t":1791836308412,"id":"2","progress":0.3773818322668363,"total":503,"current":309}
+{"_e":"metro:bundling:progress","_t":1791836308412,"id":"3","progress":0.5112620473032833,"total":772,"current":552}
+{"_e":"metro:bundling:progress","_t":1791836308512,"id":"2","progress":0.3773818322668363,"total":503,"current":309}
+{"_e":"metro:bundling:progress","_t":1791836308512,"id":"3","progress":0.6338190959988793,"total":878,"current":699}
+{"_e":"metro:bundling:progress","_t":1791836308612,"id":"2","progress":0.6898866994522769,"total":791,"current":657}
+{"_e":"metro:bundling:progress","_t":1791836308612,"id":"3","progress":0.6338190959988793,"total":878,"current":699}
+{"_e":"metro:bundling:progress","_t":1791836308734,"id":"2","progress":0.6898866994522769,"total":791,"current":657}
+{"_e":"metro:bundling:progress","_t":1791836308734,"id":"3","progress":0.7796514259846085,"total":1034,"current":913}
+{"_e":"metro:bundling:progress","_t":1791836308834,"id":"2","progress":0.6898866994522769,"total":791,"current":657}
+{"_e":"metro:bundling:progress","_t":1791836308834,"id":"3","progress":0.9210242698875439,"total":1067,"current":1024}
+{"_e":"metro:bundling:progress","_t":1791836308934,"id":"2","progress":0.8830420176166267,"total":1078,"current":1013}
+{"_e":"metro:bundling:progress","_t":1791836308934,"id":"3","progress":0.9210242698875439,"total":1067,"current":1024}
+{"_e":"metro:bundling:progress","_t":1791836309107,"id":"2","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:progress","_t":1791836309107,"id":"3","progress":0.9210242698875439,"total":1067,"current":1024}
+{"_e":"metro:bundling:progress","_t":1791836309119,"id":"2","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:progress","_t":1791836309119,"id":"3","progress":0.9982616257088847,"total":1150,"current":1149}
+{"_e":"metro:bundling:progress","_t":1791836309322,"id":"2","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:progress","_t":1791836309322,"id":"3","progress":0.9982631353690102,"total":1151,"current":1150}
+{"_e":"metro:bundling:progress","_t":1791836309350,"id":"2","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:progress","_t":1791836309350,"id":"3","progress":0.999,"total":1151,"current":1151}
+{"_e":"metro:bundling:done","_t":1791836309417,"id":"3","total":1151,"ms":2297.5877}
+{"_e":"metro:bundling:progress","_t":1791836309417,"id":"2","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:done","_t":1791836310154,"id":"2","total":1118,"ms":3038.0083}
+{"_e":"metro:bundling:started","_t":1791836310197,"id":"4","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791836310197,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836310200,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836310300,"id":"4","progress":0.14903190914007572,"total":215,"current":83}
+{"_e":"metro:bundling:progress","_t":1791836310404,"id":"4","progress":0.22883344119822488,"total":416,"current":199}
+{"_e":"metro:bundling:progress","_t":1791836310504,"id":"4","progress":0.44729343999999993,"total":625,"current":418}
+{"_e":"metro:bundling:progress","_t":1791836310607,"id":"4","progress":0.6929676889995474,"total":752,"current":626}
+{"_e":"metro:bundling:progress","_t":1791836310707,"id":"4","progress":0.7940957587080798,"total":946,"current":843}
+{"_e":"metro:bundling:progress","_t":1791836310807,"id":"4","progress":0.999,"total":1118,"current":1118}
+{"_e":"metro:bundling:done","_t":1791836310846,"id":"4","total":1118,"ms":649.4518}
+{"_e":"metro:client_log","_t":1791836311236,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791836311237,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791836321034,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791836321048,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:bundling:failed","_t":1791836328338,"id":null,"message":"SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({","importStack":null,"filename":"src\\components\\whiteboard\\BoardCanvas.tsx","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791836328384,"level":"error","data":["[TransformError: SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({]"]}
+{"_e":"metro:bundling:failed","_t":1791836329120,"id":null,"message":"SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({","importStack":null,"filename":"src\\components\\whiteboard\\BoardCanvas.tsx","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791836329154,"level":"error","data":["[TransformError: SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({]"]}
+{"_e":"metro:bundling:failed","_t":1791836329816,"id":null,"message":"SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({","importStack":null,"filename":"src\\components\\whiteboard\\BoardCanvas.tsx","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791836329817,"level":"error","data":["[TransformError: SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({]"]}
+{"_e":"metro:client_log","_t":1791836336209,"level":"warn","data":["An error occurred in the <SIcon> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:bundling:failed","_t":1791836336926,"id":null,"message":"SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({","importStack":null,"filename":"src\\components\\whiteboard\\BoardCanvas.tsx","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791836336930,"level":"error","data":["[RangeError: Invalid code point NaN]","\n\n","\n\n"]}
+{"_e":"metro:client_log","_t":1791836336931,"level":"error","data":["[TransformError: SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({]"]}
+{"_e":"metro:bundling:failed","_t":1791836352102,"id":null,"message":"SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({","importStack":null,"filename":"src\\components\\whiteboard\\BoardCanvas.tsx","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791836352172,"level":"error","data":["[TransformError: SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({]"]}
+{"_e":"metro:bundling:failed","_t":1791836352911,"id":null,"message":"SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({","importStack":null,"filename":"src\\components\\whiteboard\\BoardCanvas.tsx","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791836352971,"level":"error","data":["[TransformError: SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({]"]}
+{"_e":"metro:bundling:failed","_t":1791836353703,"id":null,"message":"SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({","importStack":null,"filename":"src\\components\\whiteboard\\BoardCanvas.tsx","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791836353750,"level":"error","data":["[TransformError: SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({]"]}
+{"_e":"metro:bundling:failed","_t":1791836354112,"id":null,"message":"SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({","importStack":null,"filename":"src\\components\\whiteboard\\BoardCanvas.tsx","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791836354114,"level":"error","data":["[TransformError: SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({]"]}
+{"_e":"metro:bundling:failed","_t":1791836354826,"id":null,"message":"SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({","importStack":null,"filename":"src\\components\\whiteboard\\BoardCanvas.tsx","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791836354905,"level":"error","data":["[TransformError: SyntaxError: C:\\Users\\admin\\Desktop\\Projects\\MemoBoard\\apps\\mobile\\src\\components\\whiteboard\\BoardCanvas.tsx: Identifier 'useBoardTheme' has already been declared. (8:9)\n\n   6 | import { Shape } from \"@/components/whiteboard/Shape\";\n   7 | import { pathOf } from \"@/components/whiteboard/utils\";\n>  8 | import { useBoardTheme } from \"./BoardTheme\";\n     |          ^\n   9 |\n  10 | /** The SVG drawing surface: strokes, items, live previews and the selection outline. */\n  11 | export function BoardCanvas({]"]}
+{"_e":"metro:bundling:started","_t":1791836557166,"id":"h","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791836557166,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791836557166,"id":"i","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791836557166,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557166,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557169,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557169,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557271,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557271,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557417,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557417,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557518,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557518,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557620,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557620,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557721,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557721,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557821,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557821,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557923,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836557923,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558022,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558022,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558122,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558122,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558222,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558222,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558322,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558322,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558422,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558423,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558524,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558524,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558625,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558626,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558725,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558725,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558833,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558833,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558935,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836558935,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791836558976,"id":"i","total":1,"ms":1809.7602}
+{"_e":"metro:bundling:progress","_t":1791836558976,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791836559080,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791836559552,"id":"h","total":1,"ms":2385.7623}
+{"_e":"metro:bundling:started","_t":1791836559599,"id":"j","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791836559599,"id":"j","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791836559635,"id":"j","total":1,"ms":36.0669}
+{"_e":"metro:client_log","_t":1791836560012,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791836560012,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791836560075,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791836560083,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
