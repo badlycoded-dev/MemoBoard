@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactElement } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View, ViewStyle } from "react-native";
 import { ColorPicker } from "@/components/ColorPicker";
 import { Slider } from "@/components/ui/Slider";
@@ -91,7 +91,7 @@ export function Toolbar({
     tool !== "select" &&
     tool !== "pipette" &&
     !["text", "tip", "code", "emoji", "pin"].includes(tool);
-  const hasColor = hasSize && !isEraser && tool !== "wood";
+  const hasColor = hasSize && !isEraser;
 
   useEffect(() => {
     // Keep the selected tool visible inside scrolling toolbars.
@@ -168,12 +168,23 @@ export function Toolbar({
       ? "chevron-left"
       : "chevron-right";
   const arrow = showFull ? null : <ToolButton icon={arrowIcon} on={collapse} />;
-  const sizeButton = hasSize ? (
-    <ToolButton icon="format-line-weight" sel={sheet === "size"} on={() => toggleSheet("size")} />
-  ) : null;
-  const colorButton = hasColor ? (
-    <ToolButton icon="palette-outline" sel={sheet === "color"} on={() => toggleSheet("color")} />
-  ) : null;
+  // In the drawing bar both buttons are always shown; unavailable ones are dimmed.
+  const dim = (on: boolean, b: ReactElement) =>
+    on ? b : <View style={{ opacity: 0.3 }} pointerEvents="none">{b}</View>;
+  const sizeButton =
+    hasSize || isDraw(tool)
+      ? dim(
+          hasSize,
+          <ToolButton icon="format-line-weight" sel={sheet === "size"} on={() => toggleSheet("size")} />,
+        )
+      : null;
+  const colorButton =
+    hasColor || isDraw(tool)
+      ? dim(
+          hasColor,
+          <ToolButton icon="palette-outline" sel={sheet === "color"} on={() => toggleSheet("color")} />,
+        )
+      : null;
 
   return (
     <>

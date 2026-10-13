@@ -143,16 +143,20 @@ export function useGestures(ctx: any) {
     const o = top(p);
     if (o && !best) best = o.style.fill && o.style.fill !== "none" ? o.style.fill : o.style.stroke;
     if (best) {
-      setColor(best);
+      setCfg({ ...cfg, pen: { ...cfg.pen, color: best } });
       setTool("pen");
     }
   };
+  // pen / marker / wood each keep their own color; shapes and other tools share one.
+  const OWN = ["pen", "marker", "wood"];
   const setColor = (x: string) =>
     setCfg(
       Object.fromEntries(
         Object.entries(cfg).map(([k, v]: any) => [
           k,
-          k === "eraser" || k === "wood" ? v : { ...v, color: x },
+          k === "eraser" || k === "eraser2" || (OWN.includes(tool) ? k !== tool : OWN.includes(k))
+            ? v
+            : { ...v, color: x },
         ]),
       ),
     );

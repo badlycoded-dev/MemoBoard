@@ -35,6 +35,7 @@ export const INITIAL_TOOL_CONFIG: Record<string, any> = {
   triangle: mk(INK, 3),
   arrow: mk(INK, 3),
   arrowThick: mk(INK, 10),
+  line: mk(INK, 3),
 };
 export const DRAW_TOOLS: [Tool, IconName, string][] = [
   ["pen", "pen", "Pen"],

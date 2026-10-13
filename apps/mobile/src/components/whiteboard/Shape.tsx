@@ -235,7 +235,8 @@ function ShapeBody({ o, m }: any) {
   if (isArrow(o.kind)) {
     const { a, b: e } = ends(o, m),
       ang = Math.atan2(e.y - a.y, e.x - a.x),
-      hl = 8 + s.sw * 2.5;
+      hl = 8 + s.sw * 2.5,
+      head = o.kind !== "line";
     const p = (d: number) => `${e.x - hl * Math.cos(ang + d)},${e.y - hl * Math.sin(ang + d)}`;
     return (
       <>
@@ -243,13 +244,13 @@ function ShapeBody({ o, m }: any) {
           strokeDasharray={dashOf(s.dash)}
           x1={a.x}
           y1={a.y}
-          x2={e.x - hl * 0.6 * Math.cos(ang)}
-          y2={e.y - hl * 0.6 * Math.sin(ang)}
+          x2={head ? e.x - hl * 0.6 * Math.cos(ang) : e.x}
+          y2={head ? e.y - hl * 0.6 * Math.sin(ang) : e.y}
           stroke={s.stroke}
           strokeWidth={s.sw}
           strokeLinecap="round"
         />
-        <Polygon points={`${e.x},${e.y} ${p(-0.45)} ${p(0.45)}`} fill={s.stroke} />
+        {head && <Polygon points={`${e.x},${e.y} ${p(-0.45)} ${p(0.45)}`} fill={s.stroke} />}
         {o.text ? tx((a.x + e.x) / 2, (a.y + e.y) / 2 - s.fs) : null}
       </>
     );
