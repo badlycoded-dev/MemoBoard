@@ -1,11 +1,13 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { useVideoPlayer, VideoView } from "expo-video";
-import { useRef, ReactNode, useMemo, useState } from "react";
-import { PanResponder, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { createElement, useEffect, useRef, ReactNode, useMemo, useState } from "react";
+import { Platform, PanResponder, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { box } from "./model";
 import { embedHtml, hostOf, isGif, isAudio, isChip, isVideo, youtubeId } from "./utils";
+
+const isWeb = Platform.OS === "web";
 
 type Cam = { x: number; y: number; k: number };
 
@@ -49,6 +51,32 @@ function PeaksProbe({
   count: number;
   onPeaks: (p: number[]) => void;
 }) {
+  useEffect(() => {
+    if (!isWeb) return;
+    let alive = true;
+    (async () => {
+      try {
+        const buffer = await (await fetch(uri)).arrayBuffer();
+        const data = (
+          await new (window as any).AudioContext().decodeAudioData(buffer)
+        ).getChannelData(0);
+        const size = Math.floor(data.length / count);
+        const out: number[] = [];
+        for (let i = 0; i < count; i++) {
+          let max = 0;
+          for (let j = i * size; j < (i + 1) * size; j += 40)
+            max = Math.max(max, Math.abs(data[j] || 0));
+          out.push(max);
+        }
+        const top = Math.max(...out, 0.001);
+        if (alive) onPeaks(out.map((v) => v / top));
+      } catch {}
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [uri]);
+  if (isWeb) return null;
   const origin = uri.match(/^https?:\/\/[^/]+/)?.[0] ?? "https://localhost";
   return (
     <View style={{ width: 0, height: 0, opacity: 0 }}>
@@ -158,12 +186,17 @@ function VideoBox({ uri }: { uri: string }) {
 }
 
 /** YouTube links use the embed player; every other link loads as a normal web page. */
-function LinkEmbed({ url }: { url: string }) {
-  const id = youtubeId(url);
-  const html = embedHtml(url);
-  const source = html
-    ? { html, baseUrl: `https://${hostOf(url)}` }
-    : { uri: id ? `https://www.youtube.com/embed/${id}` : url };
+/** Web view on native; a plain iframe on web (react-native-webview has no web support). */
+function EmbedFrame({ source }: { source: { uri?: string; html?: string; baseUrl?: string } }) {
+  if (isWeb) {
+    return createElement("iframe", {
+      src: source.uri,
+      srcDoc: source.html,
+      style: { width: "100%", height: "100%", border: 0, background: "#fff" },
+      allow: "autoplay; fullscreen; encrypted-media",
+      allowFullScreen: true,
+    });
+  }
   return (
     <WebView
       source={source}
@@ -175,13 +208,32 @@ function LinkEmbed({ url }: { url: string }) {
   );
 }
 
+/** Native <video> element on web, which plays the file's own audio track reliably. */
+function WebVideo({ uri }: { uri: string }) {
+  return createElement("video", {
+    src: uri,
+    controls: true,
+    playsInline: true,
+    style: { width: "100%", height: "100%", objectFit: "contain", background: "#000" },
+  });
+}
+
+function LinkEmbed({ url }: { url: string }) {
+  const id = youtubeId(url);
+  const html = embedHtml(url);
+  const source = html
+    ? { html, baseUrl: `https://${hostOf(url)}` }
+    : { uri: id ? `https://www.youtube.com/embed/${id}` : url };
+  return <EmbedFrame source={source} />;
+}
+
 /** Real components (players, web views) that cannot be drawn inside the SVG canvas. */
 function contentOf(o: any, width: number): ReactNode {
   const name: string = o.file?.name ?? "";
   if (o.kind === "pin" && o.fileUrl && isAudio(name))
     return <AudioPlayer uri={o.fileUrl} width={width - 12} />;
   if (o.kind === "pin" && o.fileUrl && isVideo(name) && !isChip(o))
-    return <VideoBox uri={o.fileUrl} />;
+    return isWeb ? <WebVideo uri={o.fileUrl} /> : <VideoBox uri={o.fileUrl} />;
   if (o.kind === "pin" && o.fileUrl && isGif(name) && !isChip(o)) {
     return (
       <Image source={{ uri: o.fileUrl }} style={StyleSheet.absoluteFill} resizeMode="contain" />
@@ -258,3 +310,6 @@ const styles = StyleSheet.create({
   bar: { width: 3, borderRadius: 2 },
   time: { color: "#fff", fontSize: 10 },
 });
+
+/** True when the item is drawn by a real view (player / web view) instead of the SVG canvas. */
+export const hasOverlay = (o: any) => contentOf(o, 100) !== null;

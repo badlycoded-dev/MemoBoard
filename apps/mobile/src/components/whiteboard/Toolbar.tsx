@@ -31,6 +31,7 @@ export type ToolbarActions = {
   addCode: () => void;
   addPin: (mime?: string) => void;
   openEmoji: () => void;
+  pickPin: (mime: string) => void;
   setZoom: (percent: number) => void;
   setColor: (color: string) => void;
   setWidth: (width: number) => void;
@@ -87,7 +88,9 @@ export function Toolbar({
   const current = [...DRAW_TOOLS, ...OBJECT_TOOLS].find((t) => t[0] === tool);
   const isEraser = tool.startsWith("eraser");
   const hasSize =
-    tool !== "select" && tool !== "pipette" && !["text", "tip", "code", "emoji"].includes(tool);
+    tool !== "select" &&
+    tool !== "pipette" &&
+    !["text", "tip", "code", "emoji", "pin"].includes(tool);
   const hasColor = hasSize && !isEraser && tool !== "wood";
 
   useEffect(() => {
@@ -245,7 +248,7 @@ export function Toolbar({
             <Pressable
               key={key}
               onPress={() => {
-                actions.addPin(mime);
+                actions.pickPin(mime);
                 menu.setGroup(null);
               }}
               style={styles.objectRow}
@@ -294,7 +297,27 @@ export function Toolbar({
             </View>
           ) : sheet === "scale" ? (
             <>
-              <Text style={[styles.sheetLabel, { color: T.text }]}>Scale {zoomPct}%</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: 4,
+                }}
+              >
+                <Text style={[styles.sheetLabel, { color: T.text }]}>Scale {zoomPct}%</Text>
+                <Pressable
+                  onPress={() => actions.setZoom(100)}
+                  style={{
+                    paddingHorizontal: 12,
+                    paddingVertical: 4,
+                    borderRadius: 14,
+                    backgroundColor: T.sel,
+                  }}
+                >
+                  <Text style={{ color: T.text, fontWeight: "700" }}>100%</Text>
+                </Pressable>
+              </View>
               <Slider v={zoomPct} min={20} max={500} on={actions.setZoom} />
             </>
           ) : (

@@ -6,6 +6,7 @@ import { isAudio, isVideo, isTextFile, isImg } from "@/components/whiteboard/uti
 /** Actions that create and edit board items (text, tips, code, files, links) and the edit sheet. */
 export function useItemActions(deps: any) {
   const {
+    linkAt,
     dropPoint,
     board,
     upUrl,
@@ -150,7 +151,8 @@ export function useItemActions(deps: any) {
   };
   const addLink = (raw: string) => {
     const url = /^https?:\/\//i.test(raw.trim()) ? raw.trim() : `https://${raw.trim()}`;
-    const m = mid();
+    const m = linkAt.current ?? mid();
+    linkAt.current = null;
     place(
       {
         kind: "link",
@@ -166,7 +168,9 @@ export function useItemActions(deps: any) {
     );
   };
   const addPin = async (mime = "*/*") => {
+    const at = dropPoint.current;
     if (mime === "link") {
+      linkAt.current = at;
       setLinkPrompt(true);
       return;
     }
@@ -180,7 +184,7 @@ export function useItemActions(deps: any) {
       body: blob,
     });
     const file = { storageId: (await res.json()).storageId, name: a.name };
-    const m = mid();
+    const m = at ?? mid();
     const audio = isAudio(a.name);
     // New files start as a compact file chip (audio starts as a player); "Show content" in the editor reveals the media.
     place(

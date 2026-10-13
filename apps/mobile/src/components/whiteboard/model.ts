@@ -16,7 +16,8 @@ export type Tool =
   | "text"
   | "tip"
   | "code"
-  | "emoji";
+  | "emoji"
+  | "pin";
 export const SHAPES = ["rect", "round", "ellipse", "triangle", "arrow", "arrowThick", "line"];
 export const defStyle = {
   stroke: "#12275C",

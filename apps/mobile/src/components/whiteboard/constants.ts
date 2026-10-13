@@ -28,6 +28,7 @@ export const INITIAL_TOOL_CONFIG: Record<string, any> = {
   tip: mk("", 1),
   code: mk("", 1),
   emoji: mk("", 1),
+  pin: mk("", 1),
   rect: mk(INK, 3),
   round: mk(INK, 3),
   ellipse: mk(INK, 3),
