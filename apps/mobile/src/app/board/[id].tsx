@@ -13,17 +13,15 @@ import { INITIAL_TOOL_CONFIG } from "@/components/whiteboard/constants";
 import { Tool, defStyle, isArrow, box, ends, hit, Pt } from "@/components/whiteboard/model";
 import { BoardHeader } from "@/components/whiteboard/BoardHeader";
 import { Toolbar } from "@/components/whiteboard/Toolbar";
-import { BoardCanvas } from "@/components/whiteboard/BoardCanvas";
+import { BoardCanvas, LayerStack, TopOverlay } from "@/components/whiteboard/BoardCanvas";
 import { SelectionBar } from "@/components/whiteboard/SelectionBar";
 import { useCamera } from "@/hooks/useCamera";
 import { useGestures } from "@/hooks/useGestures";
 import { useHistory } from "@/hooks/useHistory";
 import { useItemActions } from "@/hooks/useItemActions";
 import { EditSheet } from "@/components/whiteboard/EditSheet";
-import { TopLayer } from "@/components/whiteboard/TopLayer";
 import { EmojiPicker } from "@/components/whiteboard/EmojiPicker";
 import { LinkPrompt } from "@/components/whiteboard/LinkPrompt";
-import { MediaLayer } from "@/components/whiteboard/MediaLayer";
 import { strip } from "@/components/whiteboard/utils";
 
 function BoardScreen() {
@@ -223,10 +221,11 @@ function BoardScreen() {
         dim.current = { w: e.nativeEvent.layout.width, h: e.nativeEvent.layout.height };
       }}
     >
-      <BoardCanvas
-        strokes={strokes}
-        draft={draft}
+      <BoardCanvas pan={pan} wheel={wheel} />
+      <LayerStack strokes={strokes} objs={objs} map={map} cam={cam} />
+      <TopOverlay
         tool={tool}
+        draft={draft}
         c={c}
         objs={objs}
         map={map}
@@ -234,12 +233,7 @@ function BoardScreen() {
         sb={sb}
         selO={selO}
         cam={cam}
-        pan={pan}
-        wheel={wheel}
       />
-
-      <MediaLayer objs={objs} map={map} cam={cam} />
-      <TopLayer objs={objs} map={map} cam={cam} />
 
       <BoardHeader
         title={board?.name ?? "Loading..."}

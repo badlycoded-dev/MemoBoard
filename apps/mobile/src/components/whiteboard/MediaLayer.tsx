@@ -270,34 +270,27 @@ function contentOf(o: any, width: number): ReactNode {
  * Overlay that places the interactive content over the canvas, following pan, zoom and rotation.
  * Only the content area catches touches, so the frame and header still select and drag the item.
  */
-export function MediaLayer({ objs, cam }: { objs: any[]; cam: Cam }) {
+export function MediaItem({ o, cam }: { o: any; cam: Cam }) {
+  const b = box(o);
+  const content = contentOf(o, b.w);
+  if (!content) return null;
+  const cx = cam.x + (b.x + b.w / 2) * cam.k;
+  const cy = cam.y + (b.y + b.h / 2) * cam.k;
   return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
-      {objs.map((o) => {
-        const b = box(o);
-        const content = contentOf(o, b.w);
-        if (!content) return null;
-        const cx = cam.x + (b.x + b.w / 2) * cam.k;
-        const cy = cam.y + (b.y + b.h / 2) * cam.k;
-        return (
-          <View
-            key={o._id}
-            pointerEvents="box-none"
-            style={{
-              position: "absolute",
-              left: cx - b.w / 2,
-              top: cy - b.h / 2,
-              width: b.w,
-              height: b.h,
-              transform: [{ rotate: `${o.rot ?? 0}deg` }, { scale: cam.k }],
-            }}
-          >
-            <View style={styles.slot} pointerEvents="box-none">
-              {content}
-            </View>
-          </View>
-        );
-      })}
+    <View
+      pointerEvents="box-none"
+      style={{
+        position: "absolute",
+        left: cx - b.w / 2,
+        top: cy - b.h / 2,
+        width: b.w,
+        height: b.h,
+        transform: [{ rotate: `${o.rot ?? 0}deg` }, { scale: cam.k }],
+      }}
+    >
+      <View style={styles.slot} pointerEvents="box-none">
+        {content}
+      </View>
     </View>
   );
 }

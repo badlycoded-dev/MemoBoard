@@ -5066,3 +5066,56 @@
 {"_e":"metro:bundling:done","_t":1791929348960,"id":"7","total":1718,"ms":6366.7173}
 {"_e":"metro:client_log","_t":1791929678694,"level":"warn","data":["An error occurred in the <BoardScreen> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
 {"_e":"metro:client_log","_t":1791929678773,"level":"error","data":["[TypeError: Cannot read properties of undefined (reading 'color')]","\n\n\u001b[1mCode: [id].tsx\u001b[22m\n\u001b[0m \u001b[90m 201 |\u001b[39m             w\u001b[33m:\u001b[39m ar \u001b[33m?\u001b[39m p\u001b[33m.\u001b[39mx \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39mx \u001b[33m:\u001b[39m \u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mabs(p\u001b[33m.\u001b[39mx \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39mx)\u001b[33m,\u001b[39m\n \u001b[90m 202 |\u001b[39m             h\u001b[33m:\u001b[39m ar \u001b[33m?\u001b[39m p\u001b[33m.\u001b[39my \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39my \u001b[33m:\u001b[39m \u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mabs(p\u001b[33m.\u001b[39my \u001b[33m-\u001b[39m draft\u001b[33m.\u001b[39ms\u001b[33m.\u001b[39my)\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m             style\u001b[33m:\u001b[39m { \u001b[33m...\u001b[39mdefStyle\u001b[33m,\u001b[39m stroke\u001b[33m:\u001b[39m c\u001b[33m.\u001b[39mcolor\u001b[33m,\u001b[39m sw\u001b[33m:\u001b[39m c\u001b[33m.\u001b[39mwidth\u001b[33m,\u001b[39m fill\u001b[33m:\u001b[39m \u001b[32m\"none\"\u001b[39m }\u001b[33m,\u001b[39m\n \u001b[90m     |\u001b[39m                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m           }\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m         })()\n \u001b[90m 206 |\u001b[39m       \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  <anonymous> (src\\app\\board\\[id].tsx:203:45)\u001b[39m\n\u001b[90m  BoardScreen (src\\app\\board\\[id].tsx:205:10)\u001b[39m","\n\n\u001b[1mCode: [id].tsx\u001b[22m\n\u001b[0m \u001b[90m 333 |\u001b[39m   \u001b[36mreturn\u001b[39m (\n \u001b[90m 334 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33mBoardThemeProvider\u001b[39m mode\u001b[33m=\u001b[39m{theme}\u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 335 |\u001b[39m       \u001b[33m<\u001b[39m\u001b[33mBoardScreen\u001b[39m \u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m     |\u001b[39m       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 336 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mBoardThemeProvider\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 337 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 338 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  Whiteboard (src\\app\\board\\[id].tsx:335:7)\u001b[39m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791930725369,"id":"f","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791930725369,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791930725369,"id":"g","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791930725369,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725369,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725370,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725370,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725470,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725470,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725519,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725519,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725620,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725620,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725725,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725725,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725825,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725825,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725925,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725925,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725957,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930725958,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726057,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726057,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726158,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726158,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726258,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726258,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726358,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726358,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726458,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726458,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726569,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726569,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726669,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726669,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726769,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726769,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726869,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726869,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726970,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930726970,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930727075,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791930727075,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791930727115,"id":"g","total":1,"ms":1745.8792}
+{"_e":"metro:bundling:progress","_t":1791930727115,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791930727591,"id":"f","total":1,"ms":2222.2224}
+{"_e":"metro:bundling:started","_t":1791930727631,"id":"h","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791930727631,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791930727691,"id":"h","total":1,"ms":60.0882}
+{"_e":"metro:client_log","_t":1791930728059,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791930728059,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791930728131,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1791930728138,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
