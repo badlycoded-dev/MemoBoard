@@ -102,3 +102,11 @@ export const embedHtml = (url: string): string | null => {
   }
   return null;
 };
+
+/** Item size (incl. 36px header) that fits the embed without cropping. */
+export const embedSize = (url: string) =>
+  youtubeId(url)
+    ? { w: 560, h: 352 }
+    : embedHtml(url)
+      ? { w: 420, h: 720 }
+      : { w: 520, h: 460 };

@@ -8,6 +8,11 @@ export default defineSchema({
     access: v.number(), // 0 admin,1 suspended,2 private,3 link,4 public
     createdAt: v.number(),
   }).index("by_public", ["publicId"]),
+  tasks: defineTable({
+    boardId: v.id("boards"), text: v.string(),
+    status: v.union(v.literal("todo"), v.literal("doing"), v.literal("done")),
+    createdAt: v.number(),
+  }).index("by_board", ["boardId"]),
   wb_strokes: defineTable({
     boardId: v.id("boards"), userId: v.string(),
     tool: v.optional(v.string()), // "pen" | "wood"

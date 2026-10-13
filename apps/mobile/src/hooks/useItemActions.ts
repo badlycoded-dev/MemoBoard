@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import { defStyle } from "@/components/whiteboard/model";
-import { isAudio, isVideo, isTextFile, isImg } from "@/components/whiteboard/utils";
+import { embedSize, isAudio, isVideo, isTextFile, isImg } from "@/components/whiteboard/utils";
 
 /** Actions that create and edit board items (text, tips, code, files, links) and the edit sheet. */
 export function useItemActions(deps: any) {
@@ -62,7 +62,7 @@ export function useItemActions(deps: any) {
         : isImg(name)
           ? { w: 320, h: 240 }
           : o.kind === "link"
-            ? { w: 420, h: 300 }
+            ? embedSize(o.url)
             : { w: 360, h: 240 };
       Object.assign(after, form.show ? size : { w: 230, h: 46 });
       Object.assign(before, { w: o.w, h: o.h });

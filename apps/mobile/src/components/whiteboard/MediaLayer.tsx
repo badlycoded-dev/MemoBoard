@@ -193,8 +193,10 @@ function EmbedFrame({ source }: { source: { uri?: string; html?: string; baseUrl
       src: source.uri,
       srcDoc: source.html,
       style: { width: "100%", height: "100%", border: 0, background: "#fff" },
-      allow: "autoplay; fullscreen; encrypted-media",
+      allow: "autoplay; fullscreen; encrypted-media; picture-in-picture; clipboard-write",
       allowFullScreen: true,
+      referrerPolicy: "strict-origin-when-cross-origin",
+      title: "embed",
     });
   }
   return (
@@ -214,6 +216,14 @@ function WebVideo({ uri }: { uri: string }) {
     src: uri,
     controls: true,
     playsInline: true,
+    preload: "metadata",
+    ref: (el: HTMLVideoElement | null) => {
+      if (!el) return;
+      el.muted = false;
+      el.defaultMuted = false;
+      el.volume = 1;
+    },
+    onPointerDown: (e: any) => e.stopPropagation(),
     style: { width: "100%", height: "100%", objectFit: "contain", background: "#000" },
   });
 }
@@ -221,9 +231,22 @@ function WebVideo({ uri }: { uri: string }) {
 function LinkEmbed({ url }: { url: string }) {
   const id = youtubeId(url);
   const html = embedHtml(url);
+  if (id && !isWeb) {
+    // Error 153 = no referrer. Wrapping in an html page with an https baseUrl makes the app send one.
+    const origin = "https://memoboard.app"; // neutral https origin; youtube.com itself is rejected (152-4)
+    const src = `https://www.youtube-nocookie.com/embed/${id}?playsinline=1&rel=0&origin=${encodeURIComponent(origin)}`;
+    return (
+      <EmbedFrame
+        source={{
+          html: `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;height:100%;background:#000}iframe{border:0;width:100%;height:100%}</style></head><body><iframe src="${src}" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe></body></html>`,
+          baseUrl: origin,
+        }}
+      />
+    );
+  }
   const source = html
     ? { html, baseUrl: `https://${hostOf(url)}` }
-    : { uri: id ? `https://www.youtube.com/embed/${id}` : url };
+    : { uri: id ? `https://www.youtube.com/embed/${id}?playsinline=1&rel=0${isWeb ? `&origin=${encodeURIComponent(window.location.origin)}` : ""}` : url };
   return <EmbedFrame source={source} />;
 }
 

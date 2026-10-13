@@ -7,10 +7,10 @@ export const byPublicId = query({
     ctx.db.query("boards").withIndex("by_public", (q) => q.eq("publicId", publicId)).unique(),
 });
 export const create = mutation({
-  args: { name: v.string() },
-  handler: async (ctx, { name }) => {
+  args: { name: v.string(), type: v.optional(v.union(v.literal("task"), v.literal("whiteboard"))) },
+  handler: async (ctx, { name, type }) => {
     const publicId = Math.random().toString(36).slice(2, 10);
-    await ctx.db.insert("boards", { publicId, type: "whiteboard", name, ownerId: "dev", access: 2, createdAt: Date.now() });
+    await ctx.db.insert("boards", { publicId, type: type ?? "whiteboard", name, ownerId: "dev", access: 2, createdAt: Date.now() });
     return publicId;
   },
 });
