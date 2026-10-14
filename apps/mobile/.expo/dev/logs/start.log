@@ -5265,3 +5265,108 @@
 {"_e":"metro:client_log","_t":1791934862905,"level":"log","data":["WebSocket closed with code 1006"]}
 {"_e":"metro:client_log","_t":1791934862906,"level":"log","data":["Attempting reconnect in 693ms"]}
 {"_e":"metro:client_log","_t":1791934863978,"level":"log","data":["WebSocket reconnected at","t=3215.6s","after disconnect due to","closed with code 1006"]}
+{"_e":"metro:client_log","_t":1791936946749,"level":"warn","data":["An error occurred in the <TaskBoard(./task/[id].tsx)> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1791936946787,"level":"error","data":["[Error: [CONVEX Q(kanban:colList)] [Request ID: de475f94864bbba9] Server Error\nCould not find public function for 'kanban:colList'.\n\n  Called by client]","\n\n\u001b[1mCode: [id].tsx\u001b[22m\n\u001b[0m \u001b[90m 21 |\u001b[39m   \u001b[36mconst\u001b[39m board\u001b[33m:\u001b[39m any \u001b[33m=\u001b[39m useQuery(api\u001b[33m.\u001b[39mboards\u001b[33m.\u001b[39mbyPublicId\u001b[33m,\u001b[39m { publicId\u001b[33m:\u001b[39m id })\u001b[33m;\u001b[39m\n \u001b[90m 22 |\u001b[39m   \u001b[36mconst\u001b[39m args \u001b[33m=\u001b[39m board \u001b[33m?\u001b[39m { boardId\u001b[33m:\u001b[39m board\u001b[33m.\u001b[39m_id } \u001b[33m:\u001b[39m \u001b[32m\"skip\"\u001b[39m\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 23 |\u001b[39m   \u001b[36mconst\u001b[39m cols\u001b[33m:\u001b[39m any[] \u001b[33m=\u001b[39m useQuery(api\u001b[33m.\u001b[39mkanban\u001b[33m.\u001b[39mcolList\u001b[33m,\u001b[39m args) \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m []\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 24 |\u001b[39m   \u001b[36mconst\u001b[39m items\u001b[33m:\u001b[39m any[] \u001b[33m=\u001b[39m useQuery(api\u001b[33m.\u001b[39mkanban\u001b[33m.\u001b[39mitemList\u001b[33m,\u001b[39m args) \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m []\u001b[33m;\u001b[39m\n \u001b[90m 25 |\u001b[39m   \u001b[36mconst\u001b[39m th \u001b[33m=\u001b[39m \u001b[33mTASK_THEMES\u001b[39m[board\u001b[33m?\u001b[39m\u001b[33m.\u001b[39mstyle \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m st\u001b[33m.\u001b[39mtaskTheme] \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[33mTASK_THEMES\u001b[39m\u001b[33m.\u001b[39mblueprint\u001b[33m;\u001b[39m\n \u001b[90m 26 |\u001b[39m   \u001b[36mconst\u001b[39m by \u001b[33m=\u001b[39m st\u001b[33m.\u001b[39muserName\u001b[33m.\u001b[39mtrim() \u001b[33m||\u001b[39m \u001b[32m\"me\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  TaskBoard (src\\app\\task\\[id].tsx:23:31)\u001b[39m","\n\n\u001b[1mCode: _layout.tsx\u001b[22m\n\u001b[0m \u001b[90m  6 |\u001b[39m   \u001b[36mreturn\u001b[39m (\n \u001b[90m  7 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33mConvexProvider\u001b[39m client\u001b[33m=\u001b[39m{convex}\u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m       \u001b[33m<\u001b[39m\u001b[33mStack\u001b[39m screenOptions\u001b[33m=\u001b[39m{{ headerShown\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m contentStyle\u001b[33m:\u001b[39m { backgroundColor\u001b[33m:\u001b[39m colors\u001b[33m.\u001b[39mink } }} \u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m    |\u001b[39m       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mConvexProvider\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m 10 |\u001b[39m   )\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m }\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  Root (src\\app\\_layout.tsx:8:7)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791936957961,"id":"1r","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791936957961,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791936957962,"id":"1s","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791936957962,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936957962,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936957964,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936957964,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958064,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958065,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958153,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958153,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958335,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958335,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958435,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958435,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958562,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958562,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958662,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958662,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958762,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958762,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958862,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958862,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958962,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936958962,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959063,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959063,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959163,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959163,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959263,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959263,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959373,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959373,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959473,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959474,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959577,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959577,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959693,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936959693,"id":"1s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791936959802,"id":"1s","total":1,"ms":1840.5028}
+{"_e":"metro:bundling:progress","_t":1791936959802,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936960319,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791936960336,"id":"1r","total":1,"ms":2374.8107}
+{"_e":"metro:bundling:started","_t":1791936960362,"id":"1t","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791936960362,"id":"1t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791936960364,"id":"1t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791936960417,"id":"1t","total":1,"ms":55.3897}
+{"_e":"metro:client_log","_t":1791936960767,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791936960767,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791936970808,"level":"error","data":["[CONVEX M(boards:create)] [Request ID: c516f0446577159a] Server Error\nArgumentValidationError: Object contains extra field `mode` that is not in the validator.\n\nObject: {mode: \"progress\", name: \"test\", type: \"task\"}\nValidator: v.object({name: v.string(), type: v.optional(v.union(v.literal(\"task\"), v.literal(\"whiteboard\")))})\n\n","\n\n\u001b[1mCode: setupHMR.ts\u001b[22m\n\u001b[0m \u001b[90m 79 |\u001b[39m \u001b[36mfunction\u001b[39m captureCurrentStack() {\n \u001b[90m 80 |\u001b[39m   \u001b[90m// If you're reading this, look deeper into the call stack to find the actual error source.\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 81 |\u001b[39m   \u001b[36mreturn\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mNamelessError\u001b[39m()\u001b[33m.\u001b[39mstack\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 82 |\u001b[39m }\n \u001b[90m 83 |\u001b[39m\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[2m\u001b[90m  captureCurrentStack (node_modules\\expo\\src\\async-require\\setupHMR.ts:81:10)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  addErrorStacks (node_modules\\expo\\src\\async-require\\setupHMR.ts:59:19)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  console.level (node_modules\\expo\\src\\async-require\\setupHMR.ts:22:48)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  consoleErrorMiddleware (node_modules\\@expo\\log-box\\src\\LogBox.ts:101:23)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  console.error (node_modules\\@expo\\log-box\\src\\LogBox.ts:33:25)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  logger.addLogLineListener$argument_0 (node_modules\\convex\\dist\\esm\\browser\\logging.js:75:17)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  DefaultLogger#error (node_modules\\convex\\dist\\esm\\browser\\logging.js:57:7)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  logForFunction (node_modules\\convex\\dist\\esm\\browser\\logging.js:105:12)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  RequestManager#onResponse (node_modules\\convex\\dist\\esm\\browser\\sync\\request_manager.js:66:21)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  WebSocketManager$argument_1.onMessage (node_modules\\convex\\dist\\esm\\browser\\sync\\client.js:230:65)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  ws.onmessage (node_modules\\convex\\dist\\esm\\browser\\sync\\web_socket_manager.js:268:29)\u001b[39m\u001b[22m"]}
+{"_e":"metro:client_log","_t":1791936970838,"level":"error","data":["[Error: [CONVEX M(boards:create)] [Request ID: c516f0446577159a] Server Error\nArgumentValidationError: Object contains extra field `mode` that is not in the validator.\n\nObject: {mode: \"progress\", name: \"test\", type: \"task\"}\nValidator: v.object({name: v.string(), type: v.optional(v.union(v.literal(\"task\"), v.literal(\"whiteboard\")))})\n\n\n  Called by client]","\n\n\u001b[1mCode: index.tsx\u001b[22m\n\u001b[0m \u001b[90m 27 |\u001b[39m   \u001b[36mconst\u001b[39m createTask \u001b[33m=\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 28 |\u001b[39m     setDlg(\u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m     open(\u001b[36mawait\u001b[39m create({ name\u001b[33m:\u001b[39m name\u001b[33m.\u001b[39mtrim() \u001b[33m||\u001b[39m \u001b[32m`Task board ${items.length + 1}`\u001b[39m\u001b[33m,\u001b[39m type\u001b[33m:\u001b[39m \u001b[32m\"task\"\u001b[39m\u001b[33m,\u001b[39m mode\u001b[33m,\u001b[39m columns\u001b[33m:\u001b[39m mode \u001b[33m===\u001b[39m \u001b[32m\"multi\"\u001b[39m \u001b[33m?\u001b[39m \u001b[33mNAMES\u001b[39m[count] \u001b[33m:\u001b[39m undefined }))\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m     setName(\u001b[32m\"\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m   }\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m   \u001b[36mconst\u001b[39m pill \u001b[33m=\u001b[39m (label\u001b[33m:\u001b[39m string\u001b[33m,\u001b[39m on\u001b[33m:\u001b[39m boolean\u001b[33m,\u001b[39m press\u001b[33m:\u001b[39m () \u001b[33m=>\u001b[39m \u001b[36mvoid\u001b[39m) \u001b[33m=>\u001b[39m (\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[90m  createTask (src\\app\\index.tsx:29:10)\u001b[39m"]}
+{"_e":"metro:bundling:started","_t":1791937240035,"id":"22","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791937240035,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1791937240036,"id":"23","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1791937240036,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240036,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240038,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240038,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240138,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240138,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240399,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240399,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240505,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240505,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240605,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240605,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240705,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240705,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240805,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240805,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240906,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937240906,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241005,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241005,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241105,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241105,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241205,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241205,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241319,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241320,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241424,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241424,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241525,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241525,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791937241536,"id":"22","total":1,"ms":1501.2924}
+{"_e":"metro:bundling:progress","_t":1791937241536,"id":"23","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791937241567,"id":"23","total":1,"ms":1530.8277}
+{"_e":"metro:bundling:started","_t":1791937241784,"id":"24","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1791937241784,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241786,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937241886,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937242008,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937242108,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937242208,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937242308,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937242408,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937242518,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937242633,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791937242724,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791937242782,"id":"24","total":1,"ms":998.3503}
+{"_e":"metro:client_log","_t":1791937243179,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1791937243179,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1791937243367,"level":"warn","data":["Cannot record touch end without a touch start.\n","Touch End: {\"identifier\":0,\"pageX\":865,\"pageY\":212,\"timestamp\":3353.9000000953674}\n","Touch Bank: []"]}
