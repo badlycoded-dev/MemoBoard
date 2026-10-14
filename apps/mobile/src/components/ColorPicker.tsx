@@ -210,12 +210,12 @@ export function ColorPicker({
         <Slider w={size - 40} v={c.a} min={0} max={255} on={(a) => emit({ ...c, a }, false)} />
         <Text style={{ width: 36, textAlign: "right", color: t }}>{c.a}</Text>
       </View>
-      <View style={{ ...row, gap: 8, marginTop: 4 }}>
+      <View style={{ ...row, gap: 8, marginTop: 4, alignItems:'flex-start'}}>
         <Pressable
           onPress={() => setFmt(fmt === "HEX" ? "RGBA" : fmt === "RGBA" ? "CMYK" : "HEX")}
           style={{ padding: 8, borderRadius: 14, backgroundColor: "#F2F4F7" }}
         >
-          <Text style={{ color: t }}>{fmt} ⌄</Text>
+          <Text style={{ color: t }}> {fmt} </Text>
         </Pressable>
         <TextInput
           value={txt ?? show(c, fmt)}
