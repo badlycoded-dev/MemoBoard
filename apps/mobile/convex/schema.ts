@@ -1,12 +1,15 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { authTables } from "@convex-dev/auth/server";
 export default defineSchema({
+  ...authTables,
   boards: defineTable({
     publicId: v.string(),
     type: v.union(v.literal("task"), v.literal("whiteboard")),
     name: v.string(), ownerId: v.string(),
     mode: v.optional(v.union(v.literal("progress"), v.literal("multi"))),
     style: v.optional(v.string()),
+    showTrash: v.optional(v.boolean()),
     access: v.number(), // 0 admin,1 suspended,2 private,3 link,4 public
     createdAt: v.number(),
   }).index("by_public", ["publicId"]),

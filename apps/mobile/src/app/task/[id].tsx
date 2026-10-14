@@ -25,13 +25,14 @@ export default function TaskBoard() {
   const th = TASK_THEMES[board?.style ?? st.taskTheme] ?? TASK_THEMES.blueprint;
   const by = st.userName.trim() || "me";
   const multi = board?.mode === "multi";
+  const showTrash = board?.showTrash ?? st.showTrash;
 
   const m = {
     add: useMutation(api.kanban.itemAdd), move: useMutation(api.kanban.itemMove), claim: useMutation(api.kanban.itemClaim),
     finish: useMutation(api.kanban.itemFinish), trash: useMutation(api.kanban.itemTrash), restore: useMutation(api.kanban.itemRestore),
     purge: useMutation(api.kanban.itemPurge), colAdd: useMutation(api.kanban.colAdd), colUpdate: useMutation(api.kanban.colUpdate),
     colMove: useMutation(api.kanban.colMove), colRemove: useMutation(api.kanban.colRemove), setStyle: useMutation(api.boards.setStyle),
-    rename: useMutation(api.boards.rename),
+    rename: useMutation(api.boards.rename), setOptions: useMutation(api.boards.setOptions),
   };
 
   const [sheet, setSheet] = useState<{ title?: string; options: Opt[] } | null>(null);
@@ -133,7 +134,11 @@ export default function TaskBoard() {
         </Pressable>
         {multi && <Pressable onPress={() => setPrompt({ title: "New column", on: (name) => m.colAdd({ boardId: board._id, name }) })} hitSlop={8}><MaterialCommunityIcons name="table-column-plus-after" size={24} color={th.colText} /></Pressable>}
         <Pressable onPress={() => setSheet({ title: "Board style", options: themeOptions })} hitSlop={8}><MaterialCommunityIcons name="palette-outline" size={24} color={th.colText} /></Pressable>
-        <Pressable onPress={() => router.push("/settings")} hitSlop={8}><MaterialCommunityIcons name="cog-outline" size={24} color={th.colText} /></Pressable>
+        <Pressable onPress={() => setSheet({ title: "Board settings (this board only)", options: [
+          { label: `Trash bin column: ${showTrash ? "on" : "off"}`, icon: "trash-can-outline", on: () => m.setOptions({ id: board._id, showTrash: !showTrash }) },
+          { label: "Board style…", icon: "palette-swatch-outline", on: () => setSheet({ title: "Board style", options: themeOptions }) },
+          { label: "Global settings", icon: "cog-outline", on: () => router.push("/settings") },
+        ] })} hitSlop={8}><MaterialCommunityIcons name="cog-outline" size={24} color={th.colText} /></Pressable>
       </View>
 
       {/* Page scrolls vertically, so a column simply grows as its list grows. */}
@@ -142,7 +147,7 @@ export default function TaskBoard() {
           {cols.map((c, i) =>
             colBox(c._id, c.name, c.color, items.filter((x) => x.columnId === c._id && x.status !== "trashed"), { menu: () => columnMenu(c, i), add: true }),
           )}
-          {st.showTrash && colBox("trash", "Trash bin", undefined, items.filter((x) => x.status === "trashed"), { trash: true })}
+          {showTrash && colBox("trash", "Trash bin", undefined, items.filter((x) => x.status === "trashed"), { trash: true })}
         </ScrollView>
       </ScrollView>
 

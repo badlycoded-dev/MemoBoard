@@ -1,6 +1,14 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
-export const list = query({ args: {}, handler: (ctx) => ctx.db.query("boards").order("desc").collect() });
+import { getAuthUserId } from "@convex-dev/auth/server";
+export const list = query({
+  args: {},
+  handler: async (ctx) => {
+    const uid = await getAuthUserId(ctx);
+    if (!uid) return [];
+    return (await ctx.db.query("boards").order("desc").collect()).filter((b) => b.ownerId === uid);
+  },
+});
 export const byPublicId = query({
   args: { publicId: v.string() },
   handler: (ctx, { publicId }) =>
@@ -14,9 +22,11 @@ export const create = mutation({
     columns: v.optional(v.array(v.string())),
   },
   handler: async (ctx, { name, type, mode, columns }) => {
+    const uid = await getAuthUserId(ctx);
+    if (!uid) throw new Error("Not signed in");
     const publicId = Math.random().toString(36).slice(2, 10);
     const boardId = await ctx.db.insert("boards", {
-      publicId, type: type ?? "whiteboard", name, ownerId: "dev", access: 2, createdAt: Date.now(),
+      publicId, type: type ?? "whiteboard", name, ownerId: uid, access: 2, createdAt: Date.now(),
       ...(type === "task" ? { mode: mode ?? "progress" } : {}),
     });
     if (type === "task") {
@@ -37,4 +47,8 @@ export const setStyle = mutation({
 export const rename = mutation({
   args: { id: v.id("boards"), name: v.string() },
   handler: (ctx, { id, name }) => ctx.db.patch(id, { name }),
+});
+export const setOptions = mutation({
+  args: { id: v.id("boards"), showTrash: v.optional(v.boolean()) },
+  handler: (ctx, { id, showTrash }) => ctx.db.patch(id, { showTrash }),
 });

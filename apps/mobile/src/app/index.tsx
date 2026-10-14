@@ -3,6 +3,12 @@ import { Modal, Pressable, ScrollView, Text, TextInput, View } from "react-nativ
 import { useRouter } from "expo-router";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/services/api";
+import { useAuthActions } from "@convex-dev/auth/react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Avatar } from "@/components/account/Avatar";
+import { ActionSheet, Opt } from "@/components/tasks/ui";
+import { useChangeAvatar } from "@/services/account";
+import { TASK_THEMES } from "@/theme/taskThemes";
 import { platformName } from "@/services/platform";
 import { colors } from "@/theme/colors";
 
@@ -80,11 +86,30 @@ function Section({ title, kind, label }: { title: string; kind: Kind; label: str
 }
 
 export default function Dashboard() {
+  const router = useRouter();
+  const me: any = useQuery(api.users.me);
+  const { signOut } = useAuthActions();
+  const changeAvatar = useChangeAvatar();
+  const [menu, setMenu] = useState<Opt[] | null>(null);
+  const openMenu = () =>
+    setMenu([
+      { label: "Settings", icon: "cog-outline", on: () => router.push("/settings") },
+      { label: "Change photo", icon: "camera-outline", on: () => changeAvatar() },
+      { label: "Sign out", icon: "logout", danger: true, on: () => signOut() },
+    ]);
   return (
     <ScrollView contentContainerStyle={{ padding: 24, paddingTop: 56, maxWidth: 720, width: "100%", alignSelf: "center" }}>
-      <Text style={{ color: colors.muted, marginBottom: 20 }}>Running on {platformName}</Text>
+      <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 20, gap: 14 }}>
+        <View style={{ flex: 1 }}>
+          <Text style={{ color: colors.muted }}>{me?.name ? `Hi, ${me.name}` : "Welcome"}</Text>
+          <Text style={{ color: colors.muted, fontSize: 12 }}>Running on {platformName}</Text>
+        </View>
+        <Pressable onPress={() => router.push("/settings")} hitSlop={8}><MaterialCommunityIcons name="cog-outline" size={26} color={colors.text} /></Pressable>
+        <Pressable onPress={openMenu} hitSlop={8}><Avatar uri={me?.image} name={me?.name ?? me?.email} size={38} /></Pressable>
+      </View>
       <Section title="Whiteboards" kind="whiteboard" label="New whiteboard" />
       <Section title="Task boards" kind="task" label="New task board" />
+      <ActionSheet th={TASK_THEMES.paper} title={me?.email} options={menu} onClose={() => setMenu(null)} />
     </ScrollView>
   );
 }
