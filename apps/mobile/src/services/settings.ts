@@ -14,6 +14,12 @@ export type Settings = {
   orientation: "auto" | "portrait" | "landscape";
   theme: "light" | "dark";
   accent: string;
+  /** Default look of task boards (a board can override it). */
+  taskTheme: string;
+  /** Name written to task logs / claims. */
+  userName: string;
+  /** Shows the trash bin as an extra column on every task board. */
+  showTrash: boolean;
 };
 
 const KEY = "memoboard.settings";
@@ -25,6 +31,9 @@ let current: Settings = {
   orientation: "auto",
   theme: "light",
   accent: "#2F5BA8",
+  taskTheme: "blueprint",
+  userName: "me",
+  showTrash: false,
 };
 const LOCKS = {
   auto: ScreenOrientation.OrientationLock.DEFAULT,

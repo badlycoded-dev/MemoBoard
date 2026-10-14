@@ -113,7 +113,7 @@ function useScrub(width: number, onSeek: (fraction: number) => void) {
   ).current.panHandlers;
 }
 
-function AudioPlayer({ uri, width }: { uri: string; width: number }) {
+export function AudioPlayer({ uri, width }: { uri: string; width: number }) {
   const player = useAudioPlayer(uri);
   const status = useAudioPlayerStatus(player);
   const [muted, setMuted] = useState(false);
@@ -201,7 +201,7 @@ function EmbedFrame({ source }: { source: { uri?: string; html?: string; baseUrl
   }
   return (
     <WebView
-      source={source}
+      source={source as any}
       originWhitelist={["*"]}
       javaScriptEnabled
       domStorageEnabled
@@ -228,7 +228,7 @@ function WebVideo({ uri }: { uri: string }) {
   });
 }
 
-function LinkEmbed({ url }: { url: string }) {
+export function LinkEmbed({ url }: { url: string }) {
   const id = youtubeId(url);
   const html = embedHtml(url);
   if (id && !isWeb) {
@@ -249,6 +249,9 @@ function LinkEmbed({ url }: { url: string }) {
     : { uri: id ? `https://www.youtube.com/embed/${id}?playsinline=1&rel=0${isWeb ? `&origin=${encodeURIComponent(window.location.origin)}` : ""}` : url };
   return <EmbedFrame source={source} />;
 }
+
+/** Video player for either platform (used by task board markdown). */
+export const VideoPlayer = ({ uri }: { uri: string }) => (isWeb ? <WebVideo uri={uri} /> : <VideoBox uri={uri} />);
 
 /** Real components (players, web views) that cannot be drawn inside the SVG canvas. */
 function contentOf(o: any, width: number): ReactNode {

@@ -1,10 +1,11 @@
-import { Pressable, ScrollView, Switch, Text, View } from "react-native";
+import { Pressable, ScrollView, Switch, Text, TextInput, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BoardHeader } from "@/components/whiteboard/BoardHeader";
 import { BoardThemeProvider, useBoardTheme } from "@/components/whiteboard/BoardTheme";
 import { Settings, setSettings, useSettings } from "@/services/settings";
 import { accents } from "@/theme/theme";
+import { TASK_THEMES } from "@/theme/taskThemes";
 
 type ChoiceKey = "headerStyle" | "toolbar" | "toolbarAnchor" | "orientation" | "theme";
 
@@ -130,6 +131,45 @@ function SettingsContent() {
               }}
             />
           ))}
+        </View>
+
+        <Heading text="Task boards: your name (used in logs and claims)" />
+        <TextInput
+          value={st.userName}
+          onChangeText={(userName) => setSettings({ userName })}
+          placeholder="me"
+          placeholderTextColor="#98A2B3"
+          style={{ color: T.text, backgroundColor: T.card, borderColor: T.border, borderWidth: 1, borderRadius: 12, padding: 12 }}
+        />
+
+        <Heading text="Task boards: default style" />
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
+          {Object.entries(TASK_THEMES).map(([id, th]) => (
+            <Pressable
+              key={id}
+              onPress={() => setSettings({ taskTheme: id })}
+              style={{
+                width: 104,
+                borderRadius: 14,
+                overflow: "hidden",
+                borderWidth: 3,
+                borderColor: st.taskTheme === id ? st.accent : T.border,
+              }}
+            >
+              <View style={{ backgroundColor: th.bg, padding: 8, gap: 5 }}>
+                <View style={{ backgroundColor: th.col, borderRadius: th.radius / 2, padding: 5, gap: 4 }}>
+                  <View style={{ height: 14, borderRadius: th.radius / 3, backgroundColor: th.card, borderTopWidth: 4, borderTopColor: th.accent }} />
+                  <View style={{ height: 14, borderRadius: th.radius / 3, backgroundColor: th.card }} />
+                </View>
+              </View>
+              <Text style={{ color: T.text, textAlign: "center", padding: 6, fontWeight: "700", backgroundColor: T.card }}>{th.name}</Text>
+            </Pressable>
+          ))}
+        </View>
+
+        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 22 }}>
+          <Text style={{ color: T.text, fontWeight: "700", flex: 1 }}>Task boards: show trash bin column</Text>
+          <Switch value={st.showTrash} onValueChange={(showTrash) => setSettings({ showTrash })} trackColor={{ true: st.accent }} />
         </View>
       </ScrollView>
       <BoardHeader

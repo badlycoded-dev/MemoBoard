@@ -51,7 +51,7 @@ function BoardScreen() {
     [over, setOver] = useState<Record<string, any>>({}),
     [pend, setPend] = useState<any[]>([]);
   const [open, setOpen] = useState(false),
-    [grp, setGrp] = useState<null | "draw" | "obj">(null),
+    [grp, setGrp] = useState<any>(null),
     [sheet, setSheet] = useState<null | "size" | "scale" | "color">(null);
   const [linkPrompt, setLinkPrompt] = useState(false);
   const [emojiPicker, setEmojiPicker] = useState(false);

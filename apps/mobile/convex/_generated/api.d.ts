@@ -9,9 +9,9 @@
  */
 
 import type * as boards from "../boards.js";
+import type * as kanban from "../kanban.js";
 import type * as objects from "../objects.js";
 import type * as strokes from "../strokes.js";
-import type * as tasks from "../tasks.js";
 
 import type {
   ApiFromModules,
@@ -21,9 +21,9 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   boards: typeof boards;
+  kanban: typeof kanban;
   objects: typeof objects;
   strokes: typeof strokes;
-  tasks: typeof tasks;
 }>;
 
 /**

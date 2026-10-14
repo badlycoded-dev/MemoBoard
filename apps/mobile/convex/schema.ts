@@ -5,14 +5,30 @@ export default defineSchema({
     publicId: v.string(),
     type: v.union(v.literal("task"), v.literal("whiteboard")),
     name: v.string(), ownerId: v.string(),
+    mode: v.optional(v.union(v.literal("progress"), v.literal("multi"))),
+    style: v.optional(v.string()),
     access: v.number(), // 0 admin,1 suspended,2 private,3 link,4 public
     createdAt: v.number(),
   }).index("by_public", ["publicId"]),
-  tasks: defineTable({
-    boardId: v.id("boards"), text: v.string(),
-    status: v.union(v.literal("todo"), v.literal("doing"), v.literal("done")),
-    createdAt: v.number(),
+  tk_columns: defineTable({
+    boardId: v.id("boards"), name: v.string(), order: v.number(),
+    kind: v.string(), // todo | doing | done | custom
+    color: v.optional(v.string()),
   }).index("by_board", ["boardId"]),
+  tk_items: defineTable({
+    boardId: v.id("boards"), columnId: v.id("tk_columns"),
+    title: v.string(), description: v.optional(v.string()), content: v.optional(v.string()),
+    importance: v.number(), // 0 low, 1 normal, 2 high, 3 critical
+    status: v.string(), // open | claimed | done | trashed
+    prevStatus: v.optional(v.string()),
+    createdBy: v.string(), claimedBy: v.optional(v.string()),
+    createdAt: v.number(), updatedAt: v.number(), completedAt: v.optional(v.number()),
+    color: v.optional(v.string()), border: v.optional(v.number()), tint: v.optional(v.boolean()),
+  }).index("by_board", ["boardId"]),
+  tk_logs: defineTable({
+    boardId: v.id("boards"), taskId: v.id("tk_items"),
+    by: v.string(), action: v.string(), info: v.optional(v.string()), at: v.number(),
+  }).index("by_task", ["taskId"]),
   wb_strokes: defineTable({
     boardId: v.id("boards"), userId: v.string(),
     tool: v.optional(v.string()), // "pen" | "wood"
