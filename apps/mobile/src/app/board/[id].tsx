@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import Svg from "react-native-svg";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation, usePaginatedQuery, useQuery } from "convex/react";
 import * as DocumentPicker from "expo-document-picker";
 import * as Clipboard from "expo-clipboard";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -34,8 +34,13 @@ function BoardScreen() {
   const card = T.panel;
   const board = useQuery(api.boards.byPublicId, { publicId: id });
   const args = board ? { boardId: board._id } : "skip";
-  const strokesRaw = useQuery(api.strokes.list, args) ?? [];
-  const objsRaw = useQuery(api.objects.list, args) ?? [];
+  // Loaded page by page; the effect keeps pulling pages until the board is complete.
+  const strokesQ = usePaginatedQuery(api.strokes.list, args, { initialNumItems: 100 });
+  const objsQ = usePaginatedQuery(api.objects.list, args, { initialNumItems: 100 });
+  useEffect(() => { if (strokesQ.status === "CanLoadMore") strokesQ.loadMore(200); }, [strokesQ.status, strokesQ.results.length]);
+  useEffect(() => { if (objsQ.status === "CanLoadMore") objsQ.loadMore(200); }, [objsQ.status, objsQ.results.length]);
+  const strokesRaw: any[] = strokesQ.results;
+  const objsRaw: any[] = objsQ.results;
   const addS: any = useMutation(api.strokes.add),
     rmS: any = useMutation(api.strokes.remove);
   const addO: any = useMutation(api.objects.add),

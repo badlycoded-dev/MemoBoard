@@ -12,7 +12,7 @@ export default defineSchema({
     showTrash: v.optional(v.boolean()),
     access: v.number(), // 0 admin,1 suspended,2 private,3 link,4 public
     createdAt: v.number(),
-  }).index("by_public", ["publicId"]),
+  }).index("by_public", ["publicId"]).index("by_owner", ["ownerId"]),
   tk_columns: defineTable({
     boardId: v.id("boards"), name: v.string(), order: v.number(),
     kind: v.string(), // todo | doing | done | custom
@@ -27,18 +27,18 @@ export default defineSchema({
     createdBy: v.string(), claimedBy: v.optional(v.string()),
     createdAt: v.number(), updatedAt: v.number(), completedAt: v.optional(v.number()),
     color: v.optional(v.string()), border: v.optional(v.number()), tint: v.optional(v.boolean()),
-  }).index("by_board", ["boardId"]),
+  }).index("by_board", ["boardId"]).index("by_column", ["columnId"]),
   tk_logs: defineTable({
     boardId: v.id("boards"), taskId: v.id("tk_items"),
     by: v.string(), action: v.string(), info: v.optional(v.string()), at: v.number(),
-  }).index("by_task", ["taskId"]),
+  }).index("by_task", ["taskId"]).index("by_board", ["boardId"]),
   wb_strokes: defineTable({
     boardId: v.id("boards"), userId: v.string(),
     tool: v.optional(v.string()), // "pen" | "wood"
     color: v.string(), width: v.number(),
     points: v.array(v.number()),
     createdAt: v.number(),
-  }).index("by_board", ["boardId"]),
+  }).index("by_board", ["boardId"]).index("by_board_user", ["boardId", "userId"]),
   wb_objects: defineTable({
     boardId: v.id("boards"), kind: v.string(), // rect|round|ellipse|triangle|arrow|arrowThick
     x: v.number(), y: v.number(), w: v.number(), h: v.number(), // arrows: start + delta
