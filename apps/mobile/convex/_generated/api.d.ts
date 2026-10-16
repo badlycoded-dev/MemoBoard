@@ -11,9 +11,12 @@
 import type * as access from "../access.js";
 import type * as auth from "../auth.js";
 import type * as boards from "../boards.js";
+import type * as drafts from "../drafts.js";
 import type * as http from "../http.js";
 import type * as kanban from "../kanban.js";
+import type * as members from "../members.js";
 import type * as objects from "../objects.js";
+import type * as presence from "../presence.js";
 import type * as strokes from "../strokes.js";
 import type * as users from "../users.js";
 
@@ -27,9 +30,12 @@ declare const fullApi: ApiFromModules<{
   access: typeof access;
   auth: typeof auth;
   boards: typeof boards;
+  drafts: typeof drafts;
   http: typeof http;
   kanban: typeof kanban;
+  members: typeof members;
   objects: typeof objects;
+  presence: typeof presence;
   strokes: typeof strokes;
   users: typeof users;
 }>;

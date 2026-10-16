@@ -26,6 +26,7 @@ export default defineSchema({
     prevStatus: v.optional(v.string()),
     createdBy: v.string(), claimedBy: v.optional(v.string()),
     createdAt: v.number(), updatedAt: v.number(), completedAt: v.optional(v.number()),
+    lockedBy: v.optional(v.string()), lockedName: v.optional(v.string()), lockedAt: v.optional(v.number()),
     color: v.optional(v.string()), border: v.optional(v.number()), tint: v.optional(v.boolean()),
   }).index("by_board", ["boardId"]).index("by_column", ["columnId"]),
   tk_logs: defineTable({
@@ -47,5 +48,20 @@ export default defineSchema({
     rot: v.optional(v.number()), flipX: v.optional(v.boolean()), flipY: v.optional(v.boolean()),
     fromId: v.optional(v.string()), toId: v.optional(v.string()), // arrow links
     file: v.optional(v.object({ storageId: v.id("_storage"), name: v.string() })),
+    updatedAt: v.optional(v.number()), // server clock; used to detect conflicting edits
+    lockedBy: v.optional(v.string()), lockedName: v.optional(v.string()), lockedAt: v.optional(v.number()),
+  }).index("by_board", ["boardId"]),
+  board_members: defineTable({
+    boardId: v.id("boards"), userId: v.string(), role: v.union(v.literal("editor"), v.literal("viewer")), joinedAt: v.number(),
+  }).index("by_board", ["boardId"]).index("by_user", ["userId"]).index("by_board_user", ["boardId", "userId"]),
+  invite_links: defineTable({
+    boardId: v.id("boards"), role: v.union(v.literal("editor"), v.literal("viewer")), tokenHash: v.string(),
+    createdBy: v.string(), expiresAt: v.optional(v.number()), maxUses: v.optional(v.number()), uses: v.number(), revoked: v.boolean(), createdAt: v.number(),
+  }).index("by_board", ["boardId"]).index("by_token", ["tokenHash"]),
+  presence: defineTable({
+    boardId: v.id("boards"), userId: v.string(), name: v.string(), editing: v.optional(v.string()), seenAt: v.number(),
+  }).index("by_board", ["boardId"]).index("by_board_user", ["boardId", "userId"]),
+  wb_drafts: defineTable({ // edits that lost a conflict; max 5 per whiteboard
+    boardId: v.id("boards"), userId: v.string(), objectId: v.id("wb_objects"), patch: v.string(), baseUpdatedAt: v.optional(v.number()), createdAt: v.number(),
   }).index("by_board", ["boardId"]),
 });

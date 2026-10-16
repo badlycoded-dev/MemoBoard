@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "convex/react";
 import { useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { CollabBar } from "@/components/collab/CollabBar";
 import { TaskCard } from "@/components/tasks/TaskCard";
 import { TaskModal } from "@/components/tasks/TaskModal";
 import { ActionSheet, Opt, Prompt } from "@/components/tasks/ui";
@@ -41,6 +42,7 @@ export default function TaskBoard() {
   const [adding, setAdding] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
   const open = items.find((i) => i._id === openId);
+  const [note, setNote] = useState<string | null>(null);
 
   const A = {
     claim: (it: any, claim: boolean) => m.claim({ id: it._id, by, claim }),
@@ -151,9 +153,10 @@ export default function TaskBoard() {
         </ScrollView>
       </ScrollView>
 
+      {board && <CollabBar boardId={board._id} publicId={board.publicId} role={board.role} editing={open?.title} note={note} onNote={setNote} />}
       {open && (
         <TaskModal
-          it={open} th={th} cols={cols} mode={board?.mode} by={by} onClose={() => setOpenId(null)}
+          it={open} th={th} cols={cols} mode={board?.mode} by={by} onClose={() => setOpenId(null)} onDenied={(who: string) => { setOpenId(null); setNote(`${who} is editing this task`); }}
           onClaim={A.claim} onFinish={A.finish} onMove={A.move} onTrash={A.trash} onRestore={A.restore} onPurge={A.purge}
         />
       )}

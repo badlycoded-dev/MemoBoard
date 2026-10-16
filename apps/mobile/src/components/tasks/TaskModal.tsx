@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Modal, Pressable, ScrollView, Text, TextInput, View, useWindowDimensions } from "react-native";
 import { api } from "@/services/api";
 import { IMPORTANCE, ITEM_COLORS, type TaskTheme } from "@/theme/taskThemes";
+import { useLock } from "@/hooks/useLock";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { Chip } from "./ui";
 
@@ -12,9 +13,11 @@ const LOG_ICON: Record<string, any> = { created: "plus-circle-outline", edited: 
 
 /** Full task view: main part (title, importance, description, markdown content, look) on the left,
  *  side part (people, dates, actions, activity log) on the right; stacked on narrow screens. */
-export function TaskModal({ it, th, cols, mode, by, onClose, onClaim, onFinish, onMove, onTrash, onRestore, onPurge }: any) {
+export function TaskModal({ it, th, cols, mode, by, onClose, onDenied, onClaim, onFinish, onMove, onTrash, onRestore, onPurge }: any) {
   const wide = useWindowDimensions().width >= 760;
   const update = useMutation(api.kanban.itemUpdate);
+  const lockItem = useMutation(api.kanban.itemLock), unlockItem = useMutation(api.kanban.itemUnlock);
+  useLock(it.status === "trashed" ? null : it._id, lockItem, unlockItem, (who) => onDenied?.(who));
   const uploadUrl = useMutation(api.kanban.uploadUrl);
   const urlOf = useMutation(api.kanban.urlOf);
   const logs = useQuery(api.kanban.logList, { taskId: it._id }) ?? [];

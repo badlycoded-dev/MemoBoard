@@ -95,7 +95,7 @@ export function BoardManager({ kind }: { kind: "whiteboard" | "task" }) {
   const [ren, setRen] = useState<any>(null);
   const [name, setName] = useState("");
   const [del, setDel] = useState<any>(null);
-  const items = (boards ?? []).filter((b) => (b.type ?? "whiteboard") === kind);
+  const items = (boards ?? []).filter((b) => (b.type ?? "whiteboard") === kind && b.role === "owner"); // shared boards are managed by their owners
   const save = async () => { if (name.trim()) await rename({ id: ren._id, name: name.trim() }); setRen(null); };
   const btn = (label: string, on: () => void, primary = false) => (
     <Pressable onPress={on} style={{ flex: 1, padding: 12, borderRadius: 10, alignItems: "center", backgroundColor: primary ? st.accent : "transparent", borderWidth: 1, borderColor: primary ? st.accent : T.border }}>

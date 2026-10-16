@@ -1,7 +1,7 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 import { getAuthUserId } from "@convex-dev/auth/server";
-import { cleanPatch, editBoard, viewBoard } from "./access";
+import { cleanPatch, editBoard, heldByOther, userName, viewBoard } from "./access";
 
 const log = (ctx: any, it: any, by: string, action: string, info?: string) =>
   ctx.db.insert("tk_logs", { boardId: it.boardId, taskId: it._id, by, action, info, at: Date.now() });
@@ -88,6 +88,8 @@ export const itemUpdate = mutation({
   handler: async (ctx, { id, patch, by }) => {
     const it: any = await ctx.db.get(id);
     await editBoard(ctx, it.boardId);
+    const uid = (await getAuthUserId(ctx))!;
+    if (heldByOther(it, uid)) return { locked: it.lockedName ?? "Someone" };
     const patchClean = cleanPatch(patch);
     const clean: any = { updatedAt: Date.now() };
     const changed: string[] = [];
@@ -205,3 +207,22 @@ export const uploadUrl = mutation({
   },
 });
 export const urlOf = mutation({ args: { storageId: v.id("_storage") }, handler: (ctx, { storageId }) => ctx.storage.getUrl(storageId) });
+export const itemLock = mutation({
+  args: { id: v.id("tk_items") },
+  handler: async (ctx, { id }) => {
+    const it: any = await ctx.db.get(id);
+    if (!it) return { ok: false as const };
+    await editBoard(ctx, it.boardId);
+    const uid = (await getAuthUserId(ctx))!;
+    if (heldByOther(it, uid)) return { ok: false as const, by: it.lockedName ?? "Someone" };
+    await ctx.db.patch(id, { lockedBy: uid, lockedName: await userName(ctx, uid), lockedAt: Date.now() });
+    return { ok: true as const };
+  },
+});
+export const itemUnlock = mutation({
+  args: { id: v.id("tk_items") },
+  handler: async (ctx, { id }) => {
+    const it: any = await ctx.db.get(id);
+    if (it?.lockedBy && it.lockedBy === (await getAuthUserId(ctx))) await ctx.db.patch(id, { lockedBy: undefined, lockedName: undefined, lockedAt: undefined });
+  },
+});

@@ -12,6 +12,8 @@ import { BoardThemeProvider, useBoardTheme } from "@/components/whiteboard/Board
 import { INITIAL_TOOL_CONFIG } from "@/components/whiteboard/constants";
 import { Tool, defStyle, isArrow, box, ends, hit, Pt } from "@/components/whiteboard/model";
 import { BoardHeader } from "@/components/whiteboard/BoardHeader";
+import { CollabBar } from "@/components/collab/CollabBar";
+import { useLock } from "@/hooks/useLock";
 import { Toolbar } from "@/components/whiteboard/Toolbar";
 import { BoardCanvas, LayerStack, TopOverlay } from "@/components/whiteboard/BoardCanvas";
 import { SelectionBar } from "@/components/whiteboard/SelectionBar";
@@ -45,12 +47,44 @@ function BoardScreen() {
     rmS: any = useMutation(api.strokes.remove);
   const addO: any = useMutation(api.objects.add),
     rmO: any = useMutation(api.objects.remove),
-    patchO: any = useMutation(api.objects.patch);
+    rawPatch: any = useMutation(api.objects.patch),
+    lockO: any = useMutation(api.objects.lock),
+    unlockO: any = useMutation(api.objects.unlock);
+  const me: any = useQuery(api.users.me);
+  const [note, setNote] = useState<string | null>(null);
+  // Edits are sent one at a time per object with the updatedAt the client last saw, so the server
+  // can tell a real conflict (saved as a draft) from our own consecutive edits.
+  const objsRef = useRef<any[]>([]);
+  objsRef.current = objsRaw;
+  const rawRef = useRef(rawPatch);
+  rawRef.current = rawPatch;
+  const seen = useRef(new Map<string, number>());
+  const chain = useRef(new Map<string, Promise<any>>());
+  const patchO: any = useRef((a: any) => {
+    const next = (chain.current.get(a.id) ?? Promise.resolve()).catch(() => {}).then(async () => {
+      const cached = objsRef.current.find((o) => o._id === a.id)?.updatedAt;
+      const mine = seen.current.get(a.id);
+      const base = mine !== undefined && mine >= (cached ?? 0) ? mine : cached;
+      try {
+        const r = await rawRef.current({ ...a, base });
+        if (r?.status === "ok") seen.current.set(a.id, r.updatedAt);
+        else if (r?.status === "locked") setNote(`${r.by} is editing this item`);
+        else if (r?.status === "draft") setNote("Someone changed this item first. Your edit was saved as a draft.");
+        else if (r?.status === "draft_full") setNote("Draft limit reached (5). Discard a draft first.");
+        return r;
+      } catch {
+        setNote("You can't edit this board.");
+        return null;
+      }
+    });
+    chain.current.set(a.id, next);
+    return next;
+  }).current;
   const upUrl = useMutation(api.objects.uploadUrl);
   const [tool, setTool] = useState<Tool>("select"),
     [ctl, setCtl] = useState(false),
     [cfg, setCfg] = useState(INITIAL_TOOL_CONFIG);
-  const [sel, setSel] = useState<string | null>(null),
+  const [sel, setSelRaw] = useState<string | null>(null),
     [form, setForm] = useState<any>(null);
   const [draft, setDraft] = useState<any>(null),
     [over, setOver] = useState<Record<string, any>>({}),
@@ -98,6 +132,13 @@ function BoardScreen() {
   const c = cfg[tool],
     selO = sel ? map.get(sel) : null,
     fo = form ? map.get(form.id) : null;
+  const lockedByOther = (o: any) => !!o?.lockedBy && o.lockedBy !== me?._id && Date.now() - (o.lockedAt ?? 0) < 45000;
+  const setSel: any = (v: any) => {
+    const o = typeof v === "string" ? map.get(v) : null;
+    if (lockedByOther(o)) return setNote(`${o.lockedName ?? "Someone"} is editing this item`);
+    setSelRaw(v);
+  };
+  useLock(selO && !String(selO._id).startsWith("t0") ? selO._id : null, lockO, unlockO, (by) => { setSelRaw(null); setNote(`${by} is editing this item`); });
   const top = (p: Pt, noArrow = false) =>
     [...objs].reverse().find((o) => !(noArrow && isArrow(o.kind)) && hit(o, p, map));
   const history = useHistory({ addS, rmS, addO, rmO, patchO, boardId: board?._id, gone });
@@ -248,6 +289,7 @@ function BoardScreen() {
         onBack={() => router.replace("/")}
         onSettings={() => router.push("/settings?from=whiteboards" as any)}
       />
+      {board && <CollabBar boardId={board._id} publicId={board.publicId} role={board.role} editing={selO?.kind} drafts note={note} onNote={setNote} />}
 
       <Toolbar
         tool={tool}

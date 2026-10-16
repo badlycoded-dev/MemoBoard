@@ -2,7 +2,7 @@ import { query, mutation, internalMutation, MutationCtx } from "./_generated/ser
 import { internal } from "./_generated/api";
 import { Id } from "./_generated/dataModel";
 import { v } from "convex/values";
-import { canView } from "./access";
+import { canView, roleOf } from "./access";
 import { getAuthUserId } from "@convex-dev/auth/server";
 const owned = async (ctx: MutationCtx, id: Id<"boards">) => {
   const uid = await getAuthUserId(ctx);
@@ -15,14 +15,17 @@ export const list = query({
   handler: async (ctx) => {
     const uid = await getAuthUserId(ctx);
     if (!uid) return [];
-    return ctx.db.query("boards").withIndex("by_owner", (q) => q.eq("ownerId", uid)).order("desc").take(200);
+    const owned = (await ctx.db.query("boards").withIndex("by_owner", (q) => q.eq("ownerId", uid)).order("desc").take(200)).map((b) => ({ ...b, role: "owner" as const }));
+    const ms = await ctx.db.query("board_members").withIndex("by_user", (q) => q.eq("userId", uid)).take(200);
+    const shared = (await Promise.all(ms.map(async (m) => { const b = await ctx.db.get(m.boardId); return b && b.access !== 1 ? { ...b, role: m.role } : null; }))).filter((b) => b !== null);
+    return [...owned, ...shared];
   },
 });
 export const byPublicId = query({
   args: { publicId: v.string() },
   handler: async (ctx, { publicId }) => {
     const b = await ctx.db.query("boards").withIndex("by_public", (q) => q.eq("publicId", publicId)).unique();
-    return (await canView(ctx, b)) ? b : null;
+    return (await canView(ctx, b)) ? { ...b!, role: (await roleOf(ctx, b)) ?? ("viewer" as const) } : null;
   },
 });
 export const create = mutation({
@@ -76,7 +79,7 @@ export const purge = internalMutation({
   args: { boardId: v.id("boards") },
   handler: async (ctx, { boardId }) => {
     let budget = 200;
-    for (const t of ["tk_logs", "tk_items", "tk_columns", "wb_strokes", "wb_objects"] as const) {
+    for (const t of ["tk_logs", "tk_items", "tk_columns", "wb_strokes", "wb_objects", "wb_drafts", "presence", "invite_links", "board_members"] as const) {
       const rows: any[] = await (ctx.db.query(t) as any).withIndex("by_board", (q: any) => q.eq("boardId", boardId)).take(budget);
       for (const r of rows) {
         if (t === "wb_objects" && r.file) await ctx.storage.delete(r.file.storageId).catch(() => {});

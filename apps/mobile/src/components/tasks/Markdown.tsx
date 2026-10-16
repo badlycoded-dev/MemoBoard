@@ -103,8 +103,8 @@ const INLINE = /(`[^`]+`)|(\*\*[^*]+\*\*)|(~~[^~]+~~)|(\*[^*\n]+\*)|(!\[[^\]]*\]
 export function inline(src: string, p: P, base: any = {}): ReactNode[] {
   const out: ReactNode[] = [];
   let last = 0, k = 0, m: RegExpExecArray | null;
-  INLINE.lastIndex = 0;
-  while ((m = INLINE.exec(src))) {
+  const re = new RegExp(INLINE.source, "g"); // own regex per call: inline() recurses, a shared one resets lastIndex
+  while ((m = re.exec(src))) {
     if (m.index > last) out.push(src.slice(last, m.index));
     const t = m[0];
     if (m[1]) out.push(<Text key={k++} style={{ fontFamily: MONO, backgroundColor: p.code, fontSize: 13 }}> {t.slice(1, -1)} </Text>);
