@@ -41,12 +41,12 @@ export function BoardHeader({ title, accent, variant, topInset, onBack, onSettin
       <Pressable onPress={onBack} style={[styles.round, { backgroundColor: accent }]}>
         {back}
       </Pressable>
-      <View style={[styles.pill, { backgroundColor: accent }]}>
-        <Text style={styles.pillTitle} numberOfLines={1}>
+      <View style={[styles.pill, { backgroundColor: accent, flexDirection: "row", alignItems: "center", gap: 8, paddingRight: 3 }]}>
+        <Text style={[styles.pillTitle, { flex: 1 }]} numberOfLines={1}>
           {title}
         </Text>
+        {right}
       </View>
-      {right}
       {onSettings && (
         <Pressable onPress={onSettings} style={[styles.round, { backgroundColor: accent }]}>
           {gear}

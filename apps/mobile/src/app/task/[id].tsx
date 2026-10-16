@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CollabBar, Toast } from "@/components/collab/CollabBar";
+import { lockedByOther, lockerOf } from "@/components/collab/LockOverlay";
 import { TaskCard } from "@/components/tasks/TaskCard";
 import { TaskModal } from "@/components/tasks/TaskModal";
 import { ActionSheet, Opt, Prompt } from "@/components/tasks/ui";
@@ -23,6 +24,8 @@ export default function TaskBoard() {
   const args = board ? { boardId: board._id } : "skip";
   const cols: any[] = useQuery(api.kanban.colList, args) ?? [];
   const items: any[] = useQuery(api.kanban.itemList, args) ?? [];
+  const presence: any[] = useQuery(api.presence.list, args) ?? [];
+  const me: any = useQuery(api.users.me);
   const th = TASK_THEMES[board?.style ?? st.taskTheme] ?? TASK_THEMES.blueprint;
   const by = st.userName.trim() || "me";
   const multi = board?.mode === "multi";
@@ -108,7 +111,7 @@ export default function TaskBoard() {
         {opts.menu && <Pressable onPress={opts.menu} hitSlop={8}><MaterialCommunityIcons name="dots-horizontal" size={20} color={th.colText} /></Pressable>}
       </View>
       {list.length === 0 && <Text style={{ color: th.colText, opacity: 0.5, textAlign: "center", paddingVertical: 8 }}>{opts.trash ? "Trash is empty" : "No tasks"}</Text>}
-      {list.map((it) => <TaskCard key={it._id} it={it} th={th} onOpen={() => setOpenId(it._id)} onMenu={() => !ro && itemMenu(it)} />)}
+      {list.map((it) => <TaskCard key={it._id} it={it} th={th} onOpen={() => setOpenId(it._id)} onMenu={() => !ro && itemMenu(it)} locker={lockedByOther(it, me?._id) ? lockerOf(it, presence) : null} />)}
       {opts.add &&
         (adding === key ? (
           <TextInput
@@ -138,7 +141,7 @@ export default function TaskBoard() {
           <Text style={{ color: th.colText, opacity: 0.65, fontSize: 12 }}>{multi ? "Multi-list board" : "Progress board"}</Text>
         </Pressable>
         {multi && !ro && <Pressable onPress={() => setPrompt({ title: "New column", on: (name) => m.colAdd({ boardId: board._id, name }) })} hitSlop={8}><MaterialCommunityIcons name="table-column-plus-after" size={24} color={th.colText} /></Pressable>}
-        {board && <CollabBar boardId={board._id} publicId={board.publicId} role={board.role} editing={open?.title} onNote={setNote} tint="rgba(127,127,127,0.25)" fg={th.colText} />}
+        {board && <CollabBar boardId={board._id} publicId={board.publicId} ownerId={board.ownerId} role={board.role} editing={open?.title} onNote={setNote} tint="rgba(127,127,127,0.25)" fg={th.colText} />}
         {isOwner && (<Pressable onPress={() => setSheet({ title: "Board style", options: themeOptions })} hitSlop={8}><MaterialCommunityIcons name="palette-outline" size={24} color={th.colText} /></Pressable>)}
         <Pressable onPress={() => setSheet({ title: "Board settings (this board only)", options: [
           ...(!isOwner ? [] : [

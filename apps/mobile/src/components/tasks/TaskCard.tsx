@@ -1,9 +1,10 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Pressable, Text, View } from "react-native";
+import { LockBadge } from "@/components/collab/LockOverlay";
 import { IMPORTANCE, type TaskTheme } from "@/theme/taskThemes";
 
 /** Column item: importance/custom color band on top, title, and an options (dot column) button. */
-export function TaskCard({ it, th, onOpen, onMenu }: { it: any; th: TaskTheme; onOpen: () => void; onMenu: () => void }) {
+export function TaskCard({ it, th, onOpen, onMenu, locker }: { it: any; th: TaskTheme; onOpen: () => void; onMenu: () => void; locker?: { name: string; image?: string | null } | null }) {
   const imp = IMPORTANCE[it.importance ?? 1];
   const band = it.color ?? imp.color;
   const bw = it.border ?? th.cardBorder;
@@ -40,6 +41,11 @@ export function TaskCard({ it, th, onOpen, onMenu }: { it: any; th: TaskTheme; o
           <MaterialCommunityIcons name="dots-vertical" size={18} color={th.cardText} />
         </Pressable>
       </View>
+      {locker && (
+        <View pointerEvents="none" style={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0, backgroundColor: "rgba(71,84,103,0.5)", alignItems: "center", justifyContent: "center" }}>
+          <LockBadge name={locker.name} image={locker.image} />
+        </View>
+      )}
     </Pressable>
   );
 }

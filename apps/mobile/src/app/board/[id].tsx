@@ -13,6 +13,7 @@ import { INITIAL_TOOL_CONFIG } from "@/components/whiteboard/constants";
 import { Tool, defStyle, isArrow, box, ends, hit, Pt } from "@/components/whiteboard/model";
 import { BoardHeader } from "@/components/whiteboard/BoardHeader";
 import { CollabBar, Toast } from "@/components/collab/CollabBar";
+import { LockOverlay, lockedByOther } from "@/components/collab/LockOverlay";
 import { useGuard } from "@/hooks/useGuard";
 import { useLock } from "@/hooks/useLock";
 import { Toolbar } from "@/components/whiteboard/Toolbar";
@@ -52,6 +53,7 @@ function BoardScreen() {
     lockO: any = useMutation(api.objects.lock),
     unlockO: any = useMutation(api.objects.unlock);
   const me: any = useQuery(api.users.me);
+  const presence: any[] = useQuery(api.presence.list, args) ?? [];
   const [note, setNote] = useState<string | null>(null);
   // Viewers get a read-only board: no toolbar, and every write is a no-op instead of a rejected promise.
   const ro = board?.role === "viewer";
@@ -141,10 +143,9 @@ function BoardScreen() {
   const c = cfg[tool],
     selO = sel ? map.get(sel) : null,
     fo = form ? map.get(form.id) : null;
-  const lockedByOther = (o: any) => !!o?.lockedBy && o.lockedBy !== me?._id && Date.now() - (o.lockedAt ?? 0) < 45000;
   const setSel: any = (v: any) => {
     const o = typeof v === "string" ? map.get(v) : null;
-    if (lockedByOther(o)) return setNote(`${o.lockedName ?? "Someone"} is editing this item`);
+    if (lockedByOther(o, me?._id)) return setNote(`${o.lockedName ?? "Someone"} is editing this item`);
     setSelRaw(v);
   };
   useLock(!ro && selO && !String(selO._id).startsWith("t0") ? selO._id : null, lockO, unlockO, (by) => { setSelRaw(null); setNote(`${by} is editing this item`); });
@@ -290,6 +291,7 @@ function BoardScreen() {
         cam={cam}
       />
 
+      <LockOverlay objs={objs} cam={cam} meId={me?._id} presence={presence} />
       <BoardHeader
         title={board?.name ?? "Loading..."}
         accent={st.accent}
@@ -297,7 +299,7 @@ function BoardScreen() {
         topInset={ins.top}
         onBack={() => router.replace("/")}
         onSettings={() => router.push("/settings?from=whiteboards" as any)}
-        right={board ? <CollabBar boardId={board._id} publicId={board.publicId} role={board.role} editing={selO?.kind} drafts onNote={setNote} /> : undefined}
+        right={board ? <CollabBar boardId={board._id} publicId={board.publicId} ownerId={board.ownerId} role={board.role} editing={selO?.kind} drafts onNote={setNote} /> : undefined}
       />
       <Toast note={note} onNote={setNote} />
 

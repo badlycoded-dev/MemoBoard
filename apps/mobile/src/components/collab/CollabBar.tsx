@@ -18,8 +18,8 @@ export function Toast({ note, onNote }: { note?: string | null; onNote: (n: stri
 }
 
 /** Header actions: [drafts] [active users] [share]. Also sends this user's presence heartbeat. */
-export function CollabBar({ boardId, publicId, role, editing, drafts, onNote, tint = "rgba(255,255,255,0.22)", fg = "#fff" }: {
-  boardId: any; publicId: string; role?: string; editing?: string; drafts?: boolean; onNote?: (n: string | null) => void; tint?: string; fg?: string;
+export function CollabBar({ boardId, publicId, ownerId, role, editing, drafts, onNote, tint = "rgba(255,255,255,0.22)", fg = "#fff" }: {
+  boardId: any; publicId: string; ownerId?: string; role?: string; editing?: string; drafts?: boolean; onNote?: (n: string | null) => void; tint?: string; fg?: string;
 }) {
   const router = useRouter();
   const me: any = useQuery(api.users.me);
@@ -41,8 +41,9 @@ export function CollabBar({ boardId, publicId, role, editing, drafts, onNote, ti
   useEffect(() => () => { leave({ boardId }).catch(() => {}); }, [boardId]);
   useEffect(() => { const t = setInterval(() => setNow(Date.now()), 10000); return () => clearInterval(t); }, []);
 
-  const active = rows.filter((r) => now - r.seenAt < 30000).sort((a, b) => (a.userId === me?._id ? -1 : b.userId === me?._id ? 1 : 0));
-  const others = active.filter((r) => r.userId !== me?._id);
+  // Owner first, then you, then everyone else.
+  const rank = (r: any) => (r.userId === ownerId ? 0 : r.userId === me?._id ? 1 : 2);
+  const active = rows.filter((r) => now - r.seenAt < 30000).sort((a, b) => rank(a) - rank(b));
   const pill = { backgroundColor: tint, borderRadius: 18, height: 34, paddingHorizontal: 10, flexDirection: "row", alignItems: "center", gap: 6 } as const;
   const close = () => setDlg(null);
   return (
@@ -55,18 +56,18 @@ export function CollabBar({ boardId, publicId, role, editing, drafts, onNote, ti
           </Pressable>
         )}
         <Pressable onPress={() => setDlg("users")} style={pill}>
-          {others.length === 0 ? (
+          {active.length === 0 ? (
             <MaterialCommunityIcons name="account-group-outline" size={18} color={fg} />
           ) : (
             <View style={{ flexDirection: "row" }}>
-              {others.slice(0, 3).map((r, i) => (
+              {active.slice(0, 3).map((r, i) => (
                 <View key={r._id} style={{ marginLeft: i ? -8 : 0, borderRadius: 12, borderWidth: 2, borderColor: tint.startsWith("rgba(255") ? "#ffffff55" : "transparent" }}>
                   <Avatar uri={r.image} name={r.name} size={22} />
                 </View>
               ))}
             </View>
           )}
-          {others.length > 3 && <Text style={{ color: fg, fontSize: 12, fontWeight: "800" }}>+{others.length - 3}</Text>}
+          {active.length > 3 && <Text style={{ color: fg, fontSize: 12, fontWeight: "800" }}>+{active.length - 3}</Text>}
         </Pressable>
         <Pressable onPress={() => router.push(`/share/${publicId}` as any)} style={pill}>
           <MaterialCommunityIcons name={role === "viewer" ? "eye-outline" : "account-multiple-plus-outline"} size={18} color={fg} />
@@ -84,7 +85,7 @@ export function CollabBar({ boardId, publicId, role, editing, drafts, onNote, ti
                   <View key={r._id} style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <Avatar uri={r.image} name={r.name} size={32} />
                     <View style={{ flex: 1 }}>
-                      <Text style={{ fontWeight: "700" }} numberOfLines={1}>{r.name}{r.userId === me?._id ? " (you)" : ""}</Text>
+                      <Text style={{ fontWeight: "700" }} numberOfLines={1}>{r.name}{r.userId === me?._id ? " (you)" : ""}{r.userId === ownerId ? " · owner" : ""}</Text>
                       <Text style={{ color: "#475467", fontSize: 12 }}>{r.editing ? `Editing ${r.editing}` : "Viewing"}</Text>
                     </View>
                     <View style={{ width: 9, height: 9, borderRadius: 5, backgroundColor: r.editing ? "#F79009" : "#12B76A" }} />
