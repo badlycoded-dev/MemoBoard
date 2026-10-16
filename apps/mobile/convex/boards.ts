@@ -17,7 +17,7 @@ export const list = query({
     if (!uid) return [];
     const owned = (await ctx.db.query("boards").withIndex("by_owner", (q) => q.eq("ownerId", uid)).order("desc").take(200)).map((b) => ({ ...b, role: "owner" as const }));
     const ms = await ctx.db.query("board_members").withIndex("by_user", (q) => q.eq("userId", uid)).take(200);
-    const shared = (await Promise.all(ms.map(async (m) => { const b = await ctx.db.get(m.boardId); return b && b.access !== 1 ? { ...b, role: m.role } : null; }))).filter((b) => b !== null);
+    const shared = (await Promise.all(ms.map(async (m) => { const b = await ctx.db.get(m.boardId); if (!b || b.access === 1) return null; const o: any = await ctx.db.get(b.ownerId as any); return { ...b, role: m.role, ownerName: o?.name ?? o?.email ?? "Someone" }; }))).filter((b) => b !== null);
     return [...owned, ...shared];
   },
 });
