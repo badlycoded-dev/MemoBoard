@@ -137,7 +137,7 @@ export default function TaskBoard() {
         <Pressable onPress={() => setSheet({ title: "Board settings (this board only)", options: [
           { label: `Trash bin column: ${showTrash ? "on" : "off"}`, icon: "trash-can-outline", on: () => m.setOptions({ id: board._id, showTrash: !showTrash }) },
           { label: "Board style…", icon: "palette-swatch-outline", on: () => setSheet({ title: "Board style", options: themeOptions }) },
-          { label: "Global settings", icon: "cog-outline", on: () => router.push("/settings") },
+          { label: "Global settings", icon: "cog-outline", on: () => router.push("/settings?from=tasks" as any) },
         ] })} hitSlop={8}><MaterialCommunityIcons name="cog-outline" size={24} color={th.colText} /></Pressable>
       </View>
 

@@ -119,10 +119,14 @@ export function BoardManager({ kind }: { kind: "whiteboard" | "task" }) {
         <View style={{ flexDirection: "row", gap: 10 }}>{btn("Cancel", () => setRen(null))}{btn("Save", save, true)}</View>
       </Dialog>
       <Dialog visible={!!del} onClose={() => setDel(null)}>
-        <Text style={{ color: T.text, fontSize: 18, fontWeight: "800" }}>Delete “{del?.name}”?</Text>
-        <Text style={{ color: T.text, opacity: 0.7 }}>The board and everything on it will be permanently deleted.</Text>
-        <HoldToDelete onDone={async () => { const id = del._id; setDel(null); await remove({ id }); }} />
-        {btn("Cancel", () => setDel(null))}
+        {del && (
+          <>
+            <Text style={{ color: T.text, fontSize: 18, fontWeight: "800" }}>Delete “{del.name}”?</Text>
+            <Text style={{ color: T.text, opacity: 0.7 }}>The board and everything on it will be permanently deleted.</Text>
+            <HoldToDelete key={del._id} onDone={() => { const id = del._id; setDel(null); remove({ id }); }} />
+            {btn("Cancel", () => setDel(null))}
+          </>
+        )}
       </Dialog>
     </View>
   );

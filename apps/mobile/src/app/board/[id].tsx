@@ -246,7 +246,7 @@ function BoardScreen() {
         variant={st.headerStyle}
         topInset={ins.top}
         onBack={() => router.replace("/")}
-        onSettings={() => router.push("/settings")}
+        onSettings={() => router.push("/settings?from=whiteboards" as any)}
       />
 
       <Toolbar

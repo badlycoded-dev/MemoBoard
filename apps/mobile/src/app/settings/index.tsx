@@ -1,5 +1,5 @@
 import { Pressable, Text } from "react-native";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SettingsScreen } from "@/components/settings/shared";
 import { useBoardTheme } from "@/components/whiteboard/BoardTheme";
@@ -13,9 +13,12 @@ const PAGES = [
 function Hub() {
   const router = useRouter();
   const T = useBoardTheme();
+  const { from } = useLocalSearchParams<{ from?: string }>();
+  // Opened from a board: that board type + account. From the main menu: account only.
+  const pages = PAGES.filter(([path]) => path === "accounts" || path === from);
   return (
     <>
-      {PAGES.map(([path, label, icon]) => (
+      {pages.map(([path, label, icon]) => (
         <Pressable key={path} onPress={() => router.push(`/settings/${path}` as any)}
           style={{ flexDirection: "row", alignItems: "center", gap: 14, padding: 18, marginBottom: 12, borderRadius: 16, backgroundColor: T.card, borderWidth: 1, borderColor: T.border }}>
           <MaterialCommunityIcons name={icon as any} size={26} color={T.text} />
