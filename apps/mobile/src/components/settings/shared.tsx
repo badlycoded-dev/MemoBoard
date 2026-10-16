@@ -74,7 +74,7 @@ export function HoldToDelete({ onDone, ms = 1500 }: { onDone: () => void; ms?: n
   );
 }
 
-function Dialog({ visible, onClose, children }: { visible: boolean; onClose: () => void; children: ReactNode }) {
+export function Dialog({ visible, onClose, children }: { visible: boolean; onClose: () => void; children: ReactNode }) {
   const T = useBoardTheme();
   return (
     <Modal transparent animationType="fade" visible={visible} onRequestClose={onClose}>
@@ -82,6 +82,24 @@ function Dialog({ visible, onClose, children }: { visible: boolean; onClose: () 
         <Pressable style={{ width: "100%", maxWidth: 420, backgroundColor: T.card, borderRadius: 16, padding: 20, gap: 14 }}>{children}</Pressable>
       </Pressable>
     </Modal>
+  );
+}
+
+/** Yes/cancel confirmation modal. */
+export function ConfirmDialog({ visible, title, body, confirm = "Confirm", onConfirm, onClose }: {
+  visible: boolean; title: string; body?: string; confirm?: string; onConfirm: () => void; onClose: () => void;
+}) {
+  const T = useBoardTheme();
+  const st = useSettings();
+  return (
+    <Dialog visible={visible} onClose={onClose}>
+      <Text style={{ color: T.text, fontSize: 18, fontWeight: "800" }}>{title}</Text>
+      {!!body && <Text style={{ color: T.text, opacity: 0.7 }}>{body}</Text>}
+      <View style={{ flexDirection: "row", gap: 10 }}>
+        <Pressable onPress={onClose} style={{ flex: 1, padding: 12, borderRadius: 10, alignItems: "center", borderWidth: 1, borderColor: T.border }}><Text style={{ color: T.text, fontWeight: "700" }}>Cancel</Text></Pressable>
+        <Pressable onPress={() => { onClose(); onConfirm(); }} style={{ flex: 1, padding: 12, borderRadius: 10, alignItems: "center", backgroundColor: st.accent }}><Text style={{ color: "#fff", fontWeight: "800" }}>{confirm}</Text></Pressable>
+      </View>
+    </Dialog>
   );
 }
 

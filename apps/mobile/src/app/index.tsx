@@ -6,6 +6,7 @@ import { api } from "@/services/api";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Avatar } from "@/components/account/Avatar";
+import { JoinDialog } from "@/components/collab/JoinDialog";
 import { ActionSheet, Opt } from "@/components/tasks/ui";
 import { useChangeAvatar } from "@/services/account";
 import { TASK_THEMES } from "@/theme/taskThemes";
@@ -91,6 +92,8 @@ export default function Dashboard() {
   const { signOut } = useAuthActions();
   const changeAvatar = useChangeAvatar();
   const [menu, setMenu] = useState<Opt[] | null>(null);
+  const [joinOpen, setJoinOpen] = useState(false);
+  const pending = (useQuery(api.members.myInvites) ?? []).length;
   const openMenu = () =>
     setMenu([
       { label: "Settings", icon: "cog-outline", on: () => router.push("/settings") },
@@ -104,11 +107,16 @@ export default function Dashboard() {
           <Text style={{ color: colors.muted }}>{me?.name ? `Hi, ${me.name}` : "Welcome"}</Text>
           <Text style={{ color: colors.muted, fontSize: 12 }}>Running on {platformName}</Text>
         </View>
+        <Pressable onPress={() => setJoinOpen(true)} hitSlop={8}>
+          <MaterialCommunityIcons name="account-plus-outline" size={26} color={colors.text} />
+          {pending > 0 && <View style={{ position: "absolute", top: -4, right: -6, minWidth: 16, height: 16, borderRadius: 8, backgroundColor: "#F04438", alignItems: "center", justifyContent: "center" }}><Text style={{ color: "#fff", fontSize: 10, fontWeight: "800" }}>{pending}</Text></View>}
+        </Pressable>
         <Pressable onPress={() => router.push("/settings")} hitSlop={8}><MaterialCommunityIcons name="cog-outline" size={26} color={colors.text} /></Pressable>
         <Pressable onPress={openMenu} hitSlop={8}><Avatar uri={me?.image} name={me?.name ?? me?.email} size={38} /></Pressable>
       </View>
       <Section title="Whiteboards" kind="whiteboard" label="New whiteboard" />
       <Section title="Task boards" kind="task" label="New task board" />
+      <JoinDialog visible={joinOpen} onClose={() => setJoinOpen(false)} />
       <ActionSheet th={TASK_THEMES.paper} title={me?.email} options={menu} onClose={() => setMenu(null)} />
     </ScrollView>
   );

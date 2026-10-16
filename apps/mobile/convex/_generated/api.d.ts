@@ -9,6 +9,7 @@
  */
 
 import type * as access from "../access.js";
+import type * as account from "../account.js";
 import type * as auth from "../auth.js";
 import type * as boards from "../boards.js";
 import type * as drafts from "../drafts.js";
@@ -28,6 +29,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   access: typeof access;
+  account: typeof account;
   auth: typeof auth;
   boards: typeof boards;
   drafts: typeof drafts;

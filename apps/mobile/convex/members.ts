@@ -92,3 +92,73 @@ export const join = mutation({
     return { publicId: b.publicId, type: b.type };
   },
 });
+
+// ---- invite a specific person ----
+// Exact email match only, so the user list can't be browsed.
+export const findUser = query({
+  args: { boardId: v.id("boards"), email: v.string() },
+  handler: async (ctx, { boardId, email }) => {
+    const b = await ctx.db.get(boardId);
+    if ((await roleOf(ctx, b)) !== "owner") return null;
+    const u: any = await ctx.db.query("users").withIndex("email", (q) => q.eq("email", email.trim().toLowerCase())).first();
+    if (!u || u._id === b!.ownerId) return null;
+    return { userId: u._id as string, name: u.name ?? u.email, image: u.image ?? null };
+  },
+});
+export const inviteUser = mutation({
+  args: { boardId: v.id("boards"), userId: v.string(), role: roleV },
+  handler: async (ctx, { boardId, userId, role }) => {
+    const b = await ownerOnly(ctx, boardId);
+    if (userId === b.ownerId) throw new Error("That is the owner");
+    const member = await ctx.db.query("board_members").withIndex("by_board_user", (q) => q.eq("boardId", boardId).eq("userId", userId)).unique();
+    if (member) throw new Error("Already a member");
+    const dup = (await ctx.db.query("board_invites").withIndex("by_user", (q) => q.eq("toUserId", userId)).take(100)).find((i) => i.boardId === boardId);
+    if (dup) await ctx.db.patch(dup._id, { role });
+    else await ctx.db.insert("board_invites", { boardId, toUserId: userId, role, invitedBy: (await getAuthUserId(ctx))!, createdAt: Date.now() });
+  },
+});
+export const boardInvites = query({
+  args: { boardId: v.id("boards") },
+  handler: async (ctx, { boardId }) => {
+    if ((await roleOf(ctx, await ctx.db.get(boardId))) !== "owner") return [];
+    const rows = await ctx.db.query("board_invites").withIndex("by_board", (q) => q.eq("boardId", boardId)).take(50);
+    return Promise.all(rows.map(async (i) => { const u: any = await ctx.db.get(i.toUserId as any); return { _id: i._id, role: i.role, name: u?.name ?? u?.email ?? "Unknown" }; }));
+  },
+});
+export const cancelInvite = mutation({
+  args: { id: v.id("board_invites") },
+  handler: async (ctx, { id }) => {
+    const i = await ctx.db.get(id);
+    if (!i) return;
+    await ownerOnly(ctx, i.boardId);
+    await ctx.db.delete(id);
+  },
+});
+export const myInvites = query({
+  args: {},
+  handler: async (ctx) => {
+    const uid = await getAuthUserId(ctx);
+    if (!uid) return [];
+    const rows = await ctx.db.query("board_invites").withIndex("by_user", (q) => q.eq("toUserId", uid)).take(50);
+    const out = await Promise.all(rows.map(async (i) => {
+      const b = await ctx.db.get(i.boardId);
+      const from: any = await ctx.db.get(i.invitedBy as any);
+      return b && b.access !== 1 ? { _id: i._id, board: b.name, type: b.type, role: i.role, from: from?.name ?? from?.email ?? "Someone" } : null;
+    }));
+    return out.filter((x) => x !== null);
+  },
+});
+export const respond = mutation({
+  args: { id: v.id("board_invites"), accept: v.boolean() },
+  handler: async (ctx, { id, accept }) => {
+    const uid = await getAuthUserId(ctx);
+    const i = await ctx.db.get(id);
+    if (!uid || !i || i.toUserId !== uid) throw new Error("Invite not found");
+    await ctx.db.delete(id);
+    if (!accept) return null;
+    const b = await ctx.db.get(i.boardId);
+    if (!b || b.access === 1) throw new Error("This board is no longer available");
+    if ((await roleOf(ctx, b)) === null) await ctx.db.insert("board_members", { boardId: b._id, userId: uid, role: i.role, joinedAt: Date.now() });
+    return { publicId: b.publicId, type: b.type };
+  },
+});

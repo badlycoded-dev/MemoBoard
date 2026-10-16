@@ -5,6 +5,7 @@ import * as WebBrowser from "expo-web-browser";
 import { useState } from "react";
 import { ActivityIndicator, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { colors } from "@/theme/colors";
+import { PasswordInput } from "./PasswordInput";
 import { useOnline } from "./OfflineBanner";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -57,7 +58,9 @@ export function AuthScreen() {
     }
   };
 
-  const input = (k: keyof typeof f, placeholder: string, extra: object = {}) => (
+  const input = (k: keyof typeof f, placeholder: string, extra: any = {}) => extra.secureTextEntry ? (
+    <PasswordInput value={f[k]} onChangeText={set(k)} placeholder={placeholder} color={colors.text} bg={colors.ink} border={colors.line} muted={colors.muted} />
+  ) : (
     <TextInput
       value={f[k]} onChangeText={set(k)} placeholder={placeholder} placeholderTextColor={colors.muted} autoCapitalize="none" autoCorrect={false}
       style={{ color: colors.text, borderWidth: 1, borderColor: colors.line, borderRadius: 10, padding: 12, backgroundColor: colors.ink }} {...extra}

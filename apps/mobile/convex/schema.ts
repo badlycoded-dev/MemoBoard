@@ -58,6 +58,9 @@ export default defineSchema({
     boardId: v.id("boards"), role: v.union(v.literal("editor"), v.literal("viewer")), tokenHash: v.string(),
     createdBy: v.string(), expiresAt: v.optional(v.number()), maxUses: v.optional(v.number()), uses: v.number(), revoked: v.boolean(), createdAt: v.number(),
   }).index("by_board", ["boardId"]).index("by_token", ["tokenHash"]),
+  board_invites: defineTable({ // invitations sent to a specific user; they accept or decline
+    boardId: v.id("boards"), toUserId: v.string(), role: v.union(v.literal("editor"), v.literal("viewer")), invitedBy: v.string(), createdAt: v.number(),
+  }).index("by_user", ["toUserId"]).index("by_board", ["boardId"]),
   presence: defineTable({
     boardId: v.id("boards"), userId: v.string(), name: v.string(), editing: v.optional(v.string()), seenAt: v.number(),
   }).index("by_board", ["boardId"]).index("by_board_user", ["boardId", "userId"]),

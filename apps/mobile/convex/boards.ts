@@ -79,7 +79,7 @@ export const purge = internalMutation({
   args: { boardId: v.id("boards") },
   handler: async (ctx, { boardId }) => {
     let budget = 200;
-    for (const t of ["tk_logs", "tk_items", "tk_columns", "wb_strokes", "wb_objects", "wb_drafts", "presence", "invite_links", "board_members"] as const) {
+    for (const t of ["tk_logs", "tk_items", "tk_columns", "wb_strokes", "wb_objects", "wb_drafts", "presence", "invite_links", "board_invites", "board_members"] as const) {
       const rows: any[] = await (ctx.db.query(t) as any).withIndex("by_board", (q: any) => q.eq("boardId", boardId)).take(budget);
       for (const r of rows) {
         if (t === "wb_objects" && r.file) await ctx.storage.delete(r.file.storageId).catch(() => {});
