@@ -11,8 +11,10 @@ export const beat = mutation({
     if (!uid || !(await viewBoard(ctx, boardId))) return;
     const row = await ctx.db.query("presence").withIndex("by_board_user", (q) => q.eq("boardId", boardId).eq("userId", uid)).unique();
     const now = Date.now();
-    if (row) await ctx.db.patch(row._id, { editing, seenAt: now });
-    else await ctx.db.insert("presence", { boardId, userId: uid, name: await userName(ctx, uid), editing, seenAt: now });
+    const u: any = await ctx.db.get(uid as any);
+    const image = u?.image ?? undefined;
+    if (row) await ctx.db.patch(row._id, { editing, image, seenAt: now });
+    else await ctx.db.insert("presence", { boardId, userId: uid, name: await userName(ctx, uid), image, editing, seenAt: now });
     // opportunistic cleanup of long-gone rows
     const old = await ctx.db.query("presence").withIndex("by_board", (q) => q.eq("boardId", boardId)).take(50);
     for (const r of old) if (now - r.seenAt > 5 * 60_000) await ctx.db.delete(r._id);

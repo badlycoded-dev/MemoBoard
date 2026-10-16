@@ -22,6 +22,7 @@ function Body() {
   const owner = board?.role === "owner";
   const invites: any[] = useQuery(api.members.invites, owner ? { boardId: board._id } : "skip") ?? [];
   const setRole = useMutation(api.members.setRole), kick = useMutation(api.members.remove);
+  const setAccess = useMutation(api.boards.setAccess);
   const create = useMutation(api.members.createInvite), revoke = useMutation(api.members.revokeInvite);
   const [role, setRole2] = useState<"editor" | "viewer">("editor");
   const [hours, setHours] = useState<number | undefined>(168);
@@ -73,6 +74,19 @@ function Body() {
 
       {owner && (
         <>
+          <Heading text="Who can open this board" />
+          <View style={{ flexDirection: "row", gap: 8, flexWrap: "wrap" }}>
+            {([[2, "Members only"], [3, "Anyone with the link"], [4, "Public"]] as const).map(([a, l]) => pill(l, board.access === a, () => setAccess({ id: board._id, access: a }).catch(() => {})))}
+          </View>
+          <Text style={{ color: T.text, opacity: 0.6, marginTop: 8 }}>
+            {board.access === 2 ? "Only people you invite can open it." : "Signed-in people with the link can view it (read-only). Invite them to let them edit."}
+          </Text>
+          {board.access >= 3 && (
+            <Pressable onPress={() => Clipboard.setStringAsync(Linking.createURL(`/${board.type === "task" ? "task" : "board"}/${board.publicId}`))} style={{ marginTop: 10, padding: 12, borderRadius: 12, alignItems: "center", borderWidth: 1, borderColor: T.border }}>
+              <Text style={{ color: T.text, fontWeight: "700" }}>Copy view-only link</Text>
+            </Pressable>
+          )}
+
           <Heading text="Invite a person" />
           <View style={{ flexDirection: "row", gap: 8 }}>
             <TextInput value={email} onChangeText={(v) => { setEmail(v); setSearched(""); setInviteErr(""); }} placeholder="Their email" placeholderTextColor="#98A2B3" autoCapitalize="none" keyboardType="email-address"

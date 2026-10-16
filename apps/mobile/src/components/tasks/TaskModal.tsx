@@ -5,6 +5,7 @@ import { Modal, Pressable, ScrollView, Text, TextInput, View, useWindowDimension
 import { api } from "@/services/api";
 import { IMPORTANCE, ITEM_COLORS, type TaskTheme } from "@/theme/taskThemes";
 import { useLock } from "@/hooks/useLock";
+import { Markdown } from "./Markdown";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { Chip } from "./ui";
 
@@ -13,18 +14,19 @@ const LOG_ICON: Record<string, any> = { created: "plus-circle-outline", edited: 
 
 /** Full task view: main part (title, importance, description, markdown content, look) on the left,
  *  side part (people, dates, actions, activity log) on the right; stacked on narrow screens. */
-export function TaskModal({ it, th, cols, mode, by, onClose, onDenied, onClaim, onFinish, onMove, onTrash, onRestore, onPurge }: any) {
+export function TaskModal({ it, th, cols, mode, by, onClose, onDenied, readOnly, onClaim, onFinish, onMove, onTrash, onRestore, onPurge }: any) {
   const wide = useWindowDimensions().width >= 760;
   const update = useMutation(api.kanban.itemUpdate);
+  const ro = !!readOnly;
   const lockItem = useMutation(api.kanban.itemLock), unlockItem = useMutation(api.kanban.itemUnlock);
-  useLock(it.status === "trashed" ? null : it._id, lockItem, unlockItem, (who) => onDenied?.(who));
+  useLock(it.status === "trashed" || ro ? null : it._id, lockItem, unlockItem, (who) => onDenied?.(who));
   const uploadUrl = useMutation(api.kanban.uploadUrl);
   const urlOf = useMutation(api.kanban.urlOf);
   const logs = useQuery(api.kanban.logList, { taskId: it._id }) ?? [];
   const [d, setD] = useState({ title: it.title, description: it.description ?? "", content: it.content ?? "", importance: it.importance ?? 1, color: it.color as string | undefined, border: it.border as number | undefined, tint: !!it.tint });
   useEffect(() => setD({ title: it.title, description: it.description ?? "", content: it.content ?? "", importance: it.importance ?? 1, color: it.color, border: it.border, tint: !!it.tint }), [it._id]);
   const dirty = d.title !== it.title || d.description !== (it.description ?? "") || d.content !== (it.content ?? "") || d.importance !== (it.importance ?? 1) || d.color !== it.color || d.border !== it.border || d.tint !== !!it.tint;
-  const save = () => d.title.trim() && update({ id: it._id, by, patch: { ...d, color: d.color ?? null, border: d.border ?? null, title: d.title.trim() } });
+  const save = () => !ro && d.title.trim() && update({ id: it._id, by, patch: { ...d, color: d.color ?? null, border: d.border ?? null, title: d.title.trim() } }).catch(() => {});
 
   const bg = th.dark ? "#0D1117" : "#F6F8FA", panel = th.dark ? "#161B22" : "#FFFFFF", fg = th.dark ? "#E6EDF3" : "#1F2328", muted = th.dark ? "#8D96A0" : "#59636E", line = th.dark ? "#30363D" : "#D1D9E0";
   const imp = IMPORTANCE[d.importance];
@@ -51,7 +53,7 @@ export function TaskModal({ it, th, cols, mode, by, onClose, onDenied, onClaim, 
 
   const main = (
     <View style={[{ gap: 14 }, wide && { flex: 1 }]}>
-      <View style={card}>
+      <View style={card} pointerEvents={ro ? "none" : "auto"}>
         <View style={{ flexDirection: "row", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
           <View style={{ backgroundColor: d.color ?? imp.color, paddingHorizontal: 10, paddingVertical: 3, borderRadius: 10 }}><Text style={{ color: "#fff", fontWeight: "800", fontSize: 12 }}>{imp.label.toUpperCase()}</Text></View>
           <View style={{ borderWidth: 1, borderColor: line, paddingHorizontal: 10, paddingVertical: 3, borderRadius: 10 }}><Text style={{ color: fg, fontSize: 12 }}>{it.status}</Text></View>
@@ -66,9 +68,9 @@ export function TaskModal({ it, th, cols, mode, by, onClose, onDenied, onClaim, 
       </View>
       <View style={card}>
         {label("Content")}
-        <MarkdownEditor value={d.content} onChange={(content) => setD({ ...d, content })} upload={upload} dark={th.dark} />
+        {ro ? <Markdown src={d.content} dark={th.dark} /> : <MarkdownEditor value={d.content} onChange={(content) => setD({ ...d, content })} upload={upload} dark={th.dark} />}
       </View>
-      <View style={card}>
+      <View style={card} pointerEvents={ro ? "none" : "auto"}>
         {label("Card look")}
         <View style={{ flexDirection: "row", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
           <Pressable onPress={() => setD({ ...d, color: undefined })} style={{ paddingHorizontal: 10, paddingVertical: 6, borderRadius: 14, borderWidth: 2, borderColor: d.color ? line : fg }}><Text style={{ color: fg, fontSize: 12 }}>Auto</Text></Pressable>
@@ -92,14 +94,14 @@ export function TaskModal({ it, th, cols, mode, by, onClose, onDenied, onClaim, 
         {row("Updated", when(it.updatedAt))}
         {row("Claimed by", it.claimedBy ?? "—")}
         {row("Completed", when(it.completedAt))}
-        {!trashed && (
+        {!trashed && !ro && (
           <View style={{ gap: 8, marginTop: 4 }}>
             {btn(it.claimedBy ? "Unclaim" : "Claim task", () => onClaim(it, !it.claimedBy), th.accent, "hand-back-right-outline")}
             {mode === "multi" && btn(it.status === "done" ? "Reopen" : "Finish", () => onFinish(it, it.status !== "done"), "#0E9F6E", "check-circle-outline")}
           </View>
         )}
       </View>
-      <View style={card}>
+      <View style={card} pointerEvents={ro ? "none" : "auto"}>
         {label("Column")}
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
           {cols.map((c: any) => <Chip key={c._id} label={c.name} color={th.accent} fg={fg} active={c._id === it.columnId} on={() => onMove(it, c._id)} />)}
@@ -133,8 +135,8 @@ export function TaskModal({ it, th, cols, mode, by, onClose, onDenied, onClaim, 
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, padding: 12, paddingTop: 40, borderBottomWidth: 1, borderBottomColor: line, backgroundColor: panel }}>
           <Pressable onPress={onClose} hitSlop={10}><MaterialCommunityIcons name="close" size={26} color={fg} /></Pressable>
           <Text numberOfLines={1} style={{ color: fg, fontWeight: "800", fontSize: 17, flex: 1 }}>{it.title}</Text>
-          <Pressable disabled={!dirty} onPress={save} style={{ opacity: dirty ? 1 : 0.4, backgroundColor: th.accent, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 10 }}>
-            <Text style={{ color: th.dark ? "#0B1020" : "#fff", fontWeight: "800" }}>{dirty ? "Save" : "Saved"}</Text>
+          <Pressable disabled={!dirty || ro} onPress={save} style={{ opacity: dirty && !ro ? 1 : 0.4, backgroundColor: th.accent, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 10 }}>
+            <Text style={{ color: th.dark ? "#0B1020" : "#fff", fontWeight: "800" }}>{ro ? "View only" : dirty ? "Save" : "Saved"}</Text>
           </Pressable>
         </View>
         <ScrollView contentContainerStyle={{ padding: 14, gap: 14, flexDirection: wide ? "row" : "column", alignItems: wide ? "flex-start" : "stretch", maxWidth: 1200, width: "100%", alignSelf: "center" }}>

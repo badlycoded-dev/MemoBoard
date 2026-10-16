@@ -1,4 +1,5 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { ReactNode } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useBoardTheme } from "./BoardTheme";
 
@@ -11,9 +12,11 @@ type Props = {
   onBack: () => void;
   /** Optional right-hand button (the board header opens Settings; Settings omits it). */
   onSettings?: () => void;
+  /** Extra actions shown on the right, before the settings gear. */
+  right?: ReactNode;
 };
 
-export function BoardHeader({ title, accent, variant, topInset, onBack, onSettings }: Props) {
+export function BoardHeader({ title, accent, variant, topInset, onBack, onSettings, right }: Props) {
   const T = useBoardTheme();
   const back = <MaterialCommunityIcons name="arrow-left" size={22} color="#fff" />;
   const gear = <MaterialCommunityIcons name="cog-outline" size={22} color="#fff" />;
@@ -25,6 +28,7 @@ export function BoardHeader({ title, accent, variant, topInset, onBack, onSettin
         <Text style={styles.hangingTitle} numberOfLines={1}>
           {title}
         </Text>
+        {right}
         {onSettings && <Pressable onPress={onSettings}>{gear}</Pressable>}
       </View>
     );
@@ -42,6 +46,7 @@ export function BoardHeader({ title, accent, variant, topInset, onBack, onSettin
           {title}
         </Text>
       </View>
+      {right}
       {onSettings && (
         <Pressable onPress={onSettings} style={[styles.round, { backgroundColor: accent }]}>
           {gear}

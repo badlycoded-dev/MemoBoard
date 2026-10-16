@@ -62,7 +62,7 @@ export default defineSchema({
     boardId: v.id("boards"), toUserId: v.string(), role: v.union(v.literal("editor"), v.literal("viewer")), invitedBy: v.string(), createdAt: v.number(),
   }).index("by_user", ["toUserId"]).index("by_board", ["boardId"]),
   presence: defineTable({
-    boardId: v.id("boards"), userId: v.string(), name: v.string(), editing: v.optional(v.string()), seenAt: v.number(),
+    boardId: v.id("boards"), userId: v.string(), name: v.string(), image: v.optional(v.string()), editing: v.optional(v.string()), seenAt: v.number(),
   }).index("by_board", ["boardId"]).index("by_board_user", ["boardId", "userId"]),
   wb_drafts: defineTable({ // edits that lost a conflict; max 5 per whiteboard
     boardId: v.id("boards"), userId: v.string(), objectId: v.id("wb_objects"), patch: v.string(), baseUpdatedAt: v.optional(v.number()), createdAt: v.number(),

@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "convex/react";
 import { useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { CollabBar } from "@/components/collab/CollabBar";
+import { CollabBar, Toast } from "@/components/collab/CollabBar";
 import { TaskCard } from "@/components/tasks/TaskCard";
 import { TaskModal } from "@/components/tasks/TaskModal";
 import { ActionSheet, Opt, Prompt } from "@/components/tasks/ui";
@@ -28,13 +28,16 @@ export default function TaskBoard() {
   const multi = board?.mode === "multi";
   const showTrash = board?.showTrash ?? st.showTrash;
 
-  const m = {
+  const m0: any = {
     add: useMutation(api.kanban.itemAdd), move: useMutation(api.kanban.itemMove), claim: useMutation(api.kanban.itemClaim),
     finish: useMutation(api.kanban.itemFinish), trash: useMutation(api.kanban.itemTrash), restore: useMutation(api.kanban.itemRestore),
     purge: useMutation(api.kanban.itemPurge), colAdd: useMutation(api.kanban.colAdd), colUpdate: useMutation(api.kanban.colUpdate),
     colMove: useMutation(api.kanban.colMove), colRemove: useMutation(api.kanban.colRemove), setStyle: useMutation(api.boards.setStyle),
     rename: useMutation(api.boards.rename), setOptions: useMutation(api.boards.setOptions),
   };
+  // Viewers can't write; everyone else gets a notice instead of an uncaught "Not allowed".
+  const ro = board?.role === "viewer", isOwner = board?.role === "owner";
+  const m: any = Object.fromEntries(Object.entries(m0).map(([k, f]: any) => [k, (...a: any[]) => (ro ? Promise.resolve(null) : Promise.resolve(f(...a)).catch(() => setNote("You can't do that on this board.")))]));
 
   const [sheet, setSheet] = useState<{ title?: string; options: Opt[] } | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
@@ -105,7 +108,7 @@ export default function TaskBoard() {
         {opts.menu && <Pressable onPress={opts.menu} hitSlop={8}><MaterialCommunityIcons name="dots-horizontal" size={20} color={th.colText} /></Pressable>}
       </View>
       {list.length === 0 && <Text style={{ color: th.colText, opacity: 0.5, textAlign: "center", paddingVertical: 8 }}>{opts.trash ? "Trash is empty" : "No tasks"}</Text>}
-      {list.map((it) => <TaskCard key={it._id} it={it} th={th} onOpen={() => setOpenId(it._id)} onMenu={() => itemMenu(it)} />)}
+      {list.map((it) => <TaskCard key={it._id} it={it} th={th} onOpen={() => setOpenId(it._id)} onMenu={() => !ro && itemMenu(it)} />)}
       {opts.add &&
         (adding === key ? (
           <TextInput
@@ -130,15 +133,18 @@ export default function TaskBoard() {
     <View style={{ flex: 1, backgroundColor: th.bg }}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 12, paddingHorizontal: 16, paddingTop: ins.top + 12, paddingBottom: 8 }}>
         <Pressable onPress={() => router.replace("/")} hitSlop={10}><MaterialCommunityIcons name="arrow-left" size={24} color={th.colText} /></Pressable>
-        <Pressable style={{ flex: 1 }} onPress={() => board && setPrompt({ title: "Rename board", initial: board.name, on: (name) => m.rename({ id: board._id, name }) })}>
+        <Pressable style={{ flex: 1 }} onPress={() => board && isOwner && setPrompt({ title: "Rename board", initial: board.name, on: (name) => m.rename({ id: board._id, name }) })}>
           <Text numberOfLines={1} style={{ color: th.colText, fontSize: 22, fontWeight: "800" }}>{board?.name ?? "Loading…"}</Text>
           <Text style={{ color: th.colText, opacity: 0.65, fontSize: 12 }}>{multi ? "Multi-list board" : "Progress board"}</Text>
         </Pressable>
-        {multi && <Pressable onPress={() => setPrompt({ title: "New column", on: (name) => m.colAdd({ boardId: board._id, name }) })} hitSlop={8}><MaterialCommunityIcons name="table-column-plus-after" size={24} color={th.colText} /></Pressable>}
-        <Pressable onPress={() => setSheet({ title: "Board style", options: themeOptions })} hitSlop={8}><MaterialCommunityIcons name="palette-outline" size={24} color={th.colText} /></Pressable>
+        {multi && !ro && <Pressable onPress={() => setPrompt({ title: "New column", on: (name) => m.colAdd({ boardId: board._id, name }) })} hitSlop={8}><MaterialCommunityIcons name="table-column-plus-after" size={24} color={th.colText} /></Pressable>}
+        {board && <CollabBar boardId={board._id} publicId={board.publicId} role={board.role} editing={open?.title} onNote={setNote} tint="rgba(127,127,127,0.25)" fg={th.colText} />}
+        {isOwner && (<Pressable onPress={() => setSheet({ title: "Board style", options: themeOptions })} hitSlop={8}><MaterialCommunityIcons name="palette-outline" size={24} color={th.colText} /></Pressable>)}
         <Pressable onPress={() => setSheet({ title: "Board settings (this board only)", options: [
-          { label: `Trash bin column: ${showTrash ? "on" : "off"}`, icon: "trash-can-outline", on: () => m.setOptions({ id: board._id, showTrash: !showTrash }) },
-          { label: "Board style…", icon: "palette-swatch-outline", on: () => setSheet({ title: "Board style", options: themeOptions }) },
+          ...(!isOwner ? [] : [
+            { label: `Trash bin column: ${showTrash ? "on" : "off"}`, icon: "trash-can-outline" as const, on: () => m.setOptions({ id: board._id, showTrash: !showTrash }) },
+            { label: "Board style…", icon: "palette-swatch-outline" as const, on: () => setSheet({ title: "Board style", options: themeOptions }) },
+          ]),
           { label: "Global settings", icon: "cog-outline", on: () => router.push("/settings?from=tasks" as any) },
         ] })} hitSlop={8}><MaterialCommunityIcons name="cog-outline" size={24} color={th.colText} /></Pressable>
       </View>
@@ -147,16 +153,16 @@ export default function TaskBoard() {
       <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
         <ScrollView horizontal contentContainerStyle={{ padding: 16, gap: 14, alignItems: "flex-start" }}>
           {cols.map((c, i) =>
-            colBox(c._id, c.name, c.color, items.filter((x) => x.columnId === c._id && x.status !== "trashed"), { menu: () => columnMenu(c, i), add: true }),
+            colBox(c._id, c.name, c.color, items.filter((x) => x.columnId === c._id && x.status !== "trashed"), { menu: ro ? undefined : () => columnMenu(c, i), add: !ro }),
           )}
           {showTrash && colBox("trash", "Trash bin", undefined, items.filter((x) => x.status === "trashed"), { trash: true })}
         </ScrollView>
       </ScrollView>
 
-      {board && <CollabBar boardId={board._id} publicId={board.publicId} role={board.role} editing={open?.title} note={note} onNote={setNote} />}
+      <Toast note={note} onNote={setNote} />
       {open && (
         <TaskModal
-          it={open} th={th} cols={cols} mode={board?.mode} by={by} onClose={() => setOpenId(null)} onDenied={(who: string) => { setOpenId(null); setNote(`${who} is editing this task`); }}
+          readOnly={ro} it={open} th={th} cols={cols} mode={board?.mode} by={by} onClose={() => setOpenId(null)} onDenied={(who: string) => { setOpenId(null); setNote(`${who} is editing this task`); }}
           onClaim={A.claim} onFinish={A.finish} onMove={A.move} onTrash={A.trash} onRestore={A.restore} onPurge={A.purge}
         />
       )}

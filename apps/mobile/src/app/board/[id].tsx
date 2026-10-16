@@ -12,7 +12,8 @@ import { BoardThemeProvider, useBoardTheme } from "@/components/whiteboard/Board
 import { INITIAL_TOOL_CONFIG } from "@/components/whiteboard/constants";
 import { Tool, defStyle, isArrow, box, ends, hit, Pt } from "@/components/whiteboard/model";
 import { BoardHeader } from "@/components/whiteboard/BoardHeader";
-import { CollabBar } from "@/components/collab/CollabBar";
+import { CollabBar, Toast } from "@/components/collab/CollabBar";
+import { useGuard } from "@/hooks/useGuard";
 import { useLock } from "@/hooks/useLock";
 import { Toolbar } from "@/components/whiteboard/Toolbar";
 import { BoardCanvas, LayerStack, TopOverlay } from "@/components/whiteboard/BoardCanvas";
@@ -43,15 +44,22 @@ function BoardScreen() {
   useEffect(() => { if (objsQ.status === "CanLoadMore") objsQ.loadMore(200); }, [objsQ.status, objsQ.results.length]);
   const strokesRaw: any[] = strokesQ.results;
   const objsRaw: any[] = objsQ.results;
-  const addS: any = useMutation(api.strokes.add),
-    rmS: any = useMutation(api.strokes.remove);
-  const addO: any = useMutation(api.objects.add),
-    rmO: any = useMutation(api.objects.remove),
+  const rawAddS: any = useMutation(api.strokes.add),
+    rawRmS: any = useMutation(api.strokes.remove);
+  const rawAddO: any = useMutation(api.objects.add),
+    rawRmO: any = useMutation(api.objects.remove),
     rawPatch: any = useMutation(api.objects.patch),
     lockO: any = useMutation(api.objects.lock),
     unlockO: any = useMutation(api.objects.unlock);
   const me: any = useQuery(api.users.me);
   const [note, setNote] = useState<string | null>(null);
+  // Viewers get a read-only board: no toolbar, and every write is a no-op instead of a rejected promise.
+  const ro = board?.role === "viewer";
+  const roRef = useRef(false);
+  roRef.current = ro;
+  const blocked = () => roRef.current, onErr = () => setNote("You can't edit this board.");
+  const addS = useGuard(rawAddS, blocked, onErr), rmS = useGuard(rawRmS, blocked, onErr);
+  const addO = useGuard(rawAddO, blocked, onErr), rmO = useGuard(rawRmO, blocked, onErr);
   // Edits are sent one at a time per object with the updatedAt the client last saw, so the server
   // can tell a real conflict (saved as a draft) from our own consecutive edits.
   const objsRef = useRef<any[]>([]);
@@ -61,6 +69,7 @@ function BoardScreen() {
   const seen = useRef(new Map<string, number>());
   const chain = useRef(new Map<string, Promise<any>>());
   const patchO: any = useRef((a: any) => {
+    if (roRef.current) return Promise.resolve(null);
     const next = (chain.current.get(a.id) ?? Promise.resolve()).catch(() => {}).then(async () => {
       const cached = objsRef.current.find((o) => o._id === a.id)?.updatedAt;
       const mine = seen.current.get(a.id);
@@ -138,7 +147,7 @@ function BoardScreen() {
     if (lockedByOther(o)) return setNote(`${o.lockedName ?? "Someone"} is editing this item`);
     setSelRaw(v);
   };
-  useLock(selO && !String(selO._id).startsWith("t0") ? selO._id : null, lockO, unlockO, (by) => { setSelRaw(null); setNote(`${by} is editing this item`); });
+  useLock(!ro && selO && !String(selO._id).startsWith("t0") ? selO._id : null, lockO, unlockO, (by) => { setSelRaw(null); setNote(`${by} is editing this item`); });
   const top = (p: Pt, noArrow = false) =>
     [...objs].reverse().find((o) => !(noArrow && isArrow(o.kind)) && hit(o, p, map));
   const history = useHistory({ addS, rmS, addO, rmO, patchO, boardId: board?._id, gone });
@@ -288,9 +297,11 @@ function BoardScreen() {
         topInset={ins.top}
         onBack={() => router.replace("/")}
         onSettings={() => router.push("/settings?from=whiteboards" as any)}
+        right={board ? <CollabBar boardId={board._id} publicId={board.publicId} role={board.role} editing={selO?.kind} drafts onNote={setNote} /> : undefined}
       />
-      {board && <CollabBar boardId={board._id} publicId={board.publicId} role={board.role} editing={selO?.kind} drafts note={note} onNote={setNote} />}
+      <Toast note={note} onNote={setNote} />
 
+      {!ro && (
       <Toolbar
         tool={tool}
         cfg={cfg}
@@ -321,7 +332,9 @@ function BoardScreen() {
           setWidth: (width: number) => setCfg({ ...cfg, [tool]: { ...c, width } }),
         }}
       />
+      )}
 
+      {!ro && (
       <SelectionBar
         visible={!!selO && tool === "select" && !form}
         selO={selO}
@@ -333,6 +346,7 @@ function BoardScreen() {
         del={del}
         patchO={patchO}
       />
+      )}
 
       <EmojiPicker
         visible={emojiPicker}
@@ -353,6 +367,7 @@ function BoardScreen() {
           addLink(url);
         }}
       />
+      {!ro && (
       <EditSheet
         form={form}
         setForm={setForm}
@@ -365,6 +380,7 @@ function BoardScreen() {
         onAttach={attach}
         onLoadText={loadText}
       />
+      )}
     </View>
   );
 }

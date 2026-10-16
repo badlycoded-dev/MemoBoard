@@ -90,3 +90,12 @@ export const purge = internalMutation({
     }
   },
 });
+// Who can open the board: 2 private (members only), 3 anyone with the link, 4 public. Non-members are read-only.
+export const setAccess = mutation({
+  args: { id: v.id("boards"), access: v.union(v.literal(2), v.literal(3), v.literal(4)) },
+  handler: async (ctx, { id, access }) => {
+    const b = await owned(ctx, id);
+    if (b.access === 1 || b.access === 0) throw new Error("This board's access is managed by an administrator");
+    await ctx.db.patch(id, { access });
+  },
+});
